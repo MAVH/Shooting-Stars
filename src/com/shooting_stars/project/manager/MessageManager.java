@@ -1,15 +1,20 @@
 package com.shooting_stars.project.manager;
 
+
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-/**
- * Created by Пользователь on 14.11.2014.
- */
-public class MessageManager {
-    private MessageManager() {}
-    public static String getMessage(String key, Locale locale) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.message", locale);
-        return bundle.getString(key);
-    }
+public enum MessageManager {
+        INSTANCE;
+        private ResourceBundle resourceBundle;
+        private final String resourceName = "resources.message";
+        private MessageManager() {
+            resourceBundle = ResourceBundle.getBundle(resourceName, Locale.getDefault());
+        }
+        public void changeLocale(Locale locale) {
+            resourceBundle = ResourceBundle.getBundle(resourceName, locale);
+        }
+        public String getMessage(String key) {
+            return resourceBundle.getString(key);
+        }
 }

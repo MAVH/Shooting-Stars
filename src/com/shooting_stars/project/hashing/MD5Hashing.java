@@ -1,15 +1,14 @@
 package com.shooting_stars.project.hashing;
-import org.apache.log4j.Logger;
 
+import com.shooting_stars.project.exception.HashingException;
+import org.apache.log4j.Logger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/**
- * Created by Пользователь on 12.10.2014.
- */
 public class MD5Hashing {
     static Logger logger =  Logger.getLogger(MD5Hashing.class);
-    public static String hashingPassword(String password) {
+
+    public static String hashingPassword(String password) throws HashingException {
         StringBuffer hexString = null;
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -23,7 +22,7 @@ public class MD5Hashing {
             }
         }
         catch (NoSuchAlgorithmException e) {
-            logger.error("No exist method for hashing",e);
+            throw new HashingException("No method for hashing", e);
         }
         return hexString.toString();
     }

@@ -21,8 +21,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.0.51" level="application_server_libraries" />
     <orderEntry type="library" name="javax.servlet.jsp.jstl-1.2.1" level="project" />
-    <orderEntry type="library" name="mysql-connector-java-5.1.22-bin" level="project" />
     <orderEntry type="library" name="log4j-1.2.17" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-5.1.22-bin" level="project" />
   </component>
 </module>
-

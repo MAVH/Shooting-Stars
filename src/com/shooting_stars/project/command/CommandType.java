@@ -1,11 +1,10 @@
 package com.shooting_stars.project.command;
 
-/**
- * Created by Пользователь on 07.10.2014.
- */
 public enum CommandType {
     LOGIN(new LoginCommand()),
-    LOGOUT(new LogoutCommand());
+    LOGOUT(new LogoutCommand()),
+    PREPARE_REGISTRATION(new PreparingRegistrationCommand()),
+    CHANGE_LOCALE(new ChangeLocaleCommand());
     private Command command;
 
     CommandType(Command command) {
