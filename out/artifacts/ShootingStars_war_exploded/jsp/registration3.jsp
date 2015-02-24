@@ -9,14 +9,14 @@
 </head>
 <body>
 <form method="POST" action="${pageContext.request.contextPath}/controller">
-  <input type="hidden" name="command" value="register"/>
+  <input type="hidden" name="command" value="prepare_registration"/>
   <input type="hidden" name="part" value="3"/>
   <label for="abilities"><fmt:message key="abilities"/></label>
-  <input type="text" name="abilities" id="abilities"/>
+  <input type="textarea" name="abilities" id="abilities"/>
   <%--wishes--%>
-  <input type="submit" value="<fmt:message key="continue"/>"/>
+  <input type="submit" name="submitAction" value="<fmt:message key="continue"/>"/>
+  <input type="submit" name="submitAction" value="<fmt:message key="back"/>">
 </form>
-<a href="${pageContext.request.contextPath}/jsp/registration2.jsp"><fmt:message key="back"/></a>
 ${registrationError}
 </body>
 </html>

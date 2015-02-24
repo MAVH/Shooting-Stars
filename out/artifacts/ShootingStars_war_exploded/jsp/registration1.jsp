@@ -13,6 +13,7 @@
   <input type="hidden" name="part" value="1"/>
   <label for="login_name"><fmt:message key="login"/></label>
   <input type="text" name="login" id="login_name" value="${user_registry.login}"/>
+  <c:if test="${not empty registrationLoginError}"></c:if>
   <label for="password"><fmt:message key="password"/></label>
   <input type="password" name="password" id="password" value="${user_registry.password}"/>
   <label for="password_repeat"><fmt:message key="password_repeat"/></label>
@@ -22,5 +23,7 @@
   <input type="submit" value="<fmt:message key="continue"/>"/>
 </form>
 ${registrationError}
+${registrationLoginError}
+${registrationPasswordError}
 </body>
 </html>

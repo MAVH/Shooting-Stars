@@ -8,7 +8,8 @@
     <title></title>
 </head>
 <body>
+<c:import url="header.jsp"/>
 Hello
-${user.name}
+${user.login}
 </body>
 </html>

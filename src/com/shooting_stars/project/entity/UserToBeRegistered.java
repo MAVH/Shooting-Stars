@@ -2,7 +2,8 @@ package com.shooting_stars.project.entity;
 
 import com.shooting_stars.project.exception.HashingException;
 import com.shooting_stars.project.hashing.MD5Hashing;
-import java.awt.*;
+
+import java.io.InputStream;
 import java.sql.Date;
 
 public class UserToBeRegistered {
@@ -14,7 +15,7 @@ public class UserToBeRegistered {
     private String country;
     private String city;
     private Date dateOfBirth;
-    private Image photo;
+    private InputStream photo;
     private String abilities;
     private String[] wishes;
     private final int MAX_AMOUNT_OF_WISHES = 5;
@@ -55,7 +56,7 @@ public class UserToBeRegistered {
         return dateOfBirth;
     }
 
-    public Image getPhoto() {
+    public InputStream getPhoto() {
         return photo;
     }
 
@@ -99,7 +100,7 @@ public class UserToBeRegistered {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public void setPhoto(Image photo) {
+    public void setPhoto(InputStream photo) {
         this.photo = photo;
     }
 

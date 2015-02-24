@@ -2,26 +2,26 @@ package com.shooting_stars.project.entity;
 
 public class User {
     private int userId;
-    private String name;
+    private String login;
 
-    public User(int userId, String name) {
+    public User(int userId, String login) {
         this.userId = userId;
-        this.name = name;
+        this.login = login;
     }
 
     public int getUserId() {
         return userId;
     }
 
-    public String getName() {
-        return name;
+    public String getLogin() {
+        return login;
     }
 
     public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLogin(String login) {
+        this.login = login;
     }
 }

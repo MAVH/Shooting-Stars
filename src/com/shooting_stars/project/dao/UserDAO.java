@@ -12,7 +12,8 @@ public class UserDAO extends AbstractDAO {
     public static final String SQL_FIND_USER = "SELECT userId FROM user WHERE login = ? and password = ?";
     public static final String SQL_INSERT_USER = "INSERT INTO user (login, password) VALUES (?,?)";
     public static final String SQL_INSERT_USER_INFO =
-            "INSERT INTO user_info (userId, email, user_name, surname, country, city, dateOfBirth, abilities) VALUES (?,?,?,?,?,?,?,?)";
+            "INSERT INTO user_info (userId, email, user_name, surname, country, city, dateOfBirth, abilities, photo) VALUES (?,?,?,?,?,?,?,?,?)";
+    public static final String SQL_CHECK_LOGIN_EXISTENCE = "SELECT COUNT(login) FROM user WHERE login = ?";
 
     public UserDAO(Connection connection) {
         super(connection);
@@ -48,7 +49,7 @@ public class UserDAO extends AbstractDAO {
             ps = connection.prepareStatement(SQL_INSERT_USER);
             ps.setString(1, user.getLogin());
             ps.setString(2, user.getPassword());
-            ps.executeQuery();
+            ps.executeUpdate();
             //change next line
             new_user = findUserByLoginAndPassword(user.getLogin(),user.getPassword());
             ps = connection.prepareStatement(SQL_INSERT_USER_INFO);
@@ -60,7 +61,8 @@ public class UserDAO extends AbstractDAO {
             ps.setString(6, user.getCity());
             ps.setDate(7, user.getDateOfBirth());
             ps.setString(8, user.getAbilities());
-            ps.executeQuery();
+            ps.setBlob(9, user.getPhoto());
+            ps.executeUpdate();
         }
         catch (SQLException e) {
             throw new DAOException("SQL exception (request or table failed): ", e);
@@ -69,5 +71,28 @@ public class UserDAO extends AbstractDAO {
             close(ps);
         }
         return new_user;
+    }
+
+    public boolean checkUserLoginExistence(String login) throws DAOException {
+        PreparedStatement ps = null;
+        ResultSet rs;
+        boolean exist = false;
+        try {
+            ps = connection.prepareStatement(SQL_CHECK_LOGIN_EXISTENCE);
+            ps.setString(1, login);
+            rs = ps.executeQuery();
+            if(rs.next()) {
+                int count = rs.getInt(1);
+                if(count > 0) {
+                    exist =  true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+        return exist;
     }
 }

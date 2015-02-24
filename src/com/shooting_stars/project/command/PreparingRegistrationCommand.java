@@ -11,6 +11,8 @@ import com.shooting_stars.project.validation.Validation;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.awt.*;
+import java.io.InputStream;
 import java.sql.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -27,6 +29,7 @@ public class PreparingRegistrationCommand implements Command {
     private final String PARAM_CITY = "city";
     private final String PARAM_DATE = "dateOfBirth";
     private final String PARAM_SUBMIT = "submitAction";
+    private final String PARAM_PHOTO = "photo";
     private final String PARAM_ABILITIES = "abilities";
     private final String REG_PAGE1 = ConfigManager.getProperty("path.page.registration1");
     private final String REG_PAGE2 = ConfigManager.getProperty("path.page.registration2");
@@ -59,23 +62,32 @@ public class PreparingRegistrationCommand implements Command {
                 String password = request.getParameter(PARAM_PASSWORD);
                 String password_repeat = request.getParameter(PARAM_PASSWORD_REPEAT);
                 String email = request.getParameter(PARAM_EMAIL);
-                boolean differentPasswords = false;
+                boolean error = false;
                 user.setEmail(email);
                 //TODO: what if the same login as already exists? need to check this
-                user.setLogin(login);
+                try {
+                    if(RegistrationLogic.userLoginExists(login)) {
+                        user.setLogin("");
+                        error = true;
+                        request.setAttribute("registrationLoginError", Controller.messageManager.getMessage("message.login.exists"));
+                    } else {
+                        user.setLogin(login);
+                    }
+                } catch (RegistrationException e) {
+                    throw new CommandException(e.getCause());
+                }
                 if(password.equals(password_repeat)) {
                     user.setPassword(password);
                 } else {
-                    differentPasswords = true;
+                    user.setPassword("");
+                    request.setAttribute("registrationPasswordError", Controller.messageManager.getMessage("message.passwords.unequal"));
+                    error = true;
                 }
                 if(Validation.isEmpty(login) || Validation.isEmpty(password) || Validation.isEmpty(password_repeat)) {
-                    emptyFields = true;
-                }
-                if(emptyFields) {
                     request.setAttribute("registrationError", Controller.messageManager.getMessage("message.fields.empty"));
-                    page = REG_PAGE1;
-                } else if(differentPasswords) {
-                    request.setAttribute("registrationError", Controller.messageManager.getMessage("message.passwords.unequal"));
+                    error = true;
+                }
+                if(error) {
                     page = REG_PAGE1;
                 } else {
                     page = REG_PAGE2;
@@ -87,6 +99,7 @@ public class PreparingRegistrationCommand implements Command {
                 String country = request.getParameter(PARAM_COUNTRY);
                 String city = request.getParameter(PARAM_CITY);
                 String dateOfBirth = request.getParameter(PARAM_DATE);
+                //InputStream photo = request.getInputStream(PARAM_PHOTO);
                 user.setName(name);
                 user.setSurname(surname);
                 user.setCountry(country);

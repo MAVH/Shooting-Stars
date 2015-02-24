@@ -27,4 +27,17 @@ public class RegistrationLogic {
             Pool.getPool().returnConnection(connection);
         }
     }
+
+    public  static boolean userLoginExists(String login) throws RegistrationException{
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            UserDAO userDAO = new UserDAO(connection);
+            return userDAO.checkUserLoginExistence(login);
+        }  catch(PoolConnectionException | DAOException e ) {
+            throw new RegistrationException(e.getCause());
+        }  finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
 }

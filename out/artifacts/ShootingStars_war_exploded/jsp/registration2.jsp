@@ -21,7 +21,7 @@
   <input type="text" name="city" id="city" value="${user_registry.city}"/>
   <label for="dateOfBirth"><fmt:message key="date_of_birth"/></label>
   <input type="date" name="dateOfBirth" id="dateOfBirth" value="${user_registry.dateOfBirth}"/>
-  <%--photo--%>
+  <input type="file" accept="image/*"/>
   <input type="submit" name="submitAction" value="<fmt:message key="continue"/>"/>
   <input type="submit" name="submitAction" value="<fmt:message key="back"/>">
 </form>
