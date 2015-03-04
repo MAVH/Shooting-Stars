@@ -127,7 +127,7 @@ public class PreparingRegistrationCommand implements Command {
                     try {
                         User new_user = RegistrationLogic.addUser(user);
                         if (new_user != null) {
-                            session.setAttribute("user", user);
+                            session.setAttribute("user", new_user);
                             session.removeAttribute("user_registry");
                             page = ConfigManager.getProperty("path.page.main");
                         } else {
