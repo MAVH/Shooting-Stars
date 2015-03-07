@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Locale;
 
-@WebServlet ("/controller")
+//@WebServlet ("/controller")
 public class Controller extends HttpServlet {
     static Logger logger = Logger.getLogger(Controller.class);
     public static MessageManager messageManager = MessageManager.INSTANCE;

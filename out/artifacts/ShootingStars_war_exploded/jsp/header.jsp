@@ -8,11 +8,11 @@
     <title></title>
 </head>
 <body>
-  <a href="${pageContext.request.contextPath}/controller?command=form_main_page"><img src="${pageContext.request.contextPath}/img/logo.png"></a>
+  <a href="${pageContext.request.contextPath}/userPage.action?userId=${user.userId}"><img src="${pageContext.request.contextPath}/img/logo.png"></a>
   <a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=EN">EN</a>
   <a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=RU">РУС</a>
     <c:if test="${not empty user}">
-        <a href="${pageContext.request.contextPath}/controller?command=logout"><fmt:message key="logout"/></a>
+        <a href="${pageContext.request.contextPath}/logout"><fmt:message key="logout"/></a>
     </c:if>
 </body>
 </html>

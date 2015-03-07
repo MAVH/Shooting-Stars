@@ -8,18 +8,21 @@
     <title></title>
 </head>
 <body>
-
-<jsp:forward page="${pageContext.request.contextPath}/controller?command=form_user_page&userId=${user.userId}"/>
-
+<c:import url="header.jsp"/>
+gfyugfdhf
+<%--
+<jsp:forward page="${pageContext.request.contextPath}/userPage.action&userId=${user.userId}"/>
+--%>
+ <%--
 <c:import url="header.jsp"/>
 
 Hello
 ${user.login}
-<%--если эта страница является страницей текущего пользователя(сравниваем id) --%>
+
     <a href="${pageContext.request.contextPath}/jsp/changingData/changePhoto.jsp"></a>
     <c:if test="${not empty photoURL}">
         <img src="${photoURL}" />
     </c:if>
-
+ --%>
 </body>
 </html>
