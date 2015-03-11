@@ -6,6 +6,7 @@
 <html>
 <head>
     <title></title>
+    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css" media="screen"/>
 </head>
 <body>
   <a href="${pageContext.request.contextPath}/userPage.action?userId=${user.userId}"><img src="${pageContext.request.contextPath}/img/logo.png"></a>

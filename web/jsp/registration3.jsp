@@ -8,6 +8,7 @@
   <title><fmt:message key="registration_page_title"/></title>
 </head>
 <body>
+<c:import url="header.jsp"/>
 <form method="POST" action="${pageContext.request.contextPath}/controller">
   <input type="hidden" name="command" value="prepare_registration"/>
   <input type="hidden" name="part" value="3"/>
