@@ -1,25 +1,49 @@
 package com.shooting_stars.project.command;
 
+import com.opensymphony.xwork2.ActionSupport;
 import com.shooting_stars.project.controller.Controller;
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.manager.ConfigManager;
 import com.shooting_stars.project.manager.LocaleManager;
+import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Locale;
 
-public class ChangeLocaleCommand implements Command {
-    private final String PARAM_LOCALE = "locale";
+public class ChangeLocaleCommand extends ActionSupport {
+    private String localeValue;
+    Locale locale;
     @Override
-    public String execute(HttpServletRequest request) throws CommandException {
-        String localeValue = request.getParameter(PARAM_LOCALE);
+    public String execute() {
+        HttpServletRequest request = ServletActionContext.getRequest();
         HttpSession session = request.getSession();
-        Locale locale = LocaleManager.valueOf(localeValue).getLocale();
+        String newLocale = localeValue;
+        locale = LocaleManager.valueOf(newLocale).getLocale();
         Controller.messageManager.changeLocale(locale);
         session.setAttribute("locale", locale);
         Controller.messageManager.getMessage("message.login.error");
         //TODO: return current page
-        return ConfigManager.getProperty("path.page.login");
+        if(session.getAttribute("user") != null) {
+            return "user";
+        } else {
+            return "guest";
+        }
+    }
+
+    public String getLocaleValue() {
+        return localeValue;
+    }
+
+    public void setLocaleValue(String localeValue) {
+        this.localeValue = localeValue;
+    }
+
+    public Locale getLocale() {
+        return locale;
+    }
+
+    public void setLocale(Locale locale) {
+        this.locale = locale;
     }
 }

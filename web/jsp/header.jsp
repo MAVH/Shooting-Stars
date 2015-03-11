@@ -9,9 +9,20 @@
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css" media="screen"/>
 </head>
 <body>
-  <a href="${pageContext.request.contextPath}/userPage.action?userId=${user.userId}"><img src="${pageContext.request.contextPath}/img/logo.png"></a>
-  <a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=EN">EN</a>
-  <a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=RU">РУС</a>
+<%--
+<c:choose>
+
+    <c:when test="${not empty user}">
+        <a href="${pageContext.request.contextPath}/userPage?userId=${user.userId}"><img src="${pageContext.request.contextPath}/img/logo.png"></a>
+    </c:when>
+    <c:otherwise>
+        <a href="${pageContext.request.contextPath}/index.jsp"><img src="${pageContext.request.contextPath}/img/logo.png"></a>
+    </c:otherwise>
+</c:choose>  --%>
+<a href="${pageContext.request.contextPath}/index.jsp"><img src="${pageContext.request.contextPath}/img/logo.png"></a>
+
+  <a href="${pageContext.request.contextPath}/changeLocale?localeValue=EN">EN</a>
+  <a href="${pageContext.request.contextPath}/changeLocale?localeValue=RU">РУС</a>
     <c:if test="${not empty user}">
         <a href="${pageContext.request.contextPath}/logout"><fmt:message key="logout"/></a>
     </c:if>

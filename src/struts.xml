@@ -22,6 +22,14 @@
                 /index.jsp
             </result>
         </action>
+        <action name="changeLocale" class="com.shooting_stars.project.command.ChangeLocaleCommand">
+            <result name="user">
+                /jsp/main.jsp
+            </result>
+            <result name="guest">
+                /jsp/login.jsp
+            </result>
+        </action>
         <action name="userPage" class="com.shooting_stars.project.command.FormUserPageCommand">
             <result name="success">
                 /userPage.jsp
