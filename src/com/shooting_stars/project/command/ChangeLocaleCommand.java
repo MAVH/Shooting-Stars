@@ -13,15 +13,15 @@ import java.util.Locale;
 
 public class ChangeLocaleCommand extends ActionSupport {
     private String localeValue;
-    Locale locale;
+    //Locale locale;
     @Override
     public String execute() {
         HttpServletRequest request = ServletActionContext.getRequest();
         HttpSession session = request.getSession();
         String newLocale = localeValue;
-        locale = LocaleManager.valueOf(newLocale).getLocale();
+        Locale locale = LocaleManager.valueOf(newLocale).getLocale();
         Controller.messageManager.changeLocale(locale);
-        session.setAttribute("locale", locale);
+        session.setAttribute("currentLocale", locale);
         Controller.messageManager.getMessage("message.login.error");
         //TODO: return current page
         if(session.getAttribute("user") != null) {
@@ -39,11 +39,4 @@ public class ChangeLocaleCommand extends ActionSupport {
         this.localeValue = localeValue;
     }
 
-    public Locale getLocale() {
-        return locale;
-    }
-
-    public void setLocale(Locale locale) {
-        this.locale = locale;
-    }
 }

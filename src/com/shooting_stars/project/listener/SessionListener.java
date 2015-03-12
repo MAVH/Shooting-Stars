@@ -7,7 +7,7 @@ import java.util.Locale;
 @WebListener
 public class SessionListener implements HttpSessionListener {
     public void sessionCreated(HttpSessionEvent se){
-        se.getSession().setAttribute("locale", Locale.getDefault());
+        se.getSession().setAttribute("currentLocale", Locale.getDefault());
     }
 
     public void sessionDestroyed(HttpSessionEvent se){

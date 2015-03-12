@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-<fmt:setLocale value="${locale}" scope="session" />
+<fmt:setLocale value="${currentLocale}" scope="session" />
 <fmt:setBundle basename="resources.pagecontent"/>
 <html>
 <head>
@@ -10,6 +10,7 @@
 </head>
 <body>
 <c:import url="header.jsp"/>
+<section>
 <div class="well bs-component">
     <s:form action="login" class="form-horizontal">
         <fieldset>
@@ -35,6 +36,13 @@
         </fieldset>
     </s:form>
 </div>
+    <form method="POST" action="${pageContext.request.contextPath}/login">
+        <label for="login_name"><fmt:message key="login"/></label>
+        <input type="text" name="login" id="login_name"/>
+        <label for="password"><fmt:message key="password"/></label>
+        <input type="password" name="password" id="password"/>
+        <input type="submit" value="<fmt:message key="sign_in"/>"/>
+    </form>
 <%--
 <form method="POST" action="${pageContext.request.contextPath}/controller">
   <input type="hidden" name="command" value="LOGIN"/>
@@ -46,5 +54,6 @@
 </form>  --%>
 <button class="btn btn-default"><a href="jsp/registration1.jsp" ><fmt:message key="sign_up"/></a></button>
 <s:property value="loginOrPasswordErrorMessage"/>
+</section>
 </body>
 </html>
