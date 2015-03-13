@@ -9,6 +9,7 @@ import com.shooting_stars.project.exception.RegistrationException;
 import com.shooting_stars.project.logic.RegistrationLogic;
 import com.shooting_stars.project.manager.ConfigManager;
 import com.shooting_stars.project.validation.Validation;
+import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class PreparingRegistrationCommand extends ActionSupport {
+    static Logger logger = Logger.getLogger(PreparingRegistrationCommand.class);
     private String partValue;
     private  String login;
     private String password;
@@ -207,7 +209,9 @@ public class PreparingRegistrationCommand extends ActionSupport {
                         user.setLogin(login);
                     }
                 } catch (RegistrationException e) {
-                    throw new CommandException(e.getCause());
+                    logger.error(e.getMessage(), e.getCause());
+                    exception =  new CommandException(e.getCause());
+                    return ERROR;
                 }
                 if(password.equals(password_repeat)) {
                     user.setPassword(password);
@@ -265,6 +269,7 @@ public class PreparingRegistrationCommand extends ActionSupport {
                             result = STEP3;
                         }
                     } catch (RegistrationException e) {
+                        logger.error(e.getMessage(), e.getCause());
                         exception =  new CommandException(e.getCause());
                         result = ERROR;
                     }

@@ -9,11 +9,13 @@ import com.shooting_stars.project.logic.LoginLogic;
 import com.shooting_stars.project.manager.ConfigManager;
 import com.shooting_stars.project.manager.MessageManager;
 import com.shooting_stars.project.validation.Validation;
+import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class LoginCommand extends ActionSupport {
+    static Logger logger = Logger.getLogger(LoginCommand.class);
     private String login;
     private String password;
     private String loginOrPasswordErrorMessage;
@@ -36,6 +38,7 @@ public class LoginCommand extends ActionSupport {
                     result = LOGIN;
                 }
             } catch (LogicException e) {
+                logger.error(e.getMessage(), e.getCause());
                 result = ERROR;
                 exception = new CommandException(e.getCause());
             }

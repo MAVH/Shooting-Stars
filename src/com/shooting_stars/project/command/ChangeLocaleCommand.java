@@ -5,6 +5,7 @@ import com.shooting_stars.project.controller.Controller;
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.manager.ConfigManager;
 import com.shooting_stars.project.manager.LocaleManager;
+import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Locale;
 
 public class ChangeLocaleCommand extends ActionSupport {
+    static Logger logger = Logger.getLogger(ChangeLocaleCommand.class);
     private String localeValue;
     //Locale locale;
     @Override

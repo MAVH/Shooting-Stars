@@ -60,6 +60,7 @@ public class Controller extends HttpServlet {
 
     @Override
     public void destroy() {
+        System.out.println("end");
         super.destroy();
         Pool.getPool().closePool();
     }

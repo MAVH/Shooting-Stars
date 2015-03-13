@@ -5,7 +5,7 @@ public enum CommandType {
     //LOGOUT(new LogoutCommand()),
     //PREPARE_REGISTRATION(new PreparingRegistrationCommand()),
     //CHANGE_LOCALE(new ChangeLocaleCommand()),
-    CHANGE_PHOTO(new ChangePhotoCommand());
+    CHANGE_PHOTO(null);
     //FORM_USER_PAGE(new FormUserPageCommand());
     private Command command;
 

@@ -1,8 +1,11 @@
 package com.shooting_stars.project.command;
 
+import com.opensymphony.xwork2.ActionSupport;
 import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.manager.ConfigManager;
+import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,13 +17,24 @@ import java.io.IOException;
 /**
  * Created by Пользователь on 04.03.2015.
  */
-public class ChangePhotoCommand implements Command {
+public class ChangePhotoCommand extends ActionSupport {
+    static Logger logger = Logger.getLogger(ChangePhotoCommand.class);
+    private Exception exception;
+
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception exception) {
+        this.exception = exception;
+    }
 
     @Override
-    public String execute(HttpServletRequest request) throws CommandException {
+    public String execute() {
         String saveFile="";
+        HttpServletRequest request = ServletActionContext.getRequest();
         String contentType = request.getContentType();
-
+        String result = SUCCESS;
         try {
             if((contentType != null)|| (contentType.indexOf("multipart/form-data") >= 0)) {
                 DataInputStream in = new DataInputStream(request.getInputStream());
@@ -63,8 +77,11 @@ public class ChangePhotoCommand implements Command {
                 HttpSession session = request.getSession();
                 session.setAttribute("photoURL", saveFile);
             } } catch(IOException e) {
-            throw new CommandException("Problem with stream", e);
+
+                exception =  new CommandException("Problem with stream", e);
+                logger.error(exception.getMessage(), exception.getCause());
+                result = ERROR;
         }
-        return ConfigManager.getProperty("path.page.main");
+        return result;
     }
 }

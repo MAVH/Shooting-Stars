@@ -56,5 +56,13 @@
                 /jsp/error/error.jsp
             </result>
         </action>
+        <action name="changePhoto" class="com.shooting_stars.project.command.ChangePhotoCommand">
+            <result name="success">
+                /jsp/main.jsp
+            </result>
+            <result name="error">
+                /jsp/error/error.jsp
+            </result>
+        </action>
     </package>
 </struts>
