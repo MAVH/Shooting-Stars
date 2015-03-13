@@ -11,7 +11,7 @@
 <c:import url="header.jsp"/>
 gfyugfdhf
 <%--
-<jsp:forward page="${pageContext.request.contextPath}/userPage.action&userId=${user.userId}"/>
+<jsp:forward page="${pageContext.request.contextPath}/userPage.action?userId=${user.userId}"/>
 --%>
  <%--
 <c:import url="header.jsp"/>

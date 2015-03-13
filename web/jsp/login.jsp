@@ -36,15 +36,8 @@
         </fieldset>
     </s:form>
 </div>
-    <form method="POST" action="${pageContext.request.contextPath}/login">
-        <label for="login_name"><fmt:message key="login"/></label>
-        <input type="text" name="login" id="login_name"/>
-        <label for="password"><fmt:message key="password"/></label>
-        <input type="password" name="password" id="password"/>
-        <input type="submit" value="<fmt:message key="sign_in"/>"/>
-    </form>
 <%--
-<form method="POST" action="${pageContext.request.contextPath}/controller">
+<form method="POST" action="${pageContext.request.contextPath}/login">
   <input type="hidden" name="command" value="LOGIN"/>
   <label for="login_name"><fmt:message key="login"/></label>
   <input type="text" name="login" id="login_name"/>

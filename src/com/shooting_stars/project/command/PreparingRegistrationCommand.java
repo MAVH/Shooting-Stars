@@ -1,5 +1,6 @@
 package com.shooting_stars.project.command;
 
+import com.opensymphony.xwork2.ActionSupport;
 import com.shooting_stars.project.controller.Controller;
 import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.entity.UserToBeRegistered;
@@ -8,6 +9,7 @@ import com.shooting_stars.project.exception.RegistrationException;
 import com.shooting_stars.project.logic.RegistrationLogic;
 import com.shooting_stars.project.manager.ConfigManager;
 import com.shooting_stars.project.validation.Validation;
+import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,29 +19,164 @@ import java.sql.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class PreparingRegistrationCommand implements Command {
-    private final String PARAM_PART = "part";
-    private final String PARAM_LOGIN = "login";
-    private final String PARAM_PASSWORD = "password";
-    private final String PARAM_PASSWORD_REPEAT = "password_repeat";
-    private final String PARAM_EMAIL = "e-mail";
-    private final String PARAM_NAME = "name";
-    private final String PARAM_SURNAME = "surname";
-    private final String PARAM_COUNTRY = "country";
-    private final String PARAM_CITY = "city";
-    private final String PARAM_DATE = "dateOfBirth";
-    private final String PARAM_SUBMIT = "submitAction";
-    private final String PARAM_PHOTO = "photo";
-    private final String PARAM_ABILITIES = "abilities";
+public class PreparingRegistrationCommand extends ActionSupport {
+    private String partValue;
+    private  String login;
+    private String password;
+    private String password_repeat;
+    private  String email;
+    private String name;
+    private  String surname;
+    private String country;
+    private  String city;
+    private  String dateOfBirth;
+    private  String submitAction;
+    private  String abilities;
+    /*
     private final String REG_PAGE1 = ConfigManager.getProperty("path.page.registration1");
     private final String REG_PAGE2 = ConfigManager.getProperty("path.page.registration2");
-    private final String REG_PAGE3 = ConfigManager.getProperty("path.page.registration3");
+    private final String REG_PAGE3 = ConfigManager.getProperty("path.page.registration3");     */
+    private static final String STEP1 = "step1";
+    private static final String STEP2 = "step2";
+    private static final String STEP3 = "step3";
+    private String registrationError;
+    private String registrationLoginError;
+    private String registrationPasswordError;
+    private Exception exception;
+
+    public String getPartValue() {
+        return partValue;
+    }
+
+    public void setPartValue(String partValue) {
+        this.partValue = partValue;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword_repeat() {
+        return password_repeat;
+    }
+
+    public void setPassword_repeat(String password_repeat) {
+        this.password_repeat = password_repeat;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getSubmitAction() {
+        return submitAction;
+    }
+
+    public void setSubmitAction(String submitAction) {
+        this.submitAction = submitAction;
+    }
+
+    public String getAbilities() {
+        return abilities;
+    }
+
+    public void setAbilities(String abilities) {
+        this.abilities = abilities;
+    }
+
+    public String getRegistrationError() {
+        return registrationError;
+    }
+
+    public void setRegistrationError(String registrationError) {
+        this.registrationError = registrationError;
+    }
+
+    public String getRegistrationLoginError() {
+        return registrationLoginError;
+    }
+
+    public void setRegistrationLoginError(String registrationLoginError) {
+        this.registrationLoginError = registrationLoginError;
+    }
+
+    public String getRegistrationPasswordError() {
+        return registrationPasswordError;
+    }
+
+    public void setRegistrationPasswordError(String registrationPasswordError) {
+        this.registrationPasswordError = registrationPasswordError;
+    }
+
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception exception) {
+        this.exception = exception;
+    }
 
     @Override
-    public String execute(HttpServletRequest request) throws CommandException {
-        String partValue = request.getParameter(PARAM_PART);
+    public String execute() throws CommandException {
         UserToBeRegistered user;
         int part = Integer.parseInt(partValue);
+        HttpServletRequest request = ServletActionContext.getRequest();
         HttpSession session = request.getSession();
         if(session.getAttribute("user_registry") == null) {
             user = new UserToBeRegistered();
@@ -48,20 +185,16 @@ public class PreparingRegistrationCommand implements Command {
             user = (UserToBeRegistered) session.getAttribute("user_registry");
         }
         boolean forward = false;
-        String submitValue = request.getParameter(PARAM_SUBMIT);
-        if(!Validation.isEmpty(submitValue)) {
-            if (submitValue.equals(ResourceBundle.getBundle("resources.pagecontent", (Locale) session.getAttribute("locale")).getString("continue"))) {
+        if(!Validation.isEmpty(submitAction)) {
+            if (submitAction.equals(ResourceBundle.getBundle("resources.pagecontent", (Locale) session.getAttribute("currentLocale")).getString("continue"))) {
                 forward = true;
             }
         }
         boolean emptyFields = false;
         String page;
+        String result;
         switch (part) {
             case 1:
-                String login = request.getParameter(PARAM_LOGIN);
-                String password = request.getParameter(PARAM_PASSWORD);
-                String password_repeat = request.getParameter(PARAM_PASSWORD_REPEAT);
-                String email = request.getParameter(PARAM_EMAIL);
                 boolean error = false;
                 user.setEmail(email);
                 //TODO: what if the same login as already exists? need to check this
@@ -69,7 +202,7 @@ public class PreparingRegistrationCommand implements Command {
                     if(RegistrationLogic.userLoginExists(login)) {
                         user.setLogin("");
                         error = true;
-                        request.setAttribute("registrationLoginError", Controller.messageManager.getMessage("message.login.exists"));
+                        registrationLoginError = Controller.messageManager.getMessage("message.login.exists");
                     } else {
                         user.setLogin(login);
                     }
@@ -80,26 +213,23 @@ public class PreparingRegistrationCommand implements Command {
                     user.setPassword(password);
                 } else {
                     user.setPassword("");
-                    request.setAttribute("registrationPasswordError", Controller.messageManager.getMessage("message.passwords.unequal"));
+                    registrationPasswordError = Controller.messageManager.getMessage("message.passwords.unequal");
                     error = true;
                 }
                 if(Validation.isEmpty(login) || Validation.isEmpty(password) || Validation.isEmpty(password_repeat)) {
-                    request.setAttribute("registrationError", Controller.messageManager.getMessage("message.fields.empty"));
+                    registrationError = Controller.messageManager.getMessage("message.fields.empty");
                     error = true;
                 }
                 if(error) {
-                    page = REG_PAGE1;
+                   // page = REG_PAGE1;
+                    result = STEP1;
                 } else {
-                    page = REG_PAGE2;
+                    //page = REG_PAGE2;
+                    result = STEP2;
                 }
-                return page;
+               // return page;
+                return result;
             case 2:
-                String name = request.getParameter(PARAM_NAME);
-                String surname = request.getParameter(PARAM_SURNAME);
-                String country = request.getParameter(PARAM_COUNTRY);
-                String city = request.getParameter(PARAM_CITY);
-                String dateOfBirth = request.getParameter(PARAM_DATE);
-                //InputStream photo = request.getInputStream(PARAM_PHOTO);
                 user.setName(name);
                 user.setSurname(surname);
                 user.setCountry(country);
@@ -110,35 +240,36 @@ public class PreparingRegistrationCommand implements Command {
                     user.setDateOfBirth(null);
                 }
                 if(!forward) {
-                    page = REG_PAGE1;
+                    result = STEP1;
                 } else if(Validation.isEmpty(name)) {
-                    request.setAttribute("registrationError", Controller.messageManager.getMessage("message.fields.empty"));
-                    page = REG_PAGE2;
+                    registrationError = Controller.messageManager.getMessage("message.fields.empty");
+                    result = STEP2;
                 } else {
-                    page = REG_PAGE3;
+                    result = STEP3;
                 }
-                return page;
+                return result;
             case 3:
-                String abilities = request.getParameter(PARAM_ABILITIES);
                 user.setAbilities(abilities);
                 if(!forward) {
-                    page = REG_PAGE2;
+                    result = STEP2;
                 } else {
                     try {
                         User new_user = RegistrationLogic.addUser(user);
                         if (new_user != null) {
                             session.setAttribute("user", new_user);
                             session.removeAttribute("user_registry");
-                            page = ConfigManager.getProperty("path.page.main");
+                            result = SUCCESS;
+                            //page = ConfigManager.getProperty("path.page.main");
                         } else {
-                            request.setAttribute("registrationError", Controller.messageManager.getMessage("message.registration.error"));
-                            page = REG_PAGE3;
+                            registrationError = Controller.messageManager.getMessage("message.registration.error");
+                            result = STEP3;
                         }
                     } catch (RegistrationException e) {
-                        throw new CommandException(e.getCause());
+                        exception =  new CommandException(e.getCause());
+                        result = ERROR;
                     }
                 }
-                return page;
+                return result;
         }
         return null;
     }

@@ -14,7 +14,7 @@
                 /index.jsp
             </result>
             <result name="error">
-                /jsp/error.jsp
+                /jsp/error/error.jsp
             </result>
         </action>
         <action name="logout" class="com.shooting_stars.project.command.LogoutCommand">
@@ -32,10 +32,28 @@
         </action>
         <action name="userPage" class="com.shooting_stars.project.command.FormUserPageCommand">
             <result name="success">
-                /userPage.jsp
+                /jsp/userPage.jsp
             </result>
             <result name="error">
-                /jsp/error.jsp
+                /jsp/error/error.jsp
+            </result>
+        </action>
+
+        <action name="registration" class="com.shooting_stars.project.command.PreparingRegistrationCommand">
+            <result name="success">
+                /jsp/main.jsp
+            </result>
+            <result name="step1">
+                /jsp/registration1.jsp
+            </result>
+            <result name="step2">
+                /jsp/registration2.jsp
+            </result>
+            <result name="step3">
+                /jsp/registration3.jsp
+            </result>
+            <result name="error">
+                /jsp/error/error.jsp
             </result>
         </action>
     </package>
