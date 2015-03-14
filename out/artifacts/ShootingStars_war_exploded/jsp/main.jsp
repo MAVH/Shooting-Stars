@@ -8,13 +8,11 @@
     <title></title>
 </head>
 <body>
+<%--
 <jsp:forward page="${pageContext.request.contextPath}/jsp/profile.jsp"/>
-<c:import url="header.jsp"/>
-gfyugfdhf
-<a href="${pageContext.request.contextPath}/jsp/changingData/changePhoto.jsp">change photo</a>
-<c:if test="${not empty photoURL}">
-    <img src="${photoURL}" />
-</c:if>
+--%>
+<a href="${pageContext.request.contextPath}/userPage?userId=${user.userId}">To profile</a>
+
 <%--
 <jsp:forward page="${pageContext.request.contextPath}/userPage.action?userId=${user.userId}"/>
 --%>

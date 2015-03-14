@@ -5,6 +5,7 @@ import com.shooting_stars.project.hashing.MD5Hashing;
 
 import java.io.InputStream;
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class UserToBeRegistered {
     private String login;
@@ -15,7 +16,6 @@ public class UserToBeRegistered {
     private String country;
     private String city;
     private Date dateOfBirth;
-    private InputStream photo;
     private String abilities;
     private String[] wishes;
     private final int MAX_AMOUNT_OF_WISHES = 5;
@@ -56,9 +56,6 @@ public class UserToBeRegistered {
         return dateOfBirth;
     }
 
-    public InputStream getPhoto() {
-        return photo;
-    }
 
     public String getAbilities() {
         return abilities;
@@ -100,15 +97,11 @@ public class UserToBeRegistered {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public void setPhoto(InputStream photo) {
-        this.photo = photo;
-    }
-
     public void setAbilities(String abilities) {
         this.abilities = abilities;
     }
 
-    public void setWishes(String[] wishes) {
+    public void setWishes(String[]  wishes) {
         this.wishes = wishes;
     }
 

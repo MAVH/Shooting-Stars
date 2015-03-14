@@ -10,12 +10,12 @@
         <name>wishList</name>
         <tag-class>com.shooting_stars.project.tags.WishListTag</tag-class>
         <body-content>empty</body-content>
-        <!--
+
         <attribute>
             <name>list</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
-        -->
+
     </tag>
 </taglib>

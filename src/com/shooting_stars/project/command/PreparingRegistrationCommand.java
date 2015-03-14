@@ -5,8 +5,10 @@ import com.shooting_stars.project.controller.Controller;
 import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.entity.UserToBeRegistered;
 import com.shooting_stars.project.exception.CommandException;
+import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.exception.RegistrationException;
 import com.shooting_stars.project.logic.RegistrationLogic;
+import com.shooting_stars.project.logic.WishLogic;
 import com.shooting_stars.project.manager.ConfigManager;
 import com.shooting_stars.project.validation.Validation;
 import org.apache.log4j.Logger;
@@ -34,6 +36,8 @@ public class PreparingRegistrationCommand extends ActionSupport {
     private  String dateOfBirth;
     private  String submitAction;
     private  String abilities;
+    private String [] wishes;
+
     /*
     private final String REG_PAGE1 = ConfigManager.getProperty("path.page.registration1");
     private final String REG_PAGE2 = ConfigManager.getProperty("path.page.registration2");
@@ -45,6 +49,14 @@ public class PreparingRegistrationCommand extends ActionSupport {
     private String registrationLoginError;
     private String registrationPasswordError;
     private Exception exception;
+
+    public String[] getWishes() {
+        return wishes;
+    }
+
+    public void setWishes(String[] wishes) {
+        this.wishes = wishes;
+    }
 
     public String getPartValue() {
         return partValue;
@@ -254,13 +266,16 @@ public class PreparingRegistrationCommand extends ActionSupport {
                 return result;
             case 3:
                 user.setAbilities(abilities);
+                wishes = request.getParameterValues("wish");
+                user.setWishes(wishes);
                 if(!forward) {
                     result = STEP2;
                 } else {
+
                     try {
-                        User new_user = RegistrationLogic.addUser(user);
-                        if (new_user != null) {
-                            session.setAttribute("user", new_user);
+                        User newUser = RegistrationLogic.addUser(user);
+                        if (newUser != null) {
+                            session.setAttribute("user", newUser);
                             session.removeAttribute("user_registry");
                             result = SUCCESS;
                             //page = ConfigManager.getProperty("path.page.main");

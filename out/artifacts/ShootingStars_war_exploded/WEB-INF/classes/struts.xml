@@ -31,7 +31,10 @@
             </result>
         </action>
         <action name="userPage" class="com.shooting_stars.project.command.FormUserPageCommand">
-            <result name="success">
+            <result name="user">
+                /jsp/profile.jsp
+            </result>
+            <result name="other_user">
                 /jsp/userPage.jsp
             </result>
             <result name="error">
@@ -57,6 +60,23 @@
             </result>
         </action>
         <action name="changePhoto" class="com.shooting_stars.project.command.ChangePhotoCommand">
+            <result name="success">
+                /jsp/main.jsp
+            </result>
+            <result name="error">
+                /jsp/error/error.jsp
+            </result>
+        </action>
+
+        <action name="saveWishes" class="com.shooting_stars.project.command.SaveWishesCommand">
+            <result name="success">
+                /jsp/main.jsp
+            </result>
+            <result name="error">
+                /jsp/error/error.jsp
+            </result>
+        </action>
+        <action name="deleteWish" class="com.shooting_stars.project.command.DeleteWishCommand">
             <result name="success">
                 /jsp/main.jsp
             </result>
