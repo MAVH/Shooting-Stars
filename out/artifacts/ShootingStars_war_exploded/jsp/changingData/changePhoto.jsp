@@ -11,7 +11,7 @@
     <title></title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/controller?command=change_photo" method="post" enctype="multipart/form-data">
+<form action="${pageContext.request.contextPath}/changePhoto" method="post" enctype="multipart/form-data">
     <%--<input type="hidden" name="command" value="get_photo"/>   --%>
     <input type="file" name="photo"/>
     <input type="submit" value="submit"/>

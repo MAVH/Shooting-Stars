@@ -6,18 +6,7 @@
 <html>
 <head>
   <title><fmt:message key="registration_page_title"/></title>
-  <%--<script type="text/javascript" src="js/script.js"></script> --%>
-    <script language="JavaScript" type="text/javascript">
-        function addWish() {
-            var fields = (document).getElementsByName("wish");
-            for(var i=0;i<fields.length;i++) {
-                if(fields[i].classList.contains("hidden")) {
-                    fields[i].classList.remove("hidden");
-                    break;
-                }
-            }
-        }
-    </script>
+  <script type="text/javascript" src="js/script.js"></script>
 </head>
 <body>
 <c:import url="header.jsp"/>
@@ -35,7 +24,7 @@
   <input type="submit" name="submitAction" value="<fmt:message key="continue"/>"/>
   <input type="submit" name="submitAction" value="<fmt:message key="back"/>">
 </form>
-<button id = "button" onclick="addWish()">One more wish</button>
+<button id = "button_add_wish"><fmt:message key="wish_add"/> </button>
 ${registrationError}
 </body>
 </html>

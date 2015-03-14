@@ -36,7 +36,7 @@ public class ChangePhotoCommand extends ActionSupport {
         String contentType = request.getContentType();
         String result = SUCCESS;
         try {
-            if((contentType != null)|| (contentType.indexOf("multipart/form-data") >= 0)) {
+            if((contentType != null)&& (contentType.indexOf("multipart/form-data") >= 0)) {
                 DataInputStream in = new DataInputStream(request.getInputStream());
                 int formDataLength = request.getContentLength();
                 byte dataBytes[] = new byte[formDataLength];
@@ -68,16 +68,16 @@ public class ChangePhotoCommand extends ActionSupport {
                  */
 
                 //adding url to database
-
-                File ff = new File(saveFile);
+                User user = (User)request.getSession().getAttribute("user");
+                saveFile = user.getUserId() + ".jpg";
+                File ff = new File(ServletActionContext.getServletContext().getContextPath() + "/img/userPhoto/", saveFile);
                 FileOutputStream fileOut = new FileOutputStream(ff);
                 fileOut.write(dataBytes, startPos, (endPos - startPos));
                 fileOut.flush();
                 fileOut.close();
                 HttpSession session = request.getSession();
-                session.setAttribute("photoURL", saveFile);
+                session.setAttribute("photoURL","/img/userPhoto"+ saveFile);
             } } catch(IOException e) {
-
                 exception =  new CommandException("Problem with stream", e);
                 logger.error(exception.getMessage(), exception.getCause());
                 result = ERROR;

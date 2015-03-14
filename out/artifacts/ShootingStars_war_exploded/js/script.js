@@ -1,15 +1,21 @@
 /**
  * Created by Пользователь on 13.03.2015.
  */
-$(document).ready(onLoad);
-function onLoad() {
-    document.getElementById("button").onclick = function() {
-       var fields = (document).getElementsByName("wish");
-       for(var i=0;i<fields.length;i++) {
-           if(fields[i].classList.contains("hidden")) {
-               fields[i].classList.remove("hidden");
-               break;
-           }
-       }
-   };
-}
+
+document.addEventListener("DOMContentLoaded", function(event) {
+    document.getElementById("button_add_wish").classList.add("btn-default");
+    document.getElementById("button_add_wish").onclick = function() {
+        var fields = (document).getElementsByName("wish");
+        for(var i=0;i<fields.length;i++) {
+            if(fields[i].classList.contains("hidden")) {
+                fields[i].classList.remove("hidden");
+                if(i == 4) {
+                    document.getElementById("button_add_wish").classList.add("hidden");
+                }
+                break;
+            }
+        }
+        document.getElementById("add_wish_form").classList.remove("hidden");
+    };
+});
+
