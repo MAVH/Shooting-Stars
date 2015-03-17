@@ -6,32 +6,43 @@ import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.LoginLogic;
-import com.shooting_stars.project.manager.ConfigManager;
-import com.shooting_stars.project.manager.MessageManager;
-import com.shooting_stars.project.validation.Validation;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.SessionAware;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
-public class LoginCommand extends ActionSupport {
+public class LoginCommand extends ActionSupport implements SessionAware {
     static Logger logger = Logger.getLogger(LoginCommand.class);
     private String login;
     private String password;
     private String loginOrPasswordErrorMessage;
     private Exception exception;
 
+    private Map<String, Object> sessionAttributes = null;
+
+
+    @Override
+    public void validate() {
+        if(StringUtils.isEmpty(login)) {
+            addFieldError("login",Controller.messageManager.getMessage("message.fields.empty"));
+        }
+        if( StringUtils.isEmpty(password)) {
+            addFieldError("password",Controller.messageManager.getMessage("message.fields.empty"));
+        }
+    }
     @Override
     public String execute() {
         String result = null;
+        /*
         if(Validation.isEmpty(login) || Validation.isEmpty(password)) {
             loginOrPasswordErrorMessage = Controller.messageManager.getMessage("message.fields.empty");
-            result = LOGIN;
-        }  else {
+            result  LOGIN;
+        }  else { */
             try {
                 User user = LoginLogic.checkUser(login, password);
                 if (user != null) {
-                    ServletActionContext.getRequest().getSession().setAttribute("user", user);
+                    sessionAttributes.put("user", user);
                     result = SUCCESS;
                 } else {
                     loginOrPasswordErrorMessage = Controller.messageManager.getMessage("message.login.error");
@@ -42,7 +53,7 @@ public class LoginCommand extends ActionSupport {
                 result = ERROR;
                 exception = new CommandException(e.getCause());
             }
-        }
+        /*}   */
         return result;
     }
 
@@ -76,5 +87,10 @@ public class LoginCommand extends ActionSupport {
 
     public void setException(Exception exception) {
         this.exception = exception;
+    }
+
+    @Override
+    public void setSession(Map<String, Object> stringObjectMap) {
+        this.sessionAttributes = stringObjectMap;
     }
 }

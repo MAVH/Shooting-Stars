@@ -15,7 +15,6 @@ import java.util.Locale;
 public class ChangeLocaleCommand extends ActionSupport {
     static Logger logger = Logger.getLogger(ChangeLocaleCommand.class);
     private String localeValue;
-    //Locale locale;
     @Override
     public String execute() {
         HttpServletRequest request = ServletActionContext.getRequest();

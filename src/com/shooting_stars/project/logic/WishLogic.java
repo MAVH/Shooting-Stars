@@ -66,4 +66,40 @@ public class WishLogic {
         }
 
     }
+    public static void cancelWishMaking(int wishId) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            WishDAO wishDAO = new WishDAO(connection);
+            wishDAO.deleteMakingUser(wishId);
+        } catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        } finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
+    public static void cancelUserConsidered(int wishId,int userId) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            WishDAO wishDAO = new WishDAO(connection);
+            wishDAO.deleteUserConsidered(wishId,userId);
+        } catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        } finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
+    public static void cancelAllUsersConsidered(int wishId,int userId) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            WishDAO wishDAO = new WishDAO(connection);
+            wishDAO.deleteAllUsersConsidered(wishId);
+        } catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        } finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
 }

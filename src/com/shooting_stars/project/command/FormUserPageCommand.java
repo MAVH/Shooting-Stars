@@ -9,15 +9,21 @@ import com.shooting_stars.project.logic.WishLogic;
 import com.shooting_stars.project.manager.ConfigManager;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.SessionAware;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by Пользователь on 04.03.2015.
  */
-public class FormUserPageCommand extends ActionSupport {
-    static Logger logger = Logger.getLogger(FormUserPageCommand.class);
+public class FormUserPageCommand extends ActionSupport implements ServletRequestAware,SessionAware {
+
+    private HttpServletRequest request = null;
+    private Map<String, Object> sessionAttributes = null;
+
     private int userId;
     private Exception exception;
     ArrayList<Wish> wishes;
@@ -50,21 +56,31 @@ public class FormUserPageCommand extends ActionSupport {
 
     @Override
     public String execute() {
-        String result = USER;
+        String result = OTHER_USER;
         try {
-            wishes = WishLogic.getAllWishes(userId);
-            HttpServletRequest request = ServletActionContext.getRequest();
-            int id = ((User)request.getSession().getAttribute("user")).getUserId();
-            if(userId != id) {
-                result = OTHER_USER;
+            User user = (User)sessionAttributes.get("user");
+            int id = user.getUserId();
+            if(request.getParameter("userId") == null) {
+                userId = id;
+                result = USER;
             }
+            wishes = WishLogic.getAllWishes(userId);
+
         } catch (LogicException e) {
-            logger.error(e.getMessage(), e.getCause());
+            LOG.error(e.getMessage(), e.getCause());
             exception =  new CommandException(e.getCause());
             result = ERROR;
         }
-
-        //String page = ConfigManager.getProperty("path.page.user");
         return result;
+    }
+
+    @Override
+    public void setSession(Map<String, Object> stringObjectMap) {
+          this.sessionAttributes = stringObjectMap;
+    }
+
+    @Override
+    public void setServletRequest(HttpServletRequest request) {
+          this.request = request;
     }
 }

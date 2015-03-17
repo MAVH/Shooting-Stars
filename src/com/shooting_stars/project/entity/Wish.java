@@ -9,7 +9,9 @@ import java.util.Iterator;
 public class Wish implements Iterable{
     private int wishId;
     private String wish;
-    private ArrayList<Candidate> candidates;
+    private boolean isPerformed;
+    private ArrayList<User> candidates;
+    private User candidate;
 
     public Wish(int wishId, String wish) {
         this.wishId = wishId;
@@ -20,7 +22,7 @@ public class Wish implements Iterable{
         return wishId;
     }
 
-    public Wish(int wishId, String wish, ArrayList<Candidate> candidates) {
+    public Wish(int wishId, String wish, ArrayList<User> candidates) {
         this.wishId = wishId;
         this.candidates = candidates;
         this.wish = wish;
@@ -38,12 +40,28 @@ public class Wish implements Iterable{
         this.wish = wish;
     }
 
-    public ArrayList<Candidate> getCandidates() {
+    public ArrayList<User> getCandidates() {
         return candidates;
     }
 
-    public void setCandidates(ArrayList<Candidate> candidates) {
+    public void setCandidates(ArrayList<User> candidates) {
         this.candidates = candidates;
+    }
+
+    public boolean isPerformed() {
+        return isPerformed;
+    }
+
+    public void setPerformed(boolean isPerformed) {
+        this.isPerformed = isPerformed;
+    }
+
+    public User getCandidate() {
+        return candidate;
+    }
+
+    public void setCandidate(User candidate) {
+        this.candidate = candidate;
     }
 
     @Override
