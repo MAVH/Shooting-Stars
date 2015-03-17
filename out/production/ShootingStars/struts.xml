@@ -26,8 +26,8 @@
             </result>
         </action>
         <action name="changeLocale" class="com.shooting_stars.project.command.ChangeLocaleCommand">
-            <result name="user">
-                /jsp/main.jsp
+            <result name="user" type="redirectAction">
+                userPage
             </result>
             <result name="guest">
                 /jsp/login.jsp

@@ -11,7 +11,7 @@
 <c:import url="header.jsp"/>
 <form method="POST" action="${pageContext.request.contextPath}/registration">
   <input type="hidden" name="command" value="prepare_registration"/>
-  <input type="hidden" name="partValue" value="1"/>
+  <input type="hidden" name="part" value="1"/>
   <label for="login_name"><fmt:message key="login"/></label>
   <input type="text" name="login" id="login_name" value="${user_registry.login}"/>
   <c:if test="${not empty registrationLoginError}"></c:if>

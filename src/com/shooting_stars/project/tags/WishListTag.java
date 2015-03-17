@@ -33,7 +33,10 @@ public class WishListTag extends TagSupport {
                 String buttonDelete = rs.getString("delete");
                 out.write("<table id=wish_table class=table><tr><th></th><th>" + rs.getString("wishes") + "</th><th></th></tr>");
                 for(Wish wish:list) {
-                    out.write("<tr><td><button><a href=deleteWish?wishId=" + wish.getWishId() + ">" + buttonDelete + "</a></button></td><td>" + wish.getWish() + "</td><td></td></tr>");
+                    String form = "<form action=deleteWish method=post><input type=hidden name=wishId value=" + wish.getWishId() +"><input type=submit value=" + buttonDelete + "></form>";
+                    out.write("<tr><td>" + form + "</td><td>" + wish.getWish() + "</td><td></td></tr>");
+
+                    //  out.write("<tr><td><button><a href=deleteWish?wishId=" + wish.getWishId() + ">" + buttonDelete + "</a></button></td><td>" + wish.getWish() + "</td><td></td></tr>");
                 }
                 out.write("</table>");
             }

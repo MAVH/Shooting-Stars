@@ -8,13 +8,18 @@ import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.WishLogic;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.SessionAware;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * Created by Пользователь on 14.03.2015.
  */
-public class SaveWishesCommand extends ActionSupport {
+public class SaveWishesCommand extends ActionSupport implements ServletRequestAware, SessionAware {
+    private HttpServletRequest request = null;
+    private Map<String, Object> sessionAttributes = null;
     static Logger logger = Logger.getLogger(SaveWishesCommand.class);
     private static final String PARAM_WISH = "wish";
     private Exception exception;
@@ -29,9 +34,8 @@ public class SaveWishesCommand extends ActionSupport {
     @Override
     public String execute() {
         String result = SUCCESS;
-        HttpServletRequest request = ServletActionContext.getRequest();
         String[] wishes = request.getParameterValues(PARAM_WISH);
-        int userId = ((User)request.getSession().getAttribute("user")).getUserId();
+        int userId = ((User)sessionAttributes.get("user")).getUserId();
         try {
             WishLogic.addWishes(userId,wishes);
         } catch (LogicException e) {
@@ -40,5 +44,15 @@ public class SaveWishesCommand extends ActionSupport {
             result = ERROR;
         }
         return result;
+    }
+
+    @Override
+    public void setServletRequest(HttpServletRequest request) {
+           this.request = request;
+    }
+
+    @Override
+    public void setSession(Map<String, Object> stringObjectMap) {
+        this.sessionAttributes = stringObjectMap;
     }
 }

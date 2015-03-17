@@ -26,7 +26,7 @@ public class FormUserPageCommand extends ActionSupport implements ServletRequest
 
     private int userId;
     private Exception exception;
-    ArrayList<Wish> wishes;
+    private ArrayList<Wish> wishes;
     private static final String USER = "user";
     private static final String OTHER_USER = "other_user";
 

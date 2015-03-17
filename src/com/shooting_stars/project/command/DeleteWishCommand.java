@@ -48,7 +48,7 @@ public class DeleteWishCommand extends ActionSupport {
             // condition of deleting
             WishLogic.deleteWish(wishId);
         } catch (LogicException e) {
-            logger.error(e.getMessage(), e.getCause());
+            LOG.error(e.getMessage(), e.getCause());
             exception =  new CommandException(e.getCause());
             result = ERROR;
         }

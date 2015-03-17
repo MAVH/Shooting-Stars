@@ -10,8 +10,9 @@ public class Wish implements Iterable{
     private int wishId;
     private String wish;
     private boolean isPerformed;
-    private ArrayList<User> candidates;
-    private User candidate;
+    //У каждого желания либо присутствуют candidates либо candidate
+    private ArrayList<User> candidates; // те, кто подали заявку
+    private User candidate; //тот, кто выполняет
 
     public Wish(int wishId, String wish) {
         this.wishId = wishId;

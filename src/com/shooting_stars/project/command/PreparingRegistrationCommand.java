@@ -13,6 +13,8 @@ import com.shooting_stars.project.manager.ConfigManager;
 import com.shooting_stars.project.validation.Validation;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.SessionAware;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,11 +22,14 @@ import java.awt.*;
 import java.io.InputStream;
 import java.sql.Date;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
-public class PreparingRegistrationCommand extends ActionSupport {
+public class PreparingRegistrationCommand extends ActionSupport implements ServletRequestAware,SessionAware {
     static Logger logger = Logger.getLogger(PreparingRegistrationCommand.class);
-    private String partValue;
+    private HttpServletRequest request = null;
+    private Map<String, Object> sessionAttributes = null;
+    private int part;
     private  String login;
     private String password;
     private String password_repeat;
@@ -37,11 +42,6 @@ public class PreparingRegistrationCommand extends ActionSupport {
     private  String submitAction;
     private  String abilities;
     private String [] wishes;
-
-    /*
-    private final String REG_PAGE1 = ConfigManager.getProperty("path.page.registration1");
-    private final String REG_PAGE2 = ConfigManager.getProperty("path.page.registration2");
-    private final String REG_PAGE3 = ConfigManager.getProperty("path.page.registration3");     */
     private static final String STEP1 = "step1";
     private static final String STEP2 = "step2";
     private static final String STEP3 = "step3";
@@ -50,20 +50,20 @@ public class PreparingRegistrationCommand extends ActionSupport {
     private String registrationPasswordError;
     private Exception exception;
 
+    public int getPart() {
+        return part;
+    }
+
+    public void setPart(int part) {
+        this.part = part;
+    }
+
     public String[] getWishes() {
         return wishes;
     }
 
     public void setWishes(String[] wishes) {
         this.wishes = wishes;
-    }
-
-    public String getPartValue() {
-        return partValue;
-    }
-
-    public void setPartValue(String partValue) {
-        this.partValue = partValue;
     }
 
     public String getLogin() {
@@ -189,18 +189,17 @@ public class PreparingRegistrationCommand extends ActionSupport {
     @Override
     public String execute() throws CommandException {
         UserToBeRegistered user;
-        int part = Integer.parseInt(partValue);
-        HttpServletRequest request = ServletActionContext.getRequest();
-        HttpSession session = request.getSession();
-        if(session.getAttribute("user_registry") == null) {
+        //int part = Integer.parseInt(partValue);
+        //HttpSession session = request.getSession();
+        if(sessionAttributes.get("user_registry") == null) {
             user = new UserToBeRegistered();
-            session.setAttribute("user_registry", user);
+            sessionAttributes.put("user_registry", user);
         } else {
-            user = (UserToBeRegistered) session.getAttribute("user_registry");
+            user = (UserToBeRegistered) sessionAttributes.get("user_registry");
         }
         boolean forward = false;
         if(!Validation.isEmpty(submitAction)) {
-            if (submitAction.equals(ResourceBundle.getBundle("resources.pagecontent", (Locale) session.getAttribute("currentLocale")).getString("continue"))) {
+            if (submitAction.equals(ResourceBundle.getBundle("resources.pagecontent", (Locale) sessionAttributes.get("currentLocale")).getString("continue"))) {
                 forward = true;
             }
         }
@@ -275,8 +274,8 @@ public class PreparingRegistrationCommand extends ActionSupport {
                     try {
                         User newUser = RegistrationLogic.addUser(user);
                         if (newUser != null) {
-                            session.setAttribute("user", newUser);
-                            session.removeAttribute("user_registry");
+                            sessionAttributes.put("user", newUser);
+                            sessionAttributes.remove("user_registry");
                             result = SUCCESS;
                             //page = ConfigManager.getProperty("path.page.main");
                         } else {
@@ -292,5 +291,14 @@ public class PreparingRegistrationCommand extends ActionSupport {
                 return result;
         }
         return null;
+    }
+    @Override
+    public void setSession(Map<String, Object> stringObjectMap) {
+        this.sessionAttributes = stringObjectMap;
+    }
+
+    @Override
+    public void setServletRequest(HttpServletRequest request) {
+        this.request = request;
     }
 }

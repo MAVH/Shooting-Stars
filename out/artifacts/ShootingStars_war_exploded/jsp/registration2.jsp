@@ -11,7 +11,7 @@
 <c:import url="header.jsp"/>
 <form method="POST" action="${pageContext.request.contextPath}/registration">
   <input type="hidden" name="command" value="prepare_registration"/>
-  <input type="hidden" name="partValue" value="2"/>
+  <input type="hidden" name="part" value="2"/>
   <label for="name"><fmt:message key="name"/></label>
   <input type="text" name="name" id="name"  value="${user_registry.name}"/>
   <label for="surname"><fmt:message key="surname"/></label>
