@@ -66,7 +66,7 @@ public class Wish implements Iterable{
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<User> iterator() {
         return candidates.iterator();
     }
 }
