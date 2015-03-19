@@ -61,7 +61,14 @@ public class FormUserPageCommand extends ActionSupport implements ServletRequest
             User user = (User)sessionAttributes.get("user");
             int id = user.getUserId();
             if(request.getParameter("userId") == null) {
-                userId = id;
+                if(sessionAttributes.get("userId") != null) {
+                    userId = (Integer)sessionAttributes.get("userId");
+                    sessionAttributes.remove("userId");
+                } else {
+                    userId = id;
+                }
+            }
+            if (userId == id) {
                 result = USER;
             }
             wishes = WishLogic.getAllWishes(userId);

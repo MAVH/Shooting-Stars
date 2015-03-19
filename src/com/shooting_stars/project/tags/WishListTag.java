@@ -21,26 +21,35 @@ import java.util.ResourceBundle;
 public class WishListTag extends TagSupport {
     private static final int MAX_SIZE = 5;
     private ArrayList<Wish> list;
-    private boolean isProfilePage = true;
+    private boolean isProfilePage;
 
     public void setList(ArrayList<Wish> list) {
         this.list = list;
     }
 
+    public boolean isProfilePage() {
+        return isProfilePage;
+    }
+
+    public void setIsProfilePage(boolean isProfilePage) {
+        this.isProfilePage = isProfilePage;
+    }
+
     @Override
     public int doStartTag() throws JspException {
         try {
-            isProfilePage = true;
+            //isProfilePage = true;
             HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
             HttpSession session = request.getSession();
             User currentUser = (User)session.getAttribute("user");
+            /*
             if(request.getParameter("userId") != null) {
                 if(currentUser.getUserId() != Integer.parseInt(request.getParameter("userId"))) {
                     isProfilePage = false;
                 }
-            }
+            }  */
             int size = list.size();
-            ResourceBundle rs = ResourceBundle.getBundle("resources.pagecontent", (Locale) pageContext.getSession().getAttribute("currentLocale"));
+            ResourceBundle rs = ResourceBundle.getBundle("resources.pagecontent", (Locale)session.getAttribute("currentLocale"));
             JspWriter out = pageContext.getOut();
             if(size != 0) {
                 String buttonDelete = rs.getString("delete");
@@ -49,22 +58,55 @@ public class WishListTag extends TagSupport {
                 User candidate = null;
                 String label = null;
                 String formAction;
+                String buttonTake = rs.getString("take_application");
+                String buttonCancel = rs.getString("cancel");
                 for(Wish wish:list) {
                     candidatesList = "";
                     if ((candidate = wish.getCandidate()) != null) {
                         label = rs.getString("wish_performed");
-                        candidatesList = "<a href=userPage?userId=" + candidate.getUserId() + ">" + candidate.getLogin() + "</a>";
+                        candidatesList = "<h5>" + label + "</h5><table><tr><td><a href=userPage?userId=" +
+                                candidate.getUserId() + ">" + candidate.getLogin() + "</a></td>";
+                        if(isProfilePage) {
+                            candidatesList += "<td><form action=cancelMakingWish method=post><input type=hidden name=wishId value=" + wish.getWishId()
+                                    + "><input type=submit value="
+                                    + buttonCancel + "></form></td>";
+                            candidatesList += "<td><form action=wishMade method=post><input type=hidden name=wishId value=" + wish.getWishId()
+                                    + "><input type=submit value="
+                                    + "isDone" + "></form></td>";
+                        }
+                        candidatesList += "</tr></table>";
                     }
-                    for (Object user : wish) {
-                        candidatesList += "<a href=userPage?userId=" + ((User) user).getUserId() + ">" + ((User) user).getLogin() + "</a>";
+                    if(wish.getCandidates() != null) {
+                        if(!wish.getCandidates().isEmpty()) {
+                            label = rs.getString("applications");
+                            candidatesList = "<h5>" + label + "</h5>";
+                            for (Object user : wish) {
+                                candidatesList += "<a href=userPage?userId=" + ((User) user).getUserId() + ">" + ((User) user).getLogin() + "</a>";
+                                if(isProfilePage) {
+                                    candidatesList += "<form action=takeApplication method=post><input type=hidden name=wishId value=" + wish.getWishId()
+                                            + "><input type=hidden name=userId value=" + ((User) user).getUserId() + "><input type=submit value="
+                                            + buttonTake + "></form>";
+                                    candidatesList += "<form action=cancelApplication method=post><input type=hidden name=wishId value=" + wish.getWishId()
+                                            + "><input type=hidden name=userId value=" + ((User) user).getUserId() + "><input type=submit value="
+                                            + buttonCancel + "></form>";
+                                }
+                            }
+                        }
                     }
+                    formAction = "";
                     if (isProfilePage) {
                         formAction = "<form action=deleteWish method=post><input type=hidden name=wishId value=" + wish.getWishId() + "><input type=submit value=" + buttonDelete + "></form>";
                     } else {
                         if(wish.getCandidates().contains(currentUser)) {
-                            formAction = "cancel";
+                            formAction = "<form action=cancelApplication method=post><input type=hidden name=wishId value=" + wish.getWishId()
+                                    + "><input type=hidden name=userId value=" + currentUser.getUserId() + "><input type=submit value="
+                                    + "Cancel my application" + "></form>";
                         } else {
-                            formAction = "make";
+                            if(!currentUser.equals(candidate)) {
+                                formAction = "<form action=makeApplication method=post><input type=hidden name=wishId value=" + wish.getWishId()
+                                        + "><input type=submit value="
+                                        + "make application" + "></form>";
+                            }
                         }
                     }
                     out.write("<tr><td>" + formAction + "</td><td>" + wish.getWish() + "</td><td>");

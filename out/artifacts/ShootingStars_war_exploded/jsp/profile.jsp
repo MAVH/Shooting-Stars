@@ -25,6 +25,6 @@ ${user.login}
 <c:if test="${not empty photoURL}">
     <img src="${photoURL}" />
 </c:if>
-        <ctg:wishList list="${wishes}"/>
+        <ctg:wishList list="${wishes}" isProfilePage="${true}"/>
 </body>
 </html>

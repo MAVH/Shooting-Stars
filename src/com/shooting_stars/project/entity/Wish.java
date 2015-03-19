@@ -15,6 +15,7 @@ public class Wish implements Iterable{
     private User candidate; //тот, кто выполняет
 
     public Wish(int wishId, String wish) {
+        this.candidates = new ArrayList<User>();
         this.wishId = wishId;
         this.wish = wish;
     }

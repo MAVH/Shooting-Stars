@@ -14,7 +14,7 @@ public class WishDAO extends AbstractDAO {
     public static final String SQL_INSERT_WISH = "INSERT INTO wish (userId, wish) VALUES (?,?)";
     public static final String SQL_SELECT_WISHES_BY_ID = "SELECT wishId, wish FROM wish WHERE userId = ? AND wishStatusId = 0";
     public static final String SQL_DELETE_WISH = "DELETE FROM wish WHERE wishId = ?";
-    public static final String SQL_DELETE_MAKING_USER = "DELETE from fulfiled_wish WHERE wishId = ?";
+    public static final String SQL_DELETE_MAKING_USER = "DELETE FROM fulfiled_wish WHERE wishId = ?";
     public static final String SQL_DELETE_ALL_USERS_CONSIDERED = "DELETE from considered_wish WHERE wishId = ?";
     public static final String SQL_DELETE_USER_CONSIDERED = "DELETE from considered_wish WHERE wishId = ? AND userId = ?";
     public static final String SQL_CHANGE_FULFILED_WISH_STATUS = "UPDATE fulfiled_wish " +
@@ -27,6 +27,9 @@ public class WishDAO extends AbstractDAO {
             "            FROM user  JOIN fulfiled_wish ON fulfiled_wish.userId = user.userId WHERE wishId = ?";
     public static final String SQL_SELECT_USERS_CONSIDERED_BY_WISH_ID = "SELECT considered_wish.userId, login " +
             "FROM user  JOIN considered_wish ON considered_wish.userId = user.userId WHERE wishId = ?";
+    public static final String SQL_SELECT_MAKING_USER_ID_BY_WISH_ID = "SELECT userId FROM fulfiled_wish WHERE wishId = ?";
+    public static final String SQL_SELECT_USER_ID_BY_WISH_ID = "SELECT userId FROM wish WHERE wishId = ?";
+
     public WishDAO(Connection connection) {
         super(connection);
     }
@@ -195,12 +198,51 @@ public class WishDAO extends AbstractDAO {
         User user = null;
         try {
             ps = connection.prepareStatement(SQL_SELECT_MAKING_USER_BY_WISH_ID);
-            ps.setInt(1,wishId);
+            ps.setInt(1, wishId);
             rs = ps.executeQuery();
             while (rs.next()) {
                 user = new User(rs.getInt(1),rs.getString(2));
             }
             return user;
+        }
+        catch (SQLException e) {
+            throw new DAOException("Problem with connection or statement", e);
+        } finally {
+            close(ps);
+        }
+    }
+    public int getMakingUserIdByWishId(int wishId) throws DAOException {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int userId = 0;
+        try {
+            ps = connection.prepareStatement(SQL_SELECT_MAKING_USER_ID_BY_WISH_ID);
+            ps.setInt(1,wishId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                userId = rs.getInt(1);
+            }
+            return userId;
+        }
+        catch (SQLException e) {
+            throw new DAOException("Problem with connection or statement", e);
+        } finally {
+            close(ps);
+        }
+    }
+    public int getUserIdByWishId(int wishId) throws DAOException {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            int userId = 0;
+            ps = connection.prepareStatement(SQL_SELECT_USER_ID_BY_WISH_ID);
+            ps.setInt(1,wishId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                userId = rs.getInt(1);
+            }
+            return userId;
         }
         catch (SQLException e) {
             throw new DAOException("Problem with connection or statement", e);

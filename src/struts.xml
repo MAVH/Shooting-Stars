@@ -87,5 +87,46 @@
                 /jsp/error/error.jsp
             </result>
         </action>
+        <action name="takeApplication" class="com.shooting_stars.project.command.TakeApplicationCommand">
+            <result name="success" type="redirectAction">
+                userPage
+            </result>
+            <result name="error">
+                /jsp/error/error.jsp
+            </result>
+        </action>
+        <action name="cancelMakingWish" class="com.shooting_stars.project.command.CancelMakingWishCommand">
+            <result name="success" type="redirectAction">
+                userPage
+            </result>
+            <result name="error">
+                /jsp/error/error.jsp
+            </result>
+        </action>
+        <action name="cancelApplication" class="com.shooting_stars.project.command.CancelApplicationCommand">
+            <result name="success" type="redirectAction" >
+                userPage
+            </result>
+            <result name="error">
+                /jsp/error/error.jsp
+            </result>
+        </action>
+        <action name="makeApplication" class="com.shooting_stars.project.command.MakeApplicationCommand">
+            <result name="success" type="redirectAction" >
+                userPage
+            </result>
+
+            <result name="error">
+                /jsp/error/error.jsp
+            </result>
+        </action>
+        <action name="wishMade" class="com.shooting_stars.project.command.MarkWishMadeCommand">
+            <result name="success" type="redirectAction" >
+                userPage
+            </result>
+            <result name="error">
+                /jsp/error/error.jsp
+            </result>
+        </action>
     </package>
 </struts>

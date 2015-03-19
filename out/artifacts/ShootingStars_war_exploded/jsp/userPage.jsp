@@ -17,7 +17,7 @@
 </head>
 <body>
 <c:import url="header.jsp"/>
-<ctg:wishList list="${wishes}"/>
+<ctg:wishList list="${wishes}" isProfilePage="${false}"/>
 
 </body>
 </html>
