@@ -16,7 +16,7 @@
   <label for="abilities"><fmt:message key="abilities"/></label>
   <input type="textarea" name="abilities" id="abilities"/>
   <%--wishes--%>
-  <input type="text" name="wish" class="hidden"/>
+  <input type="text" name="wish"/>
   <input type="text" name="wish" class="hidden"/>
   <input type="text" name="wish" class="hidden"/>
   <input type="text" name="wish" class="hidden"/>

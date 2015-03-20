@@ -1,6 +1,7 @@
 package com.shooting_stars.project.command;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.shooting_stars.project.controller.Controller;
 import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
@@ -14,16 +15,16 @@ import javax.servlet.http.HttpServletRequest;
  * Created by Пользователь on 14.03.2015.
  */
 public class DeleteWishCommand extends ActionSupport {
-    static Logger logger = Logger.getLogger(SaveWishesCommand.class);
     private Exception exception;
     private int wishId;
+    private String messageError;
 
-    public static Logger getLogger() {
-        return logger;
+    public String getMessageError() {
+        return messageError;
     }
 
-    public static void setLogger(Logger logger) {
-        DeleteWishCommand.logger = logger;
+    public void setMessageError(String messageError) {
+        this.messageError = messageError;
     }
 
     public int getWishId() {
@@ -46,7 +47,9 @@ public class DeleteWishCommand extends ActionSupport {
         String result = SUCCESS;
         try {
             // condition of deleting
-            WishLogic.deleteWish(wishId);
+            if(!WishLogic.deleteWish(wishId)) {
+                 messageError = Controller.messageManager.getMessage("message.delete.impossible");
+            }
         } catch (LogicException e) {
             LOG.error(e.getMessage(), e.getCause());
             exception =  new CommandException(e.getCause());

@@ -66,12 +66,17 @@ public class WishLogic {
         }
 
     }
-    public static void deleteWish(int wishId) throws LogicException {
+    public static boolean deleteWish(int wishId) throws LogicException {
         Connection connection = null;
         try {
             connection = Pool.getPool().getConnection();
             WishDAO wishDAO = new WishDAO(connection);
-            wishDAO.deleteWish(wishId);
+            if(wishDAO.getMakingUser(wishId) == null) {
+                wishDAO.deleteWish(wishId);
+                return true;
+            } else {
+                return false;
+            }
         } catch(PoolConnectionException | DAOException e ) {
             throw new LogicException(e.getCause());
         } finally {

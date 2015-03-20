@@ -95,14 +95,15 @@ public class WishListTag extends TagSupport {
                     }
                     formAction = "";
                     if (isProfilePage) {
-                        formAction = "<form action=deleteWish method=post><input type=hidden name=wishId value=" + wish.getWishId() + "><input type=submit value=" + buttonDelete + "></form>";
+                        formAction = "<form action=deleteWish method=post><input type=hidden name=wishId value="
+                                + wish.getWishId() + "><input type=submit value=" + buttonDelete + "></form>";
                     } else {
                         if(wish.getCandidates().contains(currentUser)) {
                             formAction = "<form action=cancelApplication method=post><input type=hidden name=wishId value=" + wish.getWishId()
                                     + "><input type=hidden name=userId value=" + currentUser.getUserId() + "><input type=submit value="
                                     + "Cancel my application" + "></form>";
                         } else {
-                            if(!currentUser.equals(candidate)) {
+                            if(candidate == null) {
                                 formAction = "<form action=makeApplication method=post><input type=hidden name=wishId value=" + wish.getWishId()
                                         + "><input type=submit value="
                                         + "make application" + "></form>";
@@ -136,9 +137,9 @@ public class WishListTag extends TagSupport {
                 out.write("</fieldset></s:form>");
                  */
                     out.write("<form action=/saveWishes method=post class=hidden id=add_wish_form><fieldset><legend>" + label + "</legend>");
-                    for (int i = 0; i < number; i++) {
+                    //for (int i = 0; i < number; i++) {
                         out.write("<input type=text name=wish class=hidden>");
-                    }
+                    //}
                     out.write("<input type=submit id=save_wish_button value=" + submitValue + ">");
                     out.write("</fieldset></form>");
                     out.write("<button id=button_add_wish class=btn>" + buttonValue + "</button>");
