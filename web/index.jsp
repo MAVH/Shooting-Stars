@@ -6,7 +6,8 @@
   </head>
   <body>
     <c:if test="${not empty user}">
-        <jsp:forward page="jsp/main.jsp"/>
+
+        <jsp:forward page="${pageContext.request.contextPath}/userPage"/>
     </c:if>
     <jsp:forward page="jsp/login.jsp"/>
   </body>

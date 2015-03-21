@@ -3,14 +3,11 @@ package com.shooting_stars.project.entity;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-/**
- * Created by Пользователь on 14.03.2015.
- */
-public class Wish implements Iterable{
+public class Wish implements Iterable {
     private int wishId;
     private String wish;
-    private boolean isPerformed;
-    //У каждого желания либо присутствуют candidates либо candidate
+    private boolean isFulfilled;
+    //У каждого желания присутствуют либо candidates, либо candidate
     private ArrayList<User> candidates; // те, кто подали заявку
     private User candidate; //тот, кто выполняет
 
@@ -22,12 +19,6 @@ public class Wish implements Iterable{
 
     public int getWishId() {
         return wishId;
-    }
-
-    public Wish(int wishId, String wish, ArrayList<User> candidates) {
-        this.wishId = wishId;
-        this.candidates = candidates;
-        this.wish = wish;
     }
 
     public void setWishId(int wishId) {
@@ -50,12 +41,12 @@ public class Wish implements Iterable{
         this.candidates = candidates;
     }
 
-    public boolean isPerformed() {
-        return isPerformed;
+    public boolean isFulfilled() {
+        return isFulfilled;
     }
 
-    public void setPerformed(boolean isPerformed) {
-        this.isPerformed = isPerformed;
+    public void setFulfilled(boolean isFulfilled) {
+        this.isFulfilled = isFulfilled;
     }
 
     public User getCandidate() {

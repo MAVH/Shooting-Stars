@@ -1,12 +1,5 @@
 @import url("//fonts.googleapis.com/css?family=Ubuntu");
-/*!
- * bootswatch v3.3.2
- * Homepage: http://bootswatch.com
- * Copyright 2012-2015 Thomas Park
- * Licensed under MIT
- * Based on Bootstrap
-*/
-/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+
 html {
     font-family: sans-serif;
     -ms-text-size-adjust: 100%;
@@ -6567,4 +6560,29 @@ button.close {
 .navbar-inverse .badge {
     background-color: #fff;
     color: #772953;
+}
+
+
+/*CUSTOM STYLES*/
+.logo {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+}
+.lang {
+    float: right;
+    text-decoration: none;
+    color: black;
+    margin: 10px;
+}
+.header_name {
+    margin: 10px;
+    font-size: 65px;
+    color: orangered;
+    display: inline-block;
+}
+
+.motto {
+    font-size: 25px;
+    margin: -10px 10px 10px 300px;
 }

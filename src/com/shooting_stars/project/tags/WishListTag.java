@@ -2,7 +2,6 @@ package com.shooting_stars.project.tags;
 
 import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.entity.Wish;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
@@ -14,9 +13,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-/**
- * Created by Пользователь on 16.12.2014.
- */
 @SuppressWarnings("serial")
 public class WishListTag extends TagSupport {
     private static final int MAX_SIZE = 5;
@@ -83,7 +79,7 @@ public class WishListTag extends TagSupport {
                             for (Object user : wish) {
                                 candidatesList += "<a href=userPage?userId=" + ((User) user).getUserId() + ">" + ((User) user).getLogin() + "</a>";
                                 if(isProfilePage) {
-                                    candidatesList += "<form action=takeApplication method=post><input type=hidden name=wishId value=" + wish.getWishId()
+                                    candidatesList += "<form action=acceptApplication method=post><input type=hidden name=wishId value=" + wish.getWishId()
                                             + "><input type=hidden name=userId value=" + ((User) user).getUserId() + "><input type=submit value="
                                             + buttonTake + "></form>";
                                     candidatesList += "<form action=cancelApplication method=post><input type=hidden name=wishId value=" + wish.getWishId()

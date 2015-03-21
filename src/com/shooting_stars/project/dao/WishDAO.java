@@ -3,13 +3,9 @@ package com.shooting_stars.project.dao;
 import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.entity.Wish;
 import com.shooting_stars.project.exception.DAOException;
-
 import java.sql.*;
 import java.util.ArrayList;
 
-/**
- * Created by Пользователь on 14.03.2015.
- */
 public class WishDAO extends AbstractDAO {
     public static final String SQL_INSERT_WISH = "INSERT INTO wish (userId, wish) VALUES (?,?)";
     public static final String SQL_SELECT_WISHES_BY_ID = "SELECT wishId, wish FROM wish WHERE userId = ? AND wishStatusId = 0";
@@ -17,9 +13,9 @@ public class WishDAO extends AbstractDAO {
     public static final String SQL_DELETE_MAKING_USER = "DELETE FROM fulfiled_wish WHERE wishId = ?";
     public static final String SQL_DELETE_ALL_USERS_CONSIDERED = "DELETE from considered_wish WHERE wishId = ?";
     public static final String SQL_DELETE_USER_CONSIDERED = "DELETE from considered_wish WHERE wishId = ? AND userId = ?";
-    public static final String SQL_CHANGE_FULFILED_WISH_STATUS = "UPDATE fulfiled_wish " +
+    public static final String SQL_CHANGE_FULFILLED_WISH_STATUS = "UPDATE fulfiled_wish " +
             "SET fulfiled_wish.wishStatusId = (SELECT wish_status.wishStatusId FROM wish_status WHERE wish_status.wishStatus LIKE ?), date = ? WHERE wishId = ?";
-    public static final String SQL_CHANGE_FULFILED_WISH_STATUS_TABLE_WISH = "UPDATE wish " +
+    public static final String SQL_CHANGE_FULFILLED_WISH_STATUS_TABLE_WISH = "UPDATE wish " +
             "SET wish.wishStatusId = (SELECT wish_status.wishStatusId FROM wish_status WHERE wish_status.wishStatus LIKE ?) WHERE wishId = ?";
     public static final String SQL_INSERT_MAKING_USER = "INSERT INTO fulfiled_wish (wishId,userId) VALUES (?,?)";
     public static final String SQL_INSERT_USER_CONSIDERED = "INSERT INTO considered_wish (wishId,userId) VALUES (?,?)";
@@ -33,6 +29,7 @@ public class WishDAO extends AbstractDAO {
     public WishDAO(Connection connection) {
         super(connection);
     }
+
     public void deleteWish(int wishId) throws DAOException {
         PreparedStatement ps = null;
         try {
@@ -46,6 +43,7 @@ public class WishDAO extends AbstractDAO {
             close(ps);
         }
     }
+
     public void insertWishes(int userId,ArrayList<String> wishes) throws DAOException {
         PreparedStatement ps = null;
         try {
@@ -63,11 +61,12 @@ public class WishDAO extends AbstractDAO {
             close(ps);
         }
     }
+
     public ArrayList<Wish> getWishes(int userId) throws DAOException {
         ArrayList<Wish> wishes = new ArrayList<Wish>(5);
         PreparedStatement ps = null;
-        ResultSet rs = null;
-        Wish wish = null;
+        ResultSet rs;
+        Wish wish;
         try {
             ps = connection.prepareStatement(SQL_SELECT_WISHES_BY_ID);
             ps.setInt(1,userId);
@@ -84,7 +83,8 @@ public class WishDAO extends AbstractDAO {
             close(ps);
         }
     }
-    public void deleteMakingUser(int wishId) throws DAOException {
+
+    public void deleteUserWishMaker(int wishId) throws DAOException {
         PreparedStatement ps = null;
         try {
             ps = connection.prepareStatement(SQL_DELETE_MAKING_USER);
@@ -97,6 +97,7 @@ public class WishDAO extends AbstractDAO {
             close(ps);
         }
     }
+
     public void deleteAllUsersConsidered(int wishId) throws DAOException {
         PreparedStatement ps = null;
         try {
@@ -110,6 +111,7 @@ public class WishDAO extends AbstractDAO {
             close(ps);
         }
     }
+
     public void deleteUserConsidered(int wishId,int userId) throws DAOException {
         PreparedStatement ps = null;
         try {
@@ -124,15 +126,16 @@ public class WishDAO extends AbstractDAO {
             close(ps);
         }
     }
-    public void changeFulfiledWishStatus(int wishId, Date date) throws DAOException {
+
+    public void changeFulfilledWishStatus(int wishId, Date date) throws DAOException {
         PreparedStatement ps = null;
         try {
-            ps = connection.prepareStatement(SQL_CHANGE_FULFILED_WISH_STATUS);
+            ps = connection.prepareStatement(SQL_CHANGE_FULFILLED_WISH_STATUS);
             ps.setString(1,"Выполнено");
             ps.setDate(2,date);
             ps.setInt(3,wishId);
             ps.executeUpdate();
-            ps = connection.prepareStatement(SQL_CHANGE_FULFILED_WISH_STATUS_TABLE_WISH);
+            ps = connection.prepareStatement(SQL_CHANGE_FULFILLED_WISH_STATUS_TABLE_WISH);
             ps.setString(1,"Выполнено");
             ps.setInt(2,wishId);
             ps.executeUpdate();
@@ -143,7 +146,8 @@ public class WishDAO extends AbstractDAO {
             close(ps);
         }
     }
-    public void insertMakingUser(int wishId, int userId) throws DAOException {
+
+    public void insertUserWishMaker(int wishId, int userId) throws DAOException {
         PreparedStatement ps = null;
         try {
             ps = connection.prepareStatement(SQL_INSERT_MAKING_USER);
@@ -157,6 +161,7 @@ public class WishDAO extends AbstractDAO {
             close(ps);
         }
     }
+
     public void insertUserConsidered(int wishId, int userId) throws DAOException {
         PreparedStatement ps = null;
         try {
@@ -171,11 +176,12 @@ public class WishDAO extends AbstractDAO {
             close(ps);
         }
     }
+
     public ArrayList<User> getUsersConsidered(int wishId) throws DAOException {
         ArrayList<User> users = new ArrayList<>();
         PreparedStatement ps = null;
-        ResultSet rs = null;
-        User user = null;
+        ResultSet rs;
+        User user;
         try {
             ps = connection.prepareStatement(SQL_SELECT_USERS_CONSIDERED_BY_WISH_ID);
             ps.setInt(1,wishId);
@@ -192,9 +198,10 @@ public class WishDAO extends AbstractDAO {
             close(ps);
         }
     }
+
     public User getMakingUser(int wishId) throws DAOException {
         PreparedStatement ps = null;
-        ResultSet rs = null;
+        ResultSet rs;
         User user = null;
         try {
             ps = connection.prepareStatement(SQL_SELECT_MAKING_USER_BY_WISH_ID);
@@ -211,9 +218,10 @@ public class WishDAO extends AbstractDAO {
             close(ps);
         }
     }
-    public int getMakingUserIdByWishId(int wishId) throws DAOException {
+
+    public int getWishMakerUserIdByWishId(int wishId) throws DAOException {
         PreparedStatement ps = null;
-        ResultSet rs = null;
+        ResultSet rs;
         int userId = 0;
         try {
             ps = connection.prepareStatement(SQL_SELECT_MAKING_USER_ID_BY_WISH_ID);
@@ -230,9 +238,9 @@ public class WishDAO extends AbstractDAO {
             close(ps);
         }
     }
-    public int getUserIdByWishId(int wishId) throws DAOException {
+    public int getWishOwnerUserIdByWishId(int wishId) throws DAOException {
         PreparedStatement ps = null;
-        ResultSet rs = null;
+        ResultSet rs;
 
         try {
             int userId = 0;

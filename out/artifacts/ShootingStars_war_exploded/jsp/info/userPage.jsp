@@ -19,9 +19,11 @@
 
 Hello
 <%-- если эта страница является страницей текущего пользователя(сравниваем id) or boolean field --%>
-<a href="${pageContext.request.contextPath}/jsp/changingData/changePhoto.jsp">change photo</a>
+
 <c:if test="${not empty photoURL}">
     <img src="${photoURL}" />
 </c:if>
+    <a href="${pageContext.request.contextPath}/jsp/changingData/changePhoto.jsp">change photo</a>
+
 </body>
 </html>

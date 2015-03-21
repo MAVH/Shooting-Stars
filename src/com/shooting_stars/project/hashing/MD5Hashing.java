@@ -1,15 +1,12 @@
 package com.shooting_stars.project.hashing;
 
 import com.shooting_stars.project.exception.HashingException;
-import org.apache.log4j.Logger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class MD5Hashing {
-    static Logger logger =  Logger.getLogger(MD5Hashing.class);
-
     public static String hashingPassword(String password) throws HashingException {
-        StringBuffer hexString = null;
+        StringBuffer hexString;
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(password.getBytes());

@@ -24,6 +24,6 @@
     <orderEntry type="library" name="log4j-1.2.17" level="project" />
     <orderEntry type="library" name="mysql-connector-java-5.1.22-bin" level="project" />
     <orderEntry type="library" name="struts2" level="project" />
+    <orderEntry type="library" name="struts" level="project" />
   </component>
 </module>
-

@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * Created by Пользователь on 19.03.2015.
  */
-public class TakeApplicationCommand extends ActionSupport implements SessionAware {
+public class AcceptApplicationCommand extends ActionSupport implements SessionAware {
     private Exception exception;
     private int wishId;
     private int userId;

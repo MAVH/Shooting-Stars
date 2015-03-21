@@ -1,6 +1,5 @@
 package com.shooting_stars.project.logic;
 
-import com.shooting_stars.project.dao.UserDAO;
 import com.shooting_stars.project.dao.WishDAO;
 import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.entity.Wish;
@@ -89,8 +88,8 @@ public class WishLogic {
         try {
             connection = Pool.getPool().getConnection();
             WishDAO wishDAO = new WishDAO(connection);
-            int userId = wishDAO.getMakingUserIdByWishId(wishId);
-            wishDAO.deleteMakingUser(wishId);
+            int userId = wishDAO.getWishMakerUserIdByWishId(wishId);
+            wishDAO.deleteUserWishMaker(wishId);
             return userId;
         } catch(PoolConnectionException | DAOException e ) {
             throw new LogicException(e.getCause());
@@ -104,7 +103,7 @@ public class WishLogic {
             connection = Pool.getPool().getConnection();
             WishDAO wishDAO = new WishDAO(connection);
             wishDAO.deleteUserConsidered(wishId,userId);
-            return wishDAO.getUserIdByWishId(wishId);
+            return wishDAO.getWishOwnerUserIdByWishId(wishId);
         } catch(PoolConnectionException | DAOException e ) {
             throw new LogicException(e.getCause());
         } finally {
@@ -128,7 +127,7 @@ public class WishLogic {
         try {
             connection = Pool.getPool().getConnection();
             WishDAO wishDAO = new WishDAO(connection);
-            wishDAO.insertMakingUser(wishId,userId);
+            wishDAO.insertUserWishMaker(wishId, userId);
             wishDAO.deleteAllUsersConsidered(wishId);
         } catch(PoolConnectionException | DAOException e ) {
             throw new LogicException(e.getCause());
@@ -142,7 +141,7 @@ public class WishLogic {
             connection = Pool.getPool().getConnection();
             WishDAO wishDAO = new WishDAO(connection);
             wishDAO.insertUserConsidered(wishId,userId);
-            return wishDAO.getUserIdByWishId(wishId);
+            return wishDAO.getWishOwnerUserIdByWishId(wishId);
         } catch(PoolConnectionException | DAOException e ) {
             throw new LogicException(e.getCause());
         } finally {
@@ -154,8 +153,8 @@ public class WishLogic {
         try {
             connection = Pool.getPool().getConnection();
             WishDAO wishDAO = new WishDAO(connection);
-            int userId = wishDAO.getMakingUserIdByWishId(wishId);
-            wishDAO.changeFulfiledWishStatus(wishId, Date.valueOf(LocalDate.now()));
+            int userId = wishDAO.getWishMakerUserIdByWishId(wishId);
+            wishDAO.changeFulfilledWishStatus(wishId, Date.valueOf(LocalDate.now()));
             return userId;
         } catch(PoolConnectionException | DAOException e ) {
             throw new LogicException(e.getCause());

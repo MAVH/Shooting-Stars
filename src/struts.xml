@@ -10,7 +10,7 @@
             <result name="success" type="redirectAction">
                 userPage
             </result>
-            <result name="login">
+            <result name="login_failed">
                 /index.jsp
             </result>
             <result name="input">
@@ -87,7 +87,7 @@
                 /jsp/error/error.jsp
             </result>
         </action>
-        <action name="takeApplication" class="com.shooting_stars.project.command.TakeApplicationCommand">
+        <action name="acceptApplication" class="com.shooting_stars.project.command.AcceptApplicationCommand">
             <result name="success" type="redirectAction">
                 userPage
             </result>

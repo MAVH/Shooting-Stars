@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="struts">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../Server/apache-tomcat-8.0.5/lib/asm.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Server/apache-tomcat-8.0.5/lib/asm-commons.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Server/apache-tomcat-8.0.5/lib/asm-tree.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Server/apache-tomcat-8.0.5/lib/commons-fileupload.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Server/apache-tomcat-8.0.5/lib/commons-io.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Server/apache-tomcat-8.0.5/lib/commons-lang.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Server/apache-tomcat-8.0.5/lib/freemarker.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Server/apache-tomcat-8.0.5/lib/javassist.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Server/apache-tomcat-8.0.5/lib/ognl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Server/apache-tomcat-8.0.5/lib/struts2-core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Server/apache-tomcat-8.0.5/lib/xwork-core.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

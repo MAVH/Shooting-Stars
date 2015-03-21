@@ -18,6 +18,7 @@ public class LoginCommand extends ActionSupport implements SessionAware {
     private String password;
     private String loginOrPasswordErrorMessage;
     private Exception exception;
+    private final static String LOGIN_FAILED = "login_failed";
 
     private Map<String, Object> sessionAttributes = null;
 
@@ -46,7 +47,7 @@ public class LoginCommand extends ActionSupport implements SessionAware {
                     result = SUCCESS;
                 } else {
                     loginOrPasswordErrorMessage = Controller.messageManager.getMessage("message.login.error");
-                    result = LOGIN;
+                    result = LOGIN_FAILED;
                 }
             } catch (LogicException e) {
                 logger.error(e.getMessage(), e.getCause());
