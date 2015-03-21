@@ -14,13 +14,9 @@ import org.apache.struts2.interceptor.SessionAware;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-/**
- * Created by Пользователь on 14.03.2015.
- */
 public class SaveWishesCommand extends ActionSupport implements ServletRequestAware, SessionAware {
     private HttpServletRequest request = null;
     private Map<String, Object> sessionAttributes = null;
-    static Logger logger = Logger.getLogger(SaveWishesCommand.class);
     private static final String PARAM_WISH = "wish";
     private Exception exception;
 
@@ -39,7 +35,7 @@ public class SaveWishesCommand extends ActionSupport implements ServletRequestAw
         try {
             WishLogic.addWishes(userId,wishes);
         } catch (LogicException e) {
-            logger.error(e.getMessage(), e.getCause());
+            LOG.error(e.getMessage(), e.getCause());
             exception =  new CommandException(e.getCause());
             result = ERROR;
         }

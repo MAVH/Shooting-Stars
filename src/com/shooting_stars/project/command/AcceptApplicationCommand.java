@@ -10,9 +10,6 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import java.util.Map;
 
-/**
- * Created by Пользователь on 19.03.2015.
- */
 public class AcceptApplicationCommand extends ActionSupport implements SessionAware {
     private Exception exception;
     private int wishId;
@@ -52,7 +49,7 @@ public class AcceptApplicationCommand extends ActionSupport implements SessionAw
         String result = SUCCESS;
         User currentUser = (User)sessionAttributes.get("user");
         try {
-
+              //TODO change message
             //change message
             MessageLogic.sendMessage(currentUser.getUserId(),userId,"message");
             WishLogic.takeApplication(wishId,userId);

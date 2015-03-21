@@ -189,8 +189,6 @@ public class PreparingRegistrationCommand extends ActionSupport implements Servl
     @Override
     public String execute() throws CommandException {
         UserToBeRegistered user;
-        //int part = Integer.parseInt(partValue);
-        //HttpSession session = request.getSession();
         if(sessionAttributes.get("user_registry") == null) {
             user = new UserToBeRegistered();
             sessionAttributes.put("user_registry", user);
@@ -203,14 +201,11 @@ public class PreparingRegistrationCommand extends ActionSupport implements Servl
                 forward = true;
             }
         }
-        boolean emptyFields = false;
-        String page;
         String result;
         switch (part) {
             case 1:
                 boolean error = false;
                 user.setEmail(email);
-                //TODO: what if the same login as already exists? need to check this
                 try {
                     if(RegistrationLogic.userLoginExists(login)) {
                         user.setLogin("");
@@ -236,13 +231,10 @@ public class PreparingRegistrationCommand extends ActionSupport implements Servl
                     error = true;
                 }
                 if(error) {
-                   // page = REG_PAGE1;
                     result = STEP1;
                 } else {
-                    //page = REG_PAGE2;
                     result = STEP2;
                 }
-               // return page;
                 return result;
             case 2:
                 user.setName(name);
@@ -277,7 +269,6 @@ public class PreparingRegistrationCommand extends ActionSupport implements Servl
                             sessionAttributes.put("user", newUser);
                             sessionAttributes.remove("user_registry");
                             result = SUCCESS;
-                            //page = ConfigManager.getProperty("path.page.main");
                         } else {
                             registrationError = Controller.messageManager.getMessage("message.registration.error");
                             result = STEP3;

@@ -14,15 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
-/**
- * Created by Пользователь on 19.03.2015.
- */
-public class CancelApplicationCommand extends ActionSupport implements SessionAware,ServletResponseAware,ServletRequestAware {
+
+public class CancelApplicationCommand extends ActionSupport implements SessionAware {
     private Exception exception;
     private int wishId;
     private int userId;
-    private static final String USER = "user";
-    private static final String OTHER_USER = "other_user";
+
     public Exception getException() {
         return exception;
     }
@@ -48,8 +45,6 @@ public class CancelApplicationCommand extends ActionSupport implements SessionAw
     }
 
     private Map<String, Object> sessionAttributes = null;
-    private HttpServletResponse response = null;
-    private HttpServletRequest request = null;
     @Override
     public void setSession(Map<String, Object> stringObjectMap) {
         sessionAttributes = stringObjectMap;
@@ -59,31 +54,24 @@ public class CancelApplicationCommand extends ActionSupport implements SessionAw
         String result = SUCCESS;
         User currentUser = (User)sessionAttributes.get("user");
         int currentUserId = currentUser.getUserId();
-
+        int receiverId;
         try {
-            int id = WishLogic.cancelApplication(wishId,userId);
-            if(currentUserId == userId) {
-                userId = id;
-                sessionAttributes.put("userId",id);
-                //request.setAttribute("userId",id);
+            int applicantId = userId;
+            int wishOwnerId = WishLogic.cancelApplication(wishId, applicantId);
+            if(currentUserId == applicantId) {
+                receiverId = wishOwnerId;
+                userId = wishOwnerId;
+            } else {
+                receiverId = applicantId;
+                userId = currentUserId;
             }
             //change message
-            MessageLogic.sendMessage(currentUserId, userId, "message");
+            MessageLogic.sendMessage(currentUserId, receiverId, "message");
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());
             exception = new CommandException(e.getCause());
             result = ERROR;
         }
         return result;
-    }
-
-    @Override
-    public void setServletResponse(HttpServletResponse httpServletResponse) {
-        this.response = httpServletResponse;
-    }
-
-    @Override
-    public void setServletRequest(HttpServletRequest httpServletRequest) {
-        this.request = httpServletRequest;
     }
 }

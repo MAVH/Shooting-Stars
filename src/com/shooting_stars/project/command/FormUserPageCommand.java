@@ -16,9 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Map;
 
-/**
- * Created by Пользователь on 04.03.2015.
- */
 public class FormUserPageCommand extends ActionSupport implements ServletRequestAware,SessionAware {
 
     private HttpServletRequest request = null;
@@ -61,12 +58,7 @@ public class FormUserPageCommand extends ActionSupport implements ServletRequest
             User user = (User)sessionAttributes.get("user");
             int id = user.getUserId();
             if(request.getParameter("userId") == null) {
-                if(sessionAttributes.get("userId") != null) {
-                    userId = (Integer)sessionAttributes.get("userId");
-                    sessionAttributes.remove("userId");
-                } else {
                     userId = id;
-                }
             }
             if (userId == id) {
                 result = USER;

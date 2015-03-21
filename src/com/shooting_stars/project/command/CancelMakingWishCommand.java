@@ -10,9 +10,7 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import java.util.Map;
 
-/**
- * Created by Пользователь on 19.03.2015.
- */
+
 public class CancelMakingWishCommand extends ActionSupport implements SessionAware {
     private Exception exception;
     private int wishId;

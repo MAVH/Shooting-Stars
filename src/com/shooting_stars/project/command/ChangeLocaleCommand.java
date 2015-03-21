@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import java.util.Locale;
 
 public class ChangeLocaleCommand extends ActionSupport {
-    static Logger logger = Logger.getLogger(ChangeLocaleCommand.class);
     private String localeValue;
     @Override
     public String execute() {

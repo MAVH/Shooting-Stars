@@ -105,7 +105,7 @@
         </action>
         <action name="cancelApplication" class="com.shooting_stars.project.command.CancelApplicationCommand">
             <result name="success" type="redirectAction" >
-                userPage
+                userPage?userId=${userId}
             </result>
             <result name="error">
                 /jsp/error/error.jsp
@@ -113,9 +113,8 @@
         </action>
         <action name="makeApplication" class="com.shooting_stars.project.command.MakeApplicationCommand">
             <result name="success" type="redirectAction" >
-                userPage
+                userPage?userId=${userId}
             </result>
-
             <result name="error">
                 /jsp/error/error.jsp
             </result>

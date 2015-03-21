@@ -1,6 +1,7 @@
 package com.shooting_stars.project.command;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
 import com.shooting_stars.project.controller.Controller;
 import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.exception.CommandException;
@@ -13,7 +14,6 @@ import org.apache.struts2.interceptor.SessionAware;
 import java.util.Map;
 
 public class LoginCommand extends ActionSupport implements SessionAware {
-    static Logger logger = Logger.getLogger(LoginCommand.class);
     private String login;
     private String password;
     private String loginOrPasswordErrorMessage;
@@ -34,7 +34,7 @@ public class LoginCommand extends ActionSupport implements SessionAware {
     }
     @Override
     public String execute() {
-        String result = null;
+        String result;
         /*
         if(Validation.isEmpty(login) || Validation.isEmpty(password)) {
             loginOrPasswordErrorMessage = Controller.messageManager.getMessage("message.fields.empty");
@@ -50,7 +50,7 @@ public class LoginCommand extends ActionSupport implements SessionAware {
                     result = LOGIN_FAILED;
                 }
             } catch (LogicException e) {
-                logger.error(e.getMessage(), e.getCause());
+                LOG.error(e.getMessage(), e.getCause());
                 result = ERROR;
                 exception = new CommandException(e.getCause());
             }

@@ -1,7 +1,3 @@
-/**
- * Created by Пользователь on 13.03.2015.
- */
-
 document.addEventListener("DOMContentLoaded", function(event) {
     document.getElementById("button_add_wish").classList.add("btn-default");
     document.getElementById("button_add_wish").onclick = function() {

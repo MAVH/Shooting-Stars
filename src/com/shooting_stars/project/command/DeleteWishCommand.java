@@ -11,9 +11,7 @@ import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * Created by Пользователь on 14.03.2015.
- */
+
 public class DeleteWishCommand extends ActionSupport {
     private Exception exception;
     private int wishId;
@@ -46,7 +44,6 @@ public class DeleteWishCommand extends ActionSupport {
     public String execute() {
         String result = SUCCESS;
         try {
-            // condition of deleting
             if(!WishLogic.deleteWish(wishId)) {
                  messageError = Controller.messageManager.getMessage("message.delete.impossible");
             }

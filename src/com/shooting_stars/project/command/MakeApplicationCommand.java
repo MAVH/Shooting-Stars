@@ -6,19 +6,26 @@ import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.MessageLogic;
 import com.shooting_stars.project.logic.WishLogic;
+import org.apache.struts2.interceptor.RequestAware;
+import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-/**
- * Created by Пользователь on 19.03.2015.
- */
 public class MakeApplicationCommand extends ActionSupport implements SessionAware {
     private Map<String, Object> sessionAttributes = null;
     private Exception exception;
     private int wishId;
+    private int userId;
 
+    public int getUserId() {
+        return userId;
+    }
 
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     @Override
     public void setSession(Map<String, Object> stringObjectMap) {
@@ -46,10 +53,9 @@ public class MakeApplicationCommand extends ActionSupport implements SessionAwar
         User currentUser = (User)sessionAttributes.get("user");
         int currentUserId = currentUser.getUserId();
         try {
-            int userId = WishLogic.makeApplication(wishId, currentUserId);
+            userId = WishLogic.makeApplication(wishId, currentUserId);
             //change message
             MessageLogic.sendMessage(currentUserId, userId, "message");
-            sessionAttributes.put("userId",userId);
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());
             exception = new CommandException(e.getCause());

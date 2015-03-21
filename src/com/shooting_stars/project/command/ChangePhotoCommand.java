@@ -14,11 +14,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-/**
- * Created by Пользователь on 04.03.2015.
- */
 public class ChangePhotoCommand extends ActionSupport {
-    static Logger logger = Logger.getLogger(ChangePhotoCommand.class);
     private Exception exception;
 
     public Exception getException() {
@@ -31,12 +27,12 @@ public class ChangePhotoCommand extends ActionSupport {
 
     @Override
     public String execute() {
-        String saveFile="";
+        String saveFile = "";
         HttpServletRequest request = ServletActionContext.getRequest();
         String contentType = request.getContentType();
         String result = SUCCESS;
         try {
-            if((contentType != null)&& (contentType.indexOf("multipart/form-data") >= 0)) {
+            if ((contentType != null) && (contentType.indexOf("multipart/form-data") >= 0)) {
                 DataInputStream in = new DataInputStream(request.getInputStream());
                 int formDataLength = request.getContentLength();
                 byte dataBytes[] = new byte[formDataLength];
@@ -68,7 +64,7 @@ public class ChangePhotoCommand extends ActionSupport {
                  */
 
                 //adding url to database
-                User user = (User)request.getSession().getAttribute("user");
+                User user = (User) request.getSession().getAttribute("user");
                 saveFile = user.getUserId() + ".jpg";
                 File ff = new File(ServletActionContext.getServletContext().getContextPath() + "/img/userPhoto/", saveFile);
                 FileOutputStream fileOut = new FileOutputStream(ff);
@@ -76,11 +72,12 @@ public class ChangePhotoCommand extends ActionSupport {
                 fileOut.flush();
                 fileOut.close();
                 HttpSession session = request.getSession();
-                session.setAttribute("photoURL","/img/userPhoto"+ saveFile);
-            } } catch(IOException e) {
-                exception =  new CommandException("Problem with stream", e);
-                logger.error(exception.getMessage(), exception.getCause());
-                result = ERROR;
+                session.setAttribute("photoURL", "/img/userPhoto" + saveFile);
+            }
+        } catch (IOException e) {
+            exception = new CommandException("Problem with stream", e);
+            LOG.error(exception.getMessage(), exception.getCause());
+            result = ERROR;
         }
         return result;
     }
