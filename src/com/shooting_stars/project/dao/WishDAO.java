@@ -10,20 +10,20 @@ public class WishDAO extends AbstractDAO {
     public static final String SQL_INSERT_WISH = "INSERT INTO wish (userId, wish) VALUES (?,?)";
     public static final String SQL_SELECT_WISHES_BY_ID = "SELECT wishId, wish FROM wish WHERE userId = ? AND wishStatusId = 0";
     public static final String SQL_DELETE_WISH = "DELETE FROM wish WHERE wishId = ?";
-    public static final String SQL_DELETE_MAKING_USER = "DELETE FROM fulfiled_wish WHERE wishId = ?";
+    public static final String SQL_DELETE_MAKING_USER = "DELETE FROM fulfilled_wish WHERE wishId = ?";
     public static final String SQL_DELETE_ALL_USERS_CONSIDERED = "DELETE from considered_wish WHERE wishId = ?";
     public static final String SQL_DELETE_USER_CONSIDERED = "DELETE from considered_wish WHERE wishId = ? AND userId = ?";
-    public static final String SQL_CHANGE_FULFILLED_WISH_STATUS = "UPDATE fulfiled_wish " +
-            "SET fulfiled_wish.wishStatusId = (SELECT wish_status.wishStatusId FROM wish_status WHERE wish_status.wishStatus LIKE ?), date = ? WHERE wishId = ?";
+    public static final String SQL_CHANGE_FULFILLED_WISH_STATUS = "UPDATE fulfilled_wish " +
+            "SET fulfilled_wish.wishStatusId = (SELECT wish_status.wishStatusId FROM wish_status WHERE wish_status.wishStatus LIKE ?), date = ? WHERE wishId = ?";
     public static final String SQL_CHANGE_FULFILLED_WISH_STATUS_TABLE_WISH = "UPDATE wish " +
             "SET wish.wishStatusId = (SELECT wish_status.wishStatusId FROM wish_status WHERE wish_status.wishStatus LIKE ?) WHERE wishId = ?";
-    public static final String SQL_INSERT_MAKING_USER = "INSERT INTO fulfiled_wish (wishId,userId) VALUES (?,?)";
+    public static final String SQL_INSERT_MAKING_USER = "INSERT INTO fulfilled_wish (wishId,userId) VALUES (?,?)";
     public static final String SQL_INSERT_USER_CONSIDERED = "INSERT INTO considered_wish (wishId,userId) VALUES (?,?)";
-    public static final String SQL_SELECT_MAKING_USER_BY_WISH_ID = "SELECT fulfiled_wish.userId, login " +
-            "            FROM user  JOIN fulfiled_wish ON fulfiled_wish.userId = user.userId WHERE wishId = ?";
+    public static final String SQL_SELECT_MAKING_USER_BY_WISH_ID = "SELECT fulfilled_wish.userId, login " +
+            "            FROM user  JOIN fulfilled_wish ON fulfilled_wish.userId = user.userId WHERE wishId = ?";
     public static final String SQL_SELECT_USERS_CONSIDERED_BY_WISH_ID = "SELECT considered_wish.userId, login " +
             "FROM user  JOIN considered_wish ON considered_wish.userId = user.userId WHERE wishId = ?";
-    public static final String SQL_SELECT_MAKING_USER_ID_BY_WISH_ID = "SELECT userId FROM fulfiled_wish WHERE wishId = ?";
+    public static final String SQL_SELECT_MAKING_USER_ID_BY_WISH_ID = "SELECT userId FROM fulfilled_wish WHERE wishId = ?";
     public static final String SQL_SELECT_USER_ID_BY_WISH_ID = "SELECT userId FROM wish WHERE wishId = ?";
 
     public WishDAO(Connection connection) {
