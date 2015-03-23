@@ -11,13 +11,13 @@
     <script type="text/javascript" src="js/script.js"></script>
 </head>
 <body>
-<c:import url="header.jsp"/>
-Hello
-${user.login}
-<a href="${pageContext.request.contextPath}/jsp/changingData/changePhoto.jsp">change photo</a>
-<c:if test="${not empty photoURL}">
-    <img src="${photoURL}" />
-</c:if>
-        <ctg:wishList list="${wishes}" isProfilePage="${true}"/>
+    <c:import url="header.jsp"/>
+    Hello
+    ${user.login}
+    <a href="${pageContext.request.contextPath}/jsp/changingData/changePhoto.jsp">change photo</a>
+    <c:if test="${not empty photoURL}">
+        <img src="${photoURL}" />
+    </c:if>
+    <ctg:wishList list="${wishes}" isProfilePage="${true}"/>
 </body>
 </html>
