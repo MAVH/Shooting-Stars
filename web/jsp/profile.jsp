@@ -18,6 +18,14 @@
     <c:if test="${not empty photoURL}">
         <img src="${photoURL}" />
     </c:if>
+    <form action="fulfilledWishes"  method="get">
+        <input type="hidden" name="userId" value="${user.userId}">
+        <input type="submit" value="The wishes I've fulfilled"/>
+    </form>
+    <form action="myFulfilledWishes" method="get">
+        <input type="hidden" name="userId" value="${user.userId}">
+        <input type="submit" value="My fulfilled wishes"/>
+    </form>
     <ctg:wishList list="${wishes}" isProfilePage="${true}"/>
 </body>
 </html>

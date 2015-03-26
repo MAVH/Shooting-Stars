@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Пользователь
-  Date: 04.03.2015
-  Time: 9:06
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -17,6 +10,14 @@
 </head>
 <body>
 <c:import url="header.jsp"/>
+<form action="fulfilledWishes"  method="get">
+    <input type="hidden" name="userId" value="${userId}">
+    <input type="submit" value="The wishes this user has fulfilled"/>
+</form>
+<form action="myFulfilledWishes"  method="get">
+    <input type="hidden" name="userId" value="${userId}">
+    <input type="submit" value="His fulfilled wishes"/>
+</form>
 <ctg:wishList list="${wishes}" isProfilePage="${false}"/>
 
 </body>

@@ -127,5 +127,21 @@
                 /jsp/error/error.jsp
             </result>
         </action>
+        <action name="myFulfilledWishes" class="com.shooting_stars.project.command.GetOwnerFulfilledWishesCommand">
+            <result name="success">
+                /jsp/myFulfilledWishes.jsp
+            </result>
+            <result name="error">
+                /jsp/error/error.jsp
+            </result>
+        </action>
+        <action name="fulfilledWishes" class="com.shooting_stars.project.command.GetMakerWishesCommand">
+            <result name="success">
+                /jsp/myWishes.jsp
+            </result>
+            <result name="error">
+                /jsp/error/error.jsp
+            </result>
+        </action>
     </package>
 </struts>

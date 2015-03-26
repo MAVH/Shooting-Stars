@@ -10,6 +10,14 @@
 </head>
 <body>
 <c:import url="header.jsp"/>
+<form action="fulfilledWishes"  method="get">
+    <input type="hidden" name="userId" value="${userId}">
+    <input type="submit" value="The wishes this user has fulfilled"/>
+</form>
+<form action="myFulfilledWishes"  method="get">
+    <input type="hidden" name="userId" value="${userId}">
+    <input type="submit" value="His fulfilled wishes"/>
+</form>
 <ctg:wishList list="${wishes}" isProfilePage="${false}"/>
 
 </body>

@@ -162,4 +162,30 @@ public class WishLogic {
             Pool.getPool().returnConnection(connection);
         }
     }
+    public static ArrayList<Wish> getFulfilledWishesByOwnerId(int userId) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            WishDAO wishDAO = new WishDAO(connection);
+            ArrayList<Wish> wishes = wishDAO.getFulfilledWishesByOwnerUserId(userId);
+            return wishes;
+        } catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        } finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
+    public static ArrayList<Wish> getWishesByMakerId(int userId) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            WishDAO wishDAO = new WishDAO(connection);
+            ArrayList<Wish> wishes = wishDAO.getWishesByMakerUserId(userId);
+            return wishes;
+        } catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        } finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
 }

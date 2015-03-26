@@ -25,6 +25,19 @@ public class WishDAO extends AbstractDAO {
             "FROM user  JOIN considered_wish ON considered_wish.userId = user.userId WHERE wishId = ?";
     public static final String SQL_SELECT_MAKING_USER_ID_BY_WISH_ID = "SELECT userId FROM fulfilled_wish WHERE wishId = ?";
     public static final String SQL_SELECT_USER_ID_BY_WISH_ID = "SELECT userId FROM wish WHERE wishId = ?";
+    public static final String SQL_SELECT_FULFILLED_WISH_BY_OWNER_ID = "SELECT wish.wishId, wish, fulfilled_wish.userId, login, fulfilled_wish.date FROM wish JOIN fulfilled_wish" +
+            " ON fulfilled_wish.wishId = wish.wishId JOIN user ON fulfilled_wish.userId = user.userId " +
+            "JOIN wish_status ON wish.wishStatusId = wish_status.wishStatusId WHERE wish.userId = ? AND wishStatus LIKE ?" +
+            " ORDER BY fulfilled_wish.date";
+    public static final String SQL_SELECT_FULFILLED_WISH_BY_MAKING_USER_ID = "SELECT wish.wishId, wish, wish.userId, login, fulfilled_wish.date, wishStatus " +
+            "FROM user JOIN wish ON user.userId = wish.userId " +
+            "JOIN fulfilled_wish ON fulfilled_wish.wishId = wish.wishId " +
+            "JOIN wish_status ON wish.wishStatusId = wish_status.wishStatusId " +
+            "WHERE fulfilled_wish.userId = ? ";
+    public static final String SQL_SELECT_WISH_CONSIDERED_BY_MAKING_USER_ID = "SELECT wish.wishId, wish, wish.userId, login " +
+            "FROM user JOIN wish ON user.userId = wish.userId " +
+            "JOIN considered_wish ON considered_wish.wishId = wish.wishId " +
+            "WHERE considered_wish.userId = ? ";
 
     public WishDAO(Connection connection) {
         super(connection);
@@ -251,6 +264,64 @@ public class WishDAO extends AbstractDAO {
                 userId = rs.getInt(1);
             }
             return userId;
+        }
+        catch (SQLException e) {
+            throw new DAOException("Problem with connection or statement", e);
+        } finally {
+            close(ps);
+        }
+    }
+
+    public ArrayList<Wish> getFulfilledWishesByOwnerUserId(int userId) throws DAOException {
+        ArrayList<Wish> wishes = new ArrayList<Wish>();
+        PreparedStatement ps = null;
+        ResultSet rs;
+        Wish wish;
+        try {
+            ps = connection.prepareStatement(SQL_SELECT_FULFILLED_WISH_BY_OWNER_ID);
+            ps.setInt(1,userId);
+            ps.setString(2,"Выполнено");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                wish = new Wish(rs.getInt(1),rs.getString(2));
+                wish.setCandidate(new User(rs.getInt(3), rs.getString(4)));
+                wish.setDate(rs.getDate(5));
+                wishes.add(wish);
+            }
+            return wishes;
+        }
+        catch (SQLException e) {
+            throw new DAOException("Problem with connection or statement", e);
+        } finally {
+            close(ps);
+        }
+    }
+    public ArrayList<Wish> getWishesByMakerUserId(int userId) throws DAOException {
+        ArrayList<Wish> wishes = new ArrayList<Wish>();
+        PreparedStatement ps = null;
+        ResultSet rs;
+        Wish wish;
+        try {
+            ps = connection.prepareStatement(SQL_SELECT_FULFILLED_WISH_BY_MAKING_USER_ID);
+            ps.setInt(1,userId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                wish = new Wish(rs.getInt(1),rs.getString(2));
+                wish.setOwner(new User(rs.getInt(3),rs.getString(4)));
+                wish.setDate(rs.getDate(5));
+                wish.setFulfilled(true);
+                wishes.add(wish);
+            }
+            ps = connection.prepareStatement(SQL_SELECT_WISH_CONSIDERED_BY_MAKING_USER_ID);
+            ps.setInt(1,userId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                wish = new Wish(rs.getInt(1),rs.getString(2));
+                wish.setOwner(new User(rs.getInt(3),rs.getString(4)));
+                wish.setFulfilled(false);
+                wishes.add(wish);
+            }
+            return wishes;
         }
         catch (SQLException e) {
             throw new DAOException("Problem with connection or statement", e);
