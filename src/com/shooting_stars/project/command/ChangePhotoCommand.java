@@ -4,6 +4,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.manager.ConfigManager;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
@@ -15,7 +16,52 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ChangePhotoCommand extends ActionSupport {
+    private File photo;
+    private String photoContentType;
+    private String photoFileName;
+    private String destPath;
     private Exception exception;
+    private String photoURL;
+
+    public String getPhotoURL() {
+        return photoURL;
+    }
+
+    public void setPhotoURL(String photoURL) {
+        this.photoURL = photoURL;
+    }
+
+    public File getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(File photo) {
+        this.photo = photo;
+    }
+
+    public String getDestPath() {
+        return destPath;
+    }
+
+    public void setDestPath(String destPath) {
+        this.destPath = destPath;
+    }
+
+    public String getPhotoContentType() {
+        return photoContentType;
+    }
+
+    public void setPhotoContentType(String photoContentType) {
+        this.photoContentType = photoContentType;
+    }
+
+    public String getPhotoFileName() {
+        return photoFileName;
+    }
+
+    public void setPhotoFileName(String photoFileName) {
+        this.photoFileName = photoFileName;
+    }
 
     public Exception getException() {
         return exception;
@@ -27,53 +73,19 @@ public class ChangePhotoCommand extends ActionSupport {
 
     @Override
     public String execute() {
-        String saveFile = "";
-        HttpServletRequest request = ServletActionContext.getRequest();
-        String contentType = request.getContentType();
         String result = SUCCESS;
-        try {
-            if ((contentType != null) && (contentType.indexOf("multipart/form-data") >= 0)) {
-                DataInputStream in = new DataInputStream(request.getInputStream());
-                int formDataLength = request.getContentLength();
-                byte dataBytes[] = new byte[formDataLength];
-                int byteRead = 0;
-                int totalBytesRead = 0;
-                while (totalBytesRead < formDataLength) {
-                    byteRead = in.read(dataBytes, totalBytesRead, formDataLength);
-                    totalBytesRead += byteRead;
-                }
-                String file = new String(dataBytes);
-                saveFile = file.substring(file.indexOf("filename=\"") + 10);
-                saveFile = saveFile.substring(0, saveFile.indexOf("\n"));
-                saveFile = saveFile.substring(saveFile.lastIndexOf("\\") + 1, saveFile.indexOf("\""));
-                int lastIndex = contentType.lastIndexOf("=");
-                String boundary = contentType.substring(lastIndex + 1, contentType.length());
-                int pos;
-                pos = file.indexOf("filename=\"");
-                pos = file.indexOf("\n", pos) + 1;
-                pos = file.indexOf("\n", pos) + 1;
-                pos = file.indexOf("\n", pos) + 1;
-                int boundaryLocation = file.indexOf(boundary, pos) - 4;
-                int startPos = ((file.substring(0, pos)).getBytes()).length;
-                int endPos = ((file.substring(0, boundaryLocation)).getBytes()).length;
-                System.out.println(saveFile);
-                /*
-                User user = (User)request.getSession().getAttribute("user");
-                //different formats
-                saveFile = user.getUserId() + "jpg";
-                 */
+        //TODO change path
+        destPath = "E:/CourseProject/Shooting-Stars/web/img/userPhoto";
+        try{
+            System.out.println("Src File name: " + photo);
+            System.out.println("Dst File name: " + photoFileName);
 
-                //adding url to database
-                User user = (User) request.getSession().getAttribute("user");
-                saveFile = user.getUserId() + ".jpg";
-                File ff = new File(ServletActionContext.getServletContext().getContextPath() + "/img/userPhoto/", saveFile);
-                FileOutputStream fileOut = new FileOutputStream(ff);
-                fileOut.write(dataBytes, startPos, (endPos - startPos));
-                fileOut.flush();
-                fileOut.close();
-                HttpSession session = request.getSession();
-                session.setAttribute("photoURL", "/img/userPhoto" + saveFile);
-            }
+            File destFile  = new File(destPath, photoFileName);
+            FileUtils.copyFile(photo, destFile);
+            photoURL = "img/userPhoto/" + photoFileName;
+            //TODO insert into db
+            System.out.println(photoURL);
+
         } catch (IOException e) {
             exception = new CommandException("Problem with stream", e);
             LOG.error(exception.getMessage(), exception.getCause());

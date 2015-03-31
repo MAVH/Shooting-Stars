@@ -14,6 +14,8 @@ public class UserDAO extends AbstractDAO {
     public static final String SQL_INSERT_USER_INFO =
             "INSERT INTO user_info (userId, email, user_name, surname, country, city, dateOfBirth, abilities) VALUES (?,?,?,?,?,?,?,?)";
     public static final String SQL_CHECK_LOGIN_EXISTENCE = "SELECT COUNT(login) FROM user WHERE login = ?";
+    public static final  String SQL_UPDATE_PHOTO_URL = "UPDATE user_info SET photoURL = ? WHERE userId = ?";
+
 
     public UserDAO(Connection connection) {
         super(connection);
@@ -101,4 +103,19 @@ public class UserDAO extends AbstractDAO {
         }
         return exist;
     }
+    public void updatePhotoURL(int userId, String photoURL) throws DAOException {
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement(SQL_UPDATE_PHOTO_URL);
+            ps.setString(1, photoURL);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+    }
 }
+
