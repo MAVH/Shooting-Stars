@@ -7,28 +7,38 @@ import com.shooting_stars.project.manager.ConfigManager;
 import com.shooting_stars.project.manager.LocaleManager;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.SessionAware;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Locale;
+import java.util.Map;
 
-public class ChangeLocaleCommand extends ActionSupport {
+public class ChangeLocaleCommand extends ActionSupport implements SessionAware {
     private String localeValue;
+    private Map<String, Object> sessionAttributes = null;
+    @Override
+    public void setSession(Map<String, Object> stringObjectMap) {
+        sessionAttributes = stringObjectMap;
+    }
     @Override
     public String execute() {
-        HttpServletRequest request = ServletActionContext.getRequest();
-        HttpSession session = request.getSession();
+       // HttpServletRequest request = ServletActionContext.getRequest();
+        //HttpSession session = request.getSession();
         String newLocale = localeValue;
         Locale locale = LocaleManager.valueOf(newLocale).getLocale();
         Controller.messageManager.changeLocale(locale);
-        session.setAttribute("currentLocale", locale);
+        sessionAttributes.put("currentLocale", locale);
         Controller.messageManager.getMessage("message.login.error");
         //TODO: return current page
-        if(session.getAttribute("user") != null) {
+        /*
+        if(sessionAttributes.get("user") != null) {
             return "user";
         } else {
             return "guest";
-        }
+        }  */
+        return SUCCESS;
+
     }
 
     public String getLocaleValue() {

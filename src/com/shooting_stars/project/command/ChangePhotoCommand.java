@@ -3,25 +3,29 @@ package com.shooting_stars.project.command;
 import com.opensymphony.xwork2.ActionSupport;
 import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.exception.CommandException;
-import com.shooting_stars.project.manager.ConfigManager;
-import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
-
+import com.shooting_stars.project.exception.LogicException;
+import com.shooting_stars.project.logic.UserLogic;
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.SessionAware;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.Map;
 
-public class ChangePhotoCommand extends ActionSupport {
+public class ChangePhotoCommand extends ActionSupport implements SessionAware, ServletRequestAware {
     private File photo;
     private String photoContentType;
     private String photoFileName;
     private String destPath;
     private Exception exception;
     private String photoURL;
+
+    private Map<String, Object> sessionAttributes = null;
+    private HttpServletRequest request = null;
+
+    @Override
+    public void setSession(Map<String, Object> stringObjectMap) {
+        sessionAttributes = stringObjectMap;
+    }
 
     public String getPhotoURL() {
         return photoURL;
@@ -75,22 +79,21 @@ public class ChangePhotoCommand extends ActionSupport {
     public String execute() {
         String result = SUCCESS;
         //TODO change path
-        destPath = "E:/CourseProject/Shooting-Stars/web/img/userPhoto";
+
         try{
-            System.out.println("Src File name: " + photo);
-            System.out.println("Dst File name: " + photoFileName);
-
-            File destFile  = new File(destPath, photoFileName);
-            FileUtils.copyFile(photo, destFile);
-            photoURL = "img/userPhoto/" + photoFileName;
-            //TODO insert into db
-            System.out.println(photoURL);
-
-        } catch (IOException e) {
-            exception = new CommandException("Problem with stream", e);
+            User currentUser = (User)sessionAttributes.get("user");
+            String path = request.getServletContext().getRealPath("/img/userPhoto");
+            photoURL = UserLogic.changePhotoURL(currentUser.getUserId(),path,photoFileName,photo);
+        } catch (LogicException e) {
+            exception = new CommandException(e.getCause());
             LOG.error(exception.getMessage(), exception.getCause());
             result = ERROR;
         }
         return result;
+    }
+
+    @Override
+    public void setServletRequest(HttpServletRequest httpServletRequest) {
+        this.request = httpServletRequest;
     }
 }

@@ -15,9 +15,18 @@
     Hello
     ${user.login}
     <a href="${pageContext.request.contextPath}/jsp/changingData/changePhoto.jsp">change photo</a>
-    <c:if test="${not empty photoURL}">
-        <img src="${photoURL}" />
-    </c:if>
+    <div>
+    <%--следующая строчка временная, удалить когда будет информация о пользователе --%>
+    <img src="../img/userPhoto/${user.userId}.jpg" class="userPhoto"/>
+        <c:choose>
+            <c:when test="${not empty photoURL}">
+                <img src="../img/userPhoto/${photoURL}" class="userPhoto"/>
+            </c:when>
+            <c:otherwise>
+                <img src="../img/userPhoto/default.png" class="userPhoto"/>
+            </c:otherwise>
+        </c:choose>
+    </div>
     <form action="fulfilledWishes"  method="get">
         <input type="hidden" name="userId" value="${user.userId}">
         <input type="submit" value="The wishes I've fulfilled"/>

@@ -6586,3 +6586,9 @@ button.close {
     font-size: 25px;
     margin: -10px 10px 10px 300px;
 }
+.userPhoto {
+    display: inline-block;
+    float: left;
+    width: 200px;
+    height: 200px;
+}

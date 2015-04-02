@@ -26,11 +26,8 @@
             </result>
         </action>
         <action name="changeLocale" class="com.shooting_stars.project.command.ChangeLocaleCommand">
-            <result name="user" type="redirectAction">
-                userPage
-            </result>
-            <result name="guest">
-                /jsp/login.jsp
+            <result name="success">
+                /index.jsp
             </result>
         </action>
         <action name="userPage" class="com.shooting_stars.project.command.FormUserPageCommand">
@@ -63,14 +60,15 @@
             </result>
         </action>
         <action name="changePhoto" class="com.shooting_stars.project.command.ChangePhotoCommand">
-            <!--
+
              <result name="success" type="redirectAction">
                  userPage
-             </result> -->
+             </result>
+            <!--
             <result name="success">
                 /jsp/test.jsp
             </result>
-
+            -->
             <result name="error">
                 /jsp/error/error.jsp
             </result>
