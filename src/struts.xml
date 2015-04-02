@@ -140,5 +140,13 @@
                 /jsp/error/error.jsp
             </result>
         </action>
+        <action name="searchByLogin" class="com.shooting_stars.project.command.SearchByLoginCommand">
+            <result name="success">
+                /jsp/search.jsp
+            </result>
+            <result name="error">
+                /jsp/error/error.jsp
+            </result>
+        </action>
     </package>
 </struts>

@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class UserDAO extends AbstractDAO {
     public static final String SQL_FIND_USER = "SELECT userId FROM user WHERE login = ? and password = ?";
@@ -15,6 +16,7 @@ public class UserDAO extends AbstractDAO {
             "INSERT INTO user_info (userId, email, user_name, surname, country, city, dateOfBirth, abilities) VALUES (?,?,?,?,?,?,?,?)";
     public static final String SQL_CHECK_LOGIN_EXISTENCE = "SELECT COUNT(login) FROM user WHERE login = ?";
     public static final  String SQL_UPDATE_PHOTO_URL = "UPDATE user_info SET photoURL = ? WHERE userId = ?";
+    public static final String SQL_FIND_USER_BY_LOGIN = "SELECT userId, login FROM user WHERE login LIKE ?";
 
 
     public UserDAO(Connection connection) {
@@ -117,6 +119,55 @@ public class UserDAO extends AbstractDAO {
         finally {
             close(ps);
         }
+    }
+
+    //Полное совпадение Логина
+    public User findUserByLogin(String login) throws DAOException {
+        User user = null;
+        PreparedStatement ps = null;
+        ResultSet rs;
+        try {
+            ps = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN);
+            ps.setString(1, "%"+login+"%");
+            rs = ps.executeQuery();
+            int userId;
+            if(rs.next()) {
+                userId = rs.getInt(1);
+                user = new User(userId, login);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+        return user;
+    }
+
+    //Находит пользователей с логином, часть которого - введенный
+    public ArrayList<User> findUsersByLogin(String login) throws DAOException {
+        User user = null;
+        PreparedStatement ps = null;
+        ResultSet rs;
+        ArrayList<User> users = new ArrayList<User>();
+        try {
+            ps = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN);
+            ps.setString(1, "%"+login+"%");
+            rs = ps.executeQuery();
+            int userId;
+            while (rs.next()) {
+                userId = rs.getInt(1);
+                login = rs.getString(2);
+                user = new User(userId, login);
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+        return users;
     }
 }
 
