@@ -103,6 +103,7 @@ public class UserDAO extends AbstractDAO {
         }
         return exist;
     }
+
     public void updatePhotoURL(int userId, String photoURL) throws DAOException {
         PreparedStatement ps = null;
         try {

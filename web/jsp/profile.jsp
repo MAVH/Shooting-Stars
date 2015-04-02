@@ -14,8 +14,7 @@
     <c:import url="header.jsp"/>
     Hello
     ${user.login}
-    <a href="${pageContext.request.contextPath}/jsp/changingData/changePhoto.jsp">change photo</a>
-    <div>
+    <div id="userPhoto">
     <%--следующая строчка временная, удалить когда будет информация о пользователе --%>
     <img src="../img/userPhoto/${user.userId}.jpg" class="userPhoto"/>
         <c:choose>
@@ -26,15 +25,20 @@
                 <img src="../img/userPhoto/default.png" class="userPhoto"/>
             </c:otherwise>
         </c:choose>
+        <button class="hidden">
+            <a href="${pageContext.request.contextPath}/jsp/changingData/changePhoto.jsp">change photo</a>
+        </button>
     </div>
-    <form action="fulfilledWishes"  method="get">
-        <input type="hidden" name="userId" value="${user.userId}">
-        <input type="submit" value="The wishes I've fulfilled"/>
-    </form>
-    <form action="myFulfilledWishes" method="get">
-        <input type="hidden" name="userId" value="${user.userId}">
-        <input type="submit" value="My fulfilled wishes"/>
-    </form>
+    <div>
+        <form class="formWishes" action="fulfilledWishes"  method="get">
+            <input type="hidden" name="userId" value="${user.userId}">
+            <input type="submit" value="The wishes I've fulfilled"/>
+        </form>
+        <form class="formWishes" action="myFulfilledWishes" method="get">
+            <input type="hidden" name="userId" value="${user.userId}">
+            <input type="submit" value="My fulfilled wishes"/>
+        </form>
+    </div>
     <ctg:wishList list="${wishes}" isProfilePage="${true}"/>
 </body>
 </html>

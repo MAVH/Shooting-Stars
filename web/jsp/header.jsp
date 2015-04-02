@@ -9,24 +9,13 @@
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css" media="screen"/>
 </head>
 <body>
-<%--
-<c:choose>
-
-    <c:when test="${not empty user}">
-        <a href="${pageContext.request.contextPath}/userPage?userId=${user.userId}"><img src="${pageContext.request.contextPath}/img/logo.png"></a>
-    </c:when>
-    <c:otherwise>
-        <a href="${pageContext.request.contextPath}/index.jsp"><img src="${pageContext.request.contextPath}/img/logo.png"></a>
-    </c:otherwise>
-</c:choose>  --%>
-
     <a class="lang" href="${pageContext.request.contextPath}/changeLocale?localeValue=EN">EN</a>
     <a class="lang" href="${pageContext.request.contextPath}/changeLocale?localeValue=RU">РУС</a>
+    <c:if test="${not empty user}">
+        <a href="${pageContext.request.contextPath}/logout" class="logout"><fmt:message key="logout"/></a>
+    </c:if>
     <a href="${pageContext.request.contextPath}/index.jsp"><img class="logo" src="${pageContext.request.contextPath}/img/logo.png"></a>
     <h2 class="header_name">Shooting Stars</h2>
     <h5 class="motto"><fmt:message key="motto"/></h5>
-    <c:if test="${not empty user}">
-        <a href="${pageContext.request.contextPath}/logout"><fmt:message key="logout"/></a>
-    </c:if>
 </body>
 </html>

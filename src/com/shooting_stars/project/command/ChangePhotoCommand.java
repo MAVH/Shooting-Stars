@@ -17,7 +17,6 @@ public class ChangePhotoCommand extends ActionSupport implements SessionAware, S
     private String photoFileName;
     private String destPath;
     private Exception exception;
-    private String photoURL;
 
     private Map<String, Object> sessionAttributes = null;
     private HttpServletRequest request = null;
@@ -25,14 +24,6 @@ public class ChangePhotoCommand extends ActionSupport implements SessionAware, S
     @Override
     public void setSession(Map<String, Object> stringObjectMap) {
         sessionAttributes = stringObjectMap;
-    }
-
-    public String getPhotoURL() {
-        return photoURL;
-    }
-
-    public void setPhotoURL(String photoURL) {
-        this.photoURL = photoURL;
     }
 
     public File getPhoto() {
@@ -83,7 +74,7 @@ public class ChangePhotoCommand extends ActionSupport implements SessionAware, S
         try{
             User currentUser = (User)sessionAttributes.get("user");
             String path = request.getServletContext().getRealPath("/img/userPhoto");
-            photoURL = UserLogic.changePhotoURL(currentUser.getUserId(),path,photoFileName,photo);
+            UserLogic.changePhotoURL(currentUser.getUserId(),path,photoFileName,photo);
         } catch (LogicException e) {
             exception = new CommandException(e.getCause());
             LOG.error(exception.getMessage(), exception.getCause());

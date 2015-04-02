@@ -6592,3 +6592,19 @@ button.close {
     width: 200px;
     height: 200px;
 }
+#userPhoto {
+    display: block;
+    height: 250px;
+    width: 100%;
+}
+#userPhoto:hover button {
+     display: block;
+}
+.formWishes {
+    display: inline-block;
+}
+.logout {
+    margin-top: 20px;
+    margin-right: 10px;
+    float: right;
+}
