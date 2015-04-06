@@ -2,7 +2,7 @@ package com.shooting_stars.project.entity;
 
 import java.sql.Date;
 
-public class OtherUser {
+public class UserInfo {
     private String login;
     private String email;
     private String name;
@@ -11,8 +11,7 @@ public class OtherUser {
     private String city;
     private Date dateOfBirth;
     private String abilities;
-    protected String[] wishes;
-    public final int MAX_AMOUNT_OF_WISHES = 5;
+    private String photoName;
 
     public String getLogin() {
         return login;
@@ -44,10 +43,6 @@ public class OtherUser {
 
     public String getAbilities() {
         return abilities;
-    }
-
-    public String[] getWishes() {
-        return wishes;
     }
 
     public void setLogin(String login) {
@@ -82,7 +77,11 @@ public class OtherUser {
         this.abilities = abilities;
     }
 
-    public void setWishes(String[]  wishes) {
-        this.wishes = wishes;
+    public String getPhotoName() {
+        return photoName;
+    }
+
+    public void setPhotoName(String photoName) {
+        this.photoName = photoName;
     }
 }

@@ -10,7 +10,23 @@
 </head>
 <body>
 <c:import url="header.jsp"/>
-<img src="../img/userPhoto/${userId}.jpg" class="userPhoto"/>
+<h4>${userInfo.name}</h4>
+<h4>${userInfo.surname}</h4>
+<h5>${userInfo.country}</h5>
+<h5>${userInfo.city}</h5>
+<h5>${userInfo.dateOfBirth}</h5>
+<h5>${userInfo.abilities}</h5>
+<h3>${status}</h3>
+<div id="userPhoto">
+    <c:choose>
+        <c:when test="${not empty userInfo.photoName}">
+            <img src="../img/userPhoto/${userInfo.photoName}" class="userPhoto"/>
+        </c:when>
+        <c:otherwise>
+            <img src="../img/userPhoto/default.png" class="userPhoto"/>
+        </c:otherwise>
+    </c:choose>
+</div>
 <div>
     <form action="fulfilledWishes"  method="get">
         <input type="hidden" name="userId" value="${userId}">

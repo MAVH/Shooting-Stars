@@ -45,7 +45,7 @@
   <input type="password" name="password" id="password"/>
   <input type="submit" value="<fmt:message key="sign_in"/>"/>
 </form>  --%>
-<button class="btn btn-default"><a href="jsp/registration1.jsp" ><fmt:message key="sign_up"/></a></button>
+<button class="btn btn-default" onclick="window.location.href = '${pageContext.request.contextPath}/jsp/registration1.jsp'"><fmt:message key="sign_up"/></button>
 <s:property value="loginOrPasswordErrorMessage"/>
 </section>
 </body>

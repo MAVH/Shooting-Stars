@@ -14,19 +14,23 @@
     <c:import url="header.jsp"/>
     Hello
     ${user.login}
+    <h4>${userInfo.name}</h4>
+    <h4>${userInfo.surname}</h4>
+    <h5>${userInfo.country}</h5>
+    <h5>${userInfo.city}</h5>
+    <h5><fmt:formatDate value="${userInfo.dateOfBirth}" dateStyle="short"/> </h5>
+    <h5>${userInfo.abilities}</h5>
+    <h3>${status}</h3>
     <div id="userPhoto">
-    <%--следующая строчка временная, удалить когда будет информация о пользователе --%>
-    <img src="../img/userPhoto/${user.userId}.jpg" class="userPhoto"/>
         <c:choose>
-            <c:when test="${not empty photoURL}">
-                <img src="../img/userPhoto/${photoURL}" class="userPhoto"/>
+            <c:when test="${not empty userInfo.photoName}">
+                <img src="../img/userPhoto/${userInfo.photoName}" class="userPhoto"/>
             </c:when>
             <c:otherwise>
                 <img src="../img/userPhoto/default.png" class="userPhoto"/>
             </c:otherwise>
         </c:choose>
-        <button>
-            <a href="${pageContext.request.contextPath}/jsp/changingData/changePhoto.jsp">change photo</a>
+        <button onclick="window.location.href = '${pageContext.request.contextPath}/jsp/changingData/changePhoto.jsp'"><fmt:message key="change_photo"/>
         </button>
     </div>
     <div>

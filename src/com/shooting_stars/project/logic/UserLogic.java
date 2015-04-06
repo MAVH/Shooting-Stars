@@ -1,6 +1,7 @@
 package com.shooting_stars.project.logic;
 
 import com.shooting_stars.project.dao.UserDAO;
+import com.shooting_stars.project.entity.UserInfo;
 import com.shooting_stars.project.exception.DAOException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.exception.PoolConnectionException;
@@ -14,10 +15,21 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.regex.Pattern;
 
-/**
- * Created by Пользователь on 02.04.2015.
- */
 public class UserLogic {
+    public static UserInfo saveUserInfo(int userId) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            UserDAO userDAO = new UserDAO(connection);
+            UserInfo newUserInfo =  userDAO.findUserInfoByUserId(userId);
+            return newUserInfo;
+        }  catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        }  finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
+
     public static void changePhotoURL(int userId, String destPath,String fileName, File photo) throws LogicException {
         System.out.println("Src File name: " + photo);
         System.out.println("path:    " + destPath);
@@ -63,5 +75,32 @@ public class UserLogic {
             }
         }
         System.out.println(fileName);
+    }
+
+    public static String getUserStatus(int userId) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            UserDAO userDAO = new UserDAO(connection);
+            String status = userDAO.getUserStatus(userId);
+            return status;
+        }  catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        }  finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
+
+    public static void setUserStatus(int userId, int userStatusId) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            UserDAO userDAO = new UserDAO(connection);
+            userDAO.setUserStatus(userId, userStatusId);
+        }  catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        }  finally {
+            Pool.getPool().returnConnection(connection);
+        }
     }
 }
