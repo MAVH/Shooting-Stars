@@ -25,7 +25,7 @@
                 <img src="../img/userPhoto/default.png" class="userPhoto"/>
             </c:otherwise>
         </c:choose>
-        <button class="hidden">
+        <button>
             <a href="${pageContext.request.contextPath}/jsp/changingData/changePhoto.jsp">change photo</a>
         </button>
     </div>
