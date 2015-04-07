@@ -8,9 +8,6 @@ import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.UserLogic;
 import com.shooting_stars.project.logic.WishLogic;
-import com.shooting_stars.project.manager.ConfigManager;
-import org.apache.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -83,7 +80,7 @@ public class FormUserPageCommand extends ActionSupport implements ServletRequest
             if (userId == id) {
                 result = USER;
             }
-            userInfo = UserLogic.saveUserInfo(userId);
+            userInfo = UserLogic.getUserInfo(userId);
             wishes = WishLogic.getAllWishes(userId);
             status = UserLogic.getUserStatus(userId);
 

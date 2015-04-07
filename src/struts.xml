@@ -148,5 +148,37 @@
                 /jsp/error/error.jsp
             </result>
         </action>
+        <action name="editUserInfo" class="com.shooting_stars.project.command.EditUserInfoCommand">
+            <result name="success">
+                /jsp/infoEditor.jsp
+            </result>
+            <result name="error">
+                /jsp/error/error.jsp
+            </result>
+        </action>
+        <action name="saveEditedUserInfo" class="com.shooting_stars.project.command.SaveEditedUserInfoCommand">
+            <result name="success" type="redirectAction" >
+                userPage
+            </result>
+            <result name="error">
+                /jsp/error/error.jsp
+            </result>
+        </action>
+        <action name="editUserAbilities" class="com.shooting_stars.project.command.EditUserAbilitiesCommand">
+            <result name="success">
+                /jsp/abilitiesEditor.jsp
+            </result>
+            <result name="error">
+                /jsp/error/error.jsp
+            </result>
+        </action>
+        <action name="saveEditedUserAbilities" class="com.shooting_stars.project.command.SaveEditedUserAbilitiesCommand">
+            <result name="success" type="redirectAction" >
+                userPage
+            </result>
+            <result name="error">
+                /jsp/error/error.jsp
+            </result>
+        </action>
     </package>
 </struts>

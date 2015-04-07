@@ -11,7 +11,6 @@
 <body>
 <c:import url="header.jsp"/>
 <form method="POST" action="${pageContext.request.contextPath}/registration">
-  <input type="hidden" name="command" value="prepare_registration"/>
   <input type="hidden" name="part" value="3"/>
   <label for="abilities"><fmt:message key="abilities"/></label>
   <input type="textarea" name="abilities" id="abilities"/>

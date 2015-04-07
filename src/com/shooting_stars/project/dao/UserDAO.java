@@ -21,6 +21,10 @@ public class UserDAO extends AbstractDAO {
     public static final String SQL_SELECT_USER_INFO = "SELECT * FROM user_info WHERE userId = ?";
     public static final String SQL_GET_STATUS = "SELECT status FROM user_status JOIN user ON user.userStatusId = user_status.userStatusId WHERE user.userId = ?";
     public static final String SQL_SET_STATUS = "UPDATE user SET userStatusId = ? WHERE userId = ?";
+    public static final String SQL_UPDATE_USER_INFO =
+            "UPDATE user_info SET user_name = ?, surname = ?, country = ?, city = ?, dateOfBirth = ?, email = ? WHERE userId = ?";
+    public static final String SQL_SELECT_ABILITIES = "SELECT abilities FROM user_info WHERE userId = ?";
+    public static final String SQL_UPDATE_ABILITIES = "UPDATE user_info SET abilities = ? WHERE userId = ?";
 
     public UserDAO(Connection connection) {
         super(connection);
@@ -174,11 +178,11 @@ public class UserDAO extends AbstractDAO {
     }
 
     public UserInfo findUserInfoByUserId(int userId) throws DAOException {
-        UserInfo userInfo = new UserInfo();
-        PreparedStatement ps = null;
-        ResultSet rs;
-        try {
-            ps = connection.prepareStatement(SQL_SELECT_USER_INFO);
+                UserInfo userInfo = new UserInfo();
+                PreparedStatement ps = null;
+                ResultSet rs;
+                try {
+                    ps = connection.prepareStatement(SQL_SELECT_USER_INFO);
             ps.setInt(1, userId);
             rs = ps.executeQuery();
             if(rs.next()) {
@@ -225,6 +229,61 @@ public class UserDAO extends AbstractDAO {
         try {
             ps = connection.prepareStatement(SQL_SET_STATUS);
             ps.setInt(1, userStatusId);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+    }
+
+    public void updateUserInfo(int userId, UserInfo userInfo) throws DAOException {
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement(SQL_UPDATE_USER_INFO);
+            ps.setString(1, userInfo.getName());
+            ps.setString(2, userInfo.getSurname());
+            ps.setString(3, userInfo.getCountry());
+            ps.setString(4, userInfo.getCity());
+            ps.setDate(5, userInfo.getDateOfBirth());
+            ps.setString(6, userInfo.getEmail());
+            ps.setInt(7, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+    }
+
+    public String findAbilitiesByUserId(int userId) throws DAOException {
+        PreparedStatement ps = null;
+        ResultSet rs;
+        String abilities = "";
+        try {
+            ps = connection.prepareStatement(SQL_SELECT_ABILITIES);
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+            if(rs.next()) {
+                abilities = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+        return abilities;
+    }
+
+    public void updateUserAbilities(int userId, String abilities) throws DAOException {
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement(SQL_UPDATE_ABILITIES);
+            ps.setString(1, abilities);
             ps.setInt(2, userId);
             ps.executeUpdate();
         } catch (SQLException e) {

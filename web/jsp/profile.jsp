@@ -19,7 +19,9 @@
     <h5>${userInfo.country}</h5>
     <h5>${userInfo.city}</h5>
     <h5><fmt:formatDate value="${userInfo.dateOfBirth}" dateStyle="short"/> </h5>
+    <a href = "/editUserInfo"><fmt:message key="edit"/></a>
     <h5>${userInfo.abilities}</h5>
+    <a href = "/editUserAbilities"><fmt:message key="edit"/></a>
     <h3>${status}</h3>
     <div id="userPhoto">
         <c:choose>

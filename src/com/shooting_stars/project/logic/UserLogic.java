@@ -16,7 +16,7 @@ import java.sql.Connection;
 import java.util.regex.Pattern;
 
 public class UserLogic {
-    public static UserInfo saveUserInfo(int userId) throws LogicException {
+    public static UserInfo getUserInfo(int userId) throws LogicException {
         Connection connection = null;
         try {
             connection = Pool.getPool().getConnection();
@@ -97,6 +97,46 @@ public class UserLogic {
             connection = Pool.getPool().getConnection();
             UserDAO userDAO = new UserDAO(connection);
             userDAO.setUserStatus(userId, userStatusId);
+        }  catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        }  finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
+
+    public static void updateUserInfo(int userId, UserInfo userInfo) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            UserDAO userDAO = new UserDAO(connection);
+            userDAO.updateUserInfo(userId, userInfo);
+        }  catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        }  finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
+
+    public static String getUserAbilities(int userId) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            UserDAO userDAO = new UserDAO(connection);
+            String abilities = userDAO.findAbilitiesByUserId(userId);
+            return abilities;
+        }  catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        }  finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
+
+    public static void updateUserAbilities(int userId, String abilities) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            UserDAO userDAO = new UserDAO(connection);
+            userDAO.updateUserAbilities(userId, abilities);
         }  catch(PoolConnectionException | DAOException e ) {
             throw new LogicException(e.getCause());
         }  finally {
