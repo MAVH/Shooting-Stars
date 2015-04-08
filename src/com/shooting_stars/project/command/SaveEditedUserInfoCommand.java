@@ -7,14 +7,17 @@ import com.shooting_stars.project.entity.UserInfo;
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.UserLogic;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.interceptor.SessionAware;
 
+import java.sql.Date;
 import java.util.Map;
 
 public class SaveEditedUserInfoCommand extends ActionSupport implements SessionAware, ModelDriven<UserInfo> {
 
     private Exception exception;
-    private UserInfo userInfo;
+    private String date;
+    private UserInfo userInfo = new UserInfo();
     private Map<String, Object> sessionAttributes = null;
 
     @Override
@@ -22,6 +25,9 @@ public class SaveEditedUserInfoCommand extends ActionSupport implements SessionA
         String result = SUCCESS;
         try {
             int userId = ((User) sessionAttributes.get("user")).getUserId();
+            if(!StringUtils.isEmpty(date)) {
+                userInfo.setDateOfBirth(Date.valueOf(date));
+            }
             UserLogic.updateUserInfo(userId, userInfo);
         } catch (LogicException e) {
             LOG.error(e.getMessage(), e.getCause());
@@ -29,6 +35,14 @@ public class SaveEditedUserInfoCommand extends ActionSupport implements SessionA
             exception = new CommandException(e.getCause());
         }
         return result;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public Exception getException() {

@@ -22,7 +22,7 @@
     <label for="city"><fmt:message key="city"/></label>
     <input type="text" name="city" id="city" value="${userInfo.city}"/>
     <label for="dateOfBirth"><fmt:message key="date_of_birth"/></label>
-    <input type="date" name="dateOfBirth" id="dateOfBirth" value="${userInfo.dateOfBirth}"/>
+    <input type="date" name="date" id="dateOfBirth" value="${userInfo.dateOfBirth}"/>
     <label for="email"><fmt:message key="e-mail"/></label>
     <input type="email" name="email" id="email"  value="${userInfo.email}"/>
     <input type="submit" name="submitAction" value="<fmt:message key="save"/>"/>
