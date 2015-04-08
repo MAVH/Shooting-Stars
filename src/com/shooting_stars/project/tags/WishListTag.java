@@ -61,7 +61,7 @@ public class WishListTag extends TagSupport {
                     if ((candidate = wish.getCandidate()) != null) {
                         label = rs.getString("wish_performed");
                         candidatesList = "<h5>" + label + "</h5><table><tr><td><a href=userPage?userId=" +
-                                candidate.getUserId() + ">" + candidate.getLogin() + "</a></td>";
+                                candidate.getUserId() + ">" + candidate.getName() + " " + candidate.getSurname() + "</a></td>";
                         if(isProfilePage) {
                             candidatesList += "<td><form action=cancelMakingWish method=post><input type=hidden name=wishId value=" + wish.getWishId()
                                     + "><input type=submit value="
@@ -77,7 +77,9 @@ public class WishListTag extends TagSupport {
                             label = rs.getString("applications");
                             candidatesList = "<h5>" + label + "</h5>";
                             for (Object user : wish) {
-                                candidatesList += "<a href=userPage?userId=" + ((User) user).getUserId() + ">" + ((User) user).getLogin() + "</a>";
+
+                                candidatesList += "<a href=userPage?userId=" + ((User) user).getUserId() + ">" + ((User) user).getName()
+                                         + " " + ((User) user).getSurname()+ "</a>";
                                 if(isProfilePage) {
                                     candidatesList += "<form action=acceptApplication method=post><input type=hidden name=wishId value=" + wish.getWishId()
                                             + "><input type=hidden name=userId value=" + ((User) user).getUserId() + "><input type=submit value="

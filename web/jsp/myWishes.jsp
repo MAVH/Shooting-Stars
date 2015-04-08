@@ -21,7 +21,7 @@
     <c:forEach var="wish" items="${wishes}">
         <tr>
             <td>${wish.wish}</td>
-            <td><a href="userPage?userId=${wish.owner.userId}">${wish.owner.login}</a></td>
+            <td><a href="userPage?userId=${wish.owner.userId}">${wish.owner.name} ${wish.owner.surname}</a></td>
             <td><fmt:formatDate value="${wish.date}"/></td>
             <td>
                  <c:choose>

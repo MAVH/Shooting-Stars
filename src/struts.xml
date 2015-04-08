@@ -160,8 +160,8 @@
             <result name="success" type="redirectAction" >
                 userPage
             </result>
-            <result name="input" type="redirectAction">
-                editUserInfo
+            <result name="input">
+                /jsp/infoEditor.jsp
             </result>
             <result name="error">
                 /jsp/error/error.jsp
@@ -179,7 +179,6 @@
             <result name="success" type="redirectAction" >
                 userPage
             </result>
-
             <result name="error">
                 /jsp/error/error.jsp
             </result>

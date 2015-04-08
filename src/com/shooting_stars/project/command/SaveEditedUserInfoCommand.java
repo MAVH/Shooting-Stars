@@ -19,12 +19,11 @@ public class SaveEditedUserInfoCommand extends ActionSupport implements SessionA
     private Exception exception;
     private String date;
     private UserInfo userInfo = new UserInfo();
-    private String emptyFieldsMessage;
     private Map<String, Object> sessionAttributes = null;
     @Override
     public void validate() {
         if(StringUtils.isEmpty(userInfo.getName())) {
-            addFieldError("name", Controller.messageManager.getMessage("message.fields.empty"));
+            addFieldError("name", Controller.messageManager.getMessage("message.name.input"));
         }
     }
     @Override

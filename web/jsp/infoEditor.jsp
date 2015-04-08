@@ -13,8 +13,18 @@
 <body>
   <c:import url="header.jsp"/>
   <form method="POST" action="${pageContext.request.contextPath}/saveEditedUserInfo">
+      <s:textfield key="name">
+          <jsp:attribute name="value">
+                ${userInfo.name}
+          </jsp:attribute>
+          <jsp:attribute name="label">
+                 <fmt:message key="name"/>
+          </jsp:attribute>
+      </s:textfield>
+      <%--
     <label for="name"><fmt:message key="name"/></label>
     <input type="text" name="name" id="name"  value="${userInfo.name}"/>
+    --%>
     <label for="surname"><fmt:message key="surname"/></label>
     <input type="text" name="surname" id="surname"  value="${userInfo.surname}"/>
     <label for="country"><fmt:message key="country"/></label>

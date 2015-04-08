@@ -3,10 +3,34 @@ package com.shooting_stars.project.entity;
 public class User {
     private int userId;
     private String login;
+    private String name;
+    private String surname;
 
     public User(int userId, String login) {
         this.userId = userId;
         this.login = login;
+    }
+
+    public User(int userId, String name, String surname) {
+        this.userId = userId;
+        this.name = name;
+        this.surname = surname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public int getUserId() {
@@ -33,7 +57,6 @@ public class User {
         User user = (User) o;
 
         if (userId != user.userId) return false;
-        if (!login.equals(user.login)) return false;
 
         return true;
     }
@@ -41,7 +64,6 @@ public class User {
     @Override
     public int hashCode() {
         int result = userId;
-        result = 31 * result + login.hashCode();
         return result;
     }
 }

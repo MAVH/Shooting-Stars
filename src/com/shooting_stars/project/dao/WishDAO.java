@@ -19,23 +19,28 @@ public class WishDAO extends AbstractDAO {
             "SET wish.wishStatusId = (SELECT wish_status.wishStatusId FROM wish_status WHERE wish_status.wishStatus LIKE ?) WHERE wishId = ?";
     public static final String SQL_INSERT_MAKING_USER = "INSERT INTO fulfilled_wish (wishId,userId) VALUES (?,?)";
     public static final String SQL_INSERT_USER_CONSIDERED = "INSERT INTO considered_wish (wishId,userId) VALUES (?,?)";
-    public static final String SQL_SELECT_MAKING_USER_BY_WISH_ID = "SELECT fulfilled_wish.userId, login " +
-            "            FROM user  JOIN fulfilled_wish ON fulfilled_wish.userId = user.userId WHERE wishId = ?";
-    public static final String SQL_SELECT_USERS_CONSIDERED_BY_WISH_ID = "SELECT considered_wish.userId, login " +
-            "FROM user  JOIN considered_wish ON considered_wish.userId = user.userId WHERE wishId = ?";
+    public static final String SQL_SELECT_MAKING_USER_BY_WISH_ID = "SELECT fulfilled_wish.userId, user_name, surname" +
+            "            FROM user JOIN fulfilled_wish ON fulfilled_wish.userId = user.userId " +
+            " JOIN user_info ON user.userId = user_info.userId WHERE wishId = ?";
+    public static final String SQL_SELECT_USERS_CONSIDERED_BY_WISH_ID = "SELECT considered_wish.userId, user_name, surname " +
+            "FROM user  JOIN considered_wish ON considered_wish.userId = user.userId " +
+            "JOIN user_info ON user.userId = user_info.userId WHERE wishId = ?";
     public static final String SQL_SELECT_MAKING_USER_ID_BY_WISH_ID = "SELECT userId FROM fulfilled_wish WHERE wishId = ?";
     public static final String SQL_SELECT_USER_ID_BY_WISH_ID = "SELECT userId FROM wish WHERE wishId = ?";
-    public static final String SQL_SELECT_FULFILLED_WISH_BY_OWNER_ID = "SELECT wish.wishId, wish, fulfilled_wish.userId, login, fulfilled_wish.date FROM wish JOIN fulfilled_wish" +
+    public static final String SQL_SELECT_FULFILLED_WISH_BY_OWNER_ID = "SELECT wish.wishId, wish, fulfilled_wish.userId, user_name, surname, fulfilled_wish.date FROM wish JOIN fulfilled_wish" +
             " ON fulfilled_wish.wishId = wish.wishId JOIN user ON fulfilled_wish.userId = user.userId " +
+            "JOIN user_info ON user.userId = user_info.userId " +
             "JOIN wish_status ON wish.wishStatusId = wish_status.wishStatusId WHERE wish.userId = ? AND wishStatus LIKE ?" +
             " ORDER BY fulfilled_wish.date";
-    public static final String SQL_SELECT_FULFILLED_WISH_BY_MAKING_USER_ID = "SELECT wish.wishId, wish, wish.userId, login, fulfilled_wish.date, wishStatus " +
+    public static final String SQL_SELECT_FULFILLED_WISH_BY_MAKING_USER_ID = "SELECT wish.wishId, wish, wish.userId, user_name, surname,  fulfilled_wish.date, wishStatus " +
             "FROM user JOIN wish ON user.userId = wish.userId " +
+            "JOIN user_info ON user.userId = user_info.userId " +
             "JOIN fulfilled_wish ON fulfilled_wish.wishId = wish.wishId " +
             "JOIN wish_status ON wish.wishStatusId = wish_status.wishStatusId " +
             "WHERE fulfilled_wish.userId = ? ";
-    public static final String SQL_SELECT_WISH_CONSIDERED_BY_MAKING_USER_ID = "SELECT wish.wishId, wish, wish.userId, login " +
+    public static final String SQL_SELECT_WISH_CONSIDERED_BY_MAKING_USER_ID = "SELECT wish.wishId, wish, wish.userId, user_name, surname " +
             "FROM user JOIN wish ON user.userId = wish.userId " +
+            " JOIN user_info ON user.userId = user_info.userId " +
             "JOIN considered_wish ON considered_wish.wishId = wish.wishId " +
             "WHERE considered_wish.userId = ? ";
 
@@ -191,7 +196,7 @@ public class WishDAO extends AbstractDAO {
     }
 
     public ArrayList<User> getUsersConsidered(int wishId) throws DAOException {
-        ArrayList<User> users = new ArrayList<>();
+        ArrayList<User> users = new ArrayList<User>();
         PreparedStatement ps = null;
         ResultSet rs;
         User user;
@@ -200,7 +205,7 @@ public class WishDAO extends AbstractDAO {
             ps.setInt(1,wishId);
             rs = ps.executeQuery();
             while (rs.next()) {
-                user = new User(rs.getInt(1),rs.getString(2));
+                user = new User(rs.getInt(1),rs.getString(2),rs.getString(3));
                 users.add(user);
             }
             return users;
@@ -221,7 +226,7 @@ public class WishDAO extends AbstractDAO {
             ps.setInt(1, wishId);
             rs = ps.executeQuery();
             while (rs.next()) {
-                user = new User(rs.getInt(1),rs.getString(2));
+                user = new User(rs.getInt(1),rs.getString(2), rs.getString(3));
             }
             return user;
         }
@@ -284,8 +289,8 @@ public class WishDAO extends AbstractDAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 wish = new Wish(rs.getInt(1),rs.getString(2));
-                wish.setCandidate(new User(rs.getInt(3), rs.getString(4)));
-                wish.setDate(rs.getDate(5));
+                wish.setCandidate(new User(rs.getInt(3), rs.getString(4),rs.getString(5)));
+                wish.setDate(rs.getDate(6));
                 wishes.add(wish);
             }
             return wishes;
@@ -296,6 +301,7 @@ public class WishDAO extends AbstractDAO {
             close(ps);
         }
     }
+
     public ArrayList<Wish> getWishesByMakerUserId(int userId) throws DAOException {
         ArrayList<Wish> wishes = new ArrayList<Wish>();
         PreparedStatement ps = null;
@@ -307,8 +313,8 @@ public class WishDAO extends AbstractDAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 wish = new Wish(rs.getInt(1),rs.getString(2));
-                wish.setOwner(new User(rs.getInt(3),rs.getString(4)));
-                wish.setDate(rs.getDate(5));
+                wish.setOwner(new User(rs.getInt(3),rs.getString(4),rs.getString(5)));
+                wish.setDate(rs.getDate(6));
                 wish.setFulfilled(true);
                 wishes.add(wish);
             }
