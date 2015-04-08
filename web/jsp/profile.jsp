@@ -8,6 +8,7 @@
 <html>
 <head>
     <title></title>
+    <meta http-equiv="Cache-Control" content="no-cache">
     <script type="text/javascript" src="js/script.js"></script>
 </head>
 <body>

@@ -2,6 +2,7 @@ package com.shooting_stars.project.command;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.shooting_stars.project.controller.Controller;
 import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.entity.UserInfo;
 import com.shooting_stars.project.exception.CommandException;
@@ -18,12 +19,19 @@ public class SaveEditedUserInfoCommand extends ActionSupport implements SessionA
     private Exception exception;
     private String date;
     private UserInfo userInfo = new UserInfo();
+    private String emptyFieldsMessage;
     private Map<String, Object> sessionAttributes = null;
-
+    @Override
+    public void validate() {
+        if(StringUtils.isEmpty(userInfo.getName())) {
+            addFieldError("name", Controller.messageManager.getMessage("message.fields.empty"));
+        }
+    }
     @Override
     public String execute() {
         String result = SUCCESS;
         try {
+
             int userId = ((User) sessionAttributes.get("user")).getUserId();
             if(!StringUtils.isEmpty(date)) {
                 userInfo.setDateOfBirth(Date.valueOf(date));
