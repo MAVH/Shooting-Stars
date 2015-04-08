@@ -3,7 +3,7 @@
 -- Server version:               5.6.21-log - MySQL Community Server (GPL)
 -- Server OS:                    Win64
 -- HeidiSQL version:             7.0.0.4053
--- Date/time:                    2015-04-08 05:30:04
+-- Date/time:                    2015-04-08 21:25:48
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -43,7 +43,8 @@ CREATE TABLE IF NOT EXISTS `considered_wish` (
 DELETE FROM `considered_wish`;
 /*!40000 ALTER TABLE `considered_wish` DISABLE KEYS */;
 INSERT INTO `considered_wish` (`wishId`, `userId`) VALUES
-	(22, 14);
+	(22, 14),
+	(29, 2);
 /*!40000 ALTER TABLE `considered_wish` ENABLE KEYS */;
 
 
@@ -96,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`userId`, `login`, `password`, `userInfoId`, `userStatusId`) VALUES
-	(2, 'v', 'c4ca4238a0b923820dcc509a6f75849b', NULL, 1),
+	(2, 'v', 'c4ca4238a0b923820dcc509a6f75849b', NULL, 0),
 	(8, 'bbbv', 'c4ca4238a0b923820dcc509a6f75849b', NULL, NULL),
 	(9, 'ghg', 'c4ca4238a0b923820dcc509a6f75849b', NULL, NULL),
 	(10, 'gdfgd', 'c4ca4238a0b923820dcc509a6f75849b', NULL, NULL),
@@ -129,14 +130,14 @@ CREATE TABLE IF NOT EXISTS `user_info` (
 DELETE FROM `user_info`;
 /*!40000 ALTER TABLE `user_info` DISABLE KEYS */;
 INSERT INTO `user_info` (`userId`, `user_name`, `surname`, `email`, `country`, `city`, `dateOfBirth`, `abilities`, `photoURL`) VALUES
-	(2, 'v', 'v', '', '', '', NULL, '', '2.jpg'),
+	(2, 'veronica', 'haritonova', 'veronica_haritonova@mail.ru', 'belarus', 'Minsk', NULL, 'fnjfdj nc, jdgj', '2.jpg'),
 	(8, 'gfg', 'gfg', '', '', '', NULL, '', NULL),
 	(9, 'wj', 'wqh', '', '', '', NULL, 'gff', NULL),
 	(10, 'tr', 'gfgf', '', '', '', NULL, '', NULL),
 	(11, 'ffs', 'fsd', '', '', '', NULL, '', NULL),
 	(12, 'fgf', 'fg', '', '', '', NULL, '', NULL),
 	(13, 'gfg', '', '', '', '', NULL, 'dgfg', NULL),
-	(14, 'Veronica', '', '', '', '', NULL, '', NULL),
+	(14, 'Patrick', 'Weirauch', '', 'Germany', 'Munchen', NULL, '', NULL),
 	(15, 'vdvdfv', '', '', '', '', NULL, '', NULL),
 	(16, '1', '', '', '', '', NULL, '', NULL),
 	(17, 'Sasha', 'M', '', 'Australia', 'Sydney', '1994-12-12', 'sjsksl, skksl, sk', '17.jpg');
@@ -167,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `wish` (
   `wish` tinytext,
   `wishStatusId` int(10) DEFAULT '0',
   PRIMARY KEY (`wishId`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table shooting_stars_database.wish: ~21 rows (approximately)
 DELETE FROM `wish`;
@@ -190,9 +191,9 @@ INSERT INTO `wish` (`wishId`, `userId`, `wish`, `wishStatusId`) VALUES
 	(33, 2, 'tfgfhg', 0),
 	(34, 2, 'hghghg', 0),
 	(36, 14, 'sss', 0),
-	(37, 2, 'hfdhfdhf', 0),
 	(38, 17, 'Parachute jump', 0),
-	(39, 17, 'Drums', 0);
+	(39, 17, 'Drums', 0),
+	(40, 2, 'jjgjgjhj', 0);
 /*!40000 ALTER TABLE `wish` ENABLE KEYS */;
 
 
