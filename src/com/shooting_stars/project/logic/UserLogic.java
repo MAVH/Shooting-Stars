@@ -61,8 +61,7 @@ public class UserLogic {
             throw new LogicException("Problem with adding photo to folder");
         }
         if (!nameEquals) {
-            System.out.println("Insert photoURL in database");
-            //TODO insert into db
+
             Connection connection = null;
             try {
                 connection = Pool.getPool().getConnection();

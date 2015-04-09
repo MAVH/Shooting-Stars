@@ -5,6 +5,8 @@
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
+    <!--
+    <constant name="struts.multipart.maxSize" value="1000000" />   -->
     <package name="default" namespace="/" extends="struts-default">
         <action name="login" class="com.shooting_stars.project.command.LoginCommand">
             <result name="success" type="redirectAction">
@@ -59,10 +61,21 @@
                 /jsp/error/error.jsp
             </result>
         </action>
+
         <action name="changePhoto" class="com.shooting_stars.project.command.ChangePhotoCommand">
+            <!--
+            <interceptor-ref name="basicStack"/>
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">5000000</param>
+            </interceptor-ref>
+            <interceptor-ref name="validation"/>
+            <interceptor-ref name="workflow"/>   -->
              <result name="success" type="redirectAction">
                  userPage
              </result>
+            <result name="input">
+                /jsp/changingData/changePhoto.jsp
+            </result>
             <result name="error">
                 /jsp/error/error.jsp
             </result>
@@ -103,6 +116,9 @@
         <action name="cancelApplication" class="com.shooting_stars.project.command.CancelApplicationCommand">
             <result name="success" type="redirectAction" >
                 userPage?userId=${userId}
+            </result>
+            <result name="myPage" type="redirectAction" >
+                fulfilledWishes?userId=${currentUserId}
             </result>
             <result name="error">
                 /jsp/error/error.jsp

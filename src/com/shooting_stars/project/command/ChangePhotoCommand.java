@@ -5,6 +5,7 @@ import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.UserLogic;
+import org.apache.commons.io.FileUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,15 @@ public class ChangePhotoCommand extends ActionSupport implements SessionAware, S
     private Map<String, Object> sessionAttributes = null;
     private HttpServletRequest request = null;
 
+    @Override
+    public void validate() {
+        if(photo == null) {
+            addFieldError("photo", "incorrect format = null");
+        }
+        if(FileUtils.sizeOf(photo) > 1000000) {
+            addFieldError("photo", "too large size");
+        }
+    }
     @Override
     public void setSession(Map<String, Object> stringObjectMap) {
         sessionAttributes = stringObjectMap;
@@ -69,7 +79,7 @@ public class ChangePhotoCommand extends ActionSupport implements SessionAware, S
     @Override
     public String execute() {
         String result = SUCCESS;
-        //TODO change path
+
 
         try{
             User currentUser = (User)sessionAttributes.get("user");

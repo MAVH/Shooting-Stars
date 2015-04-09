@@ -308,6 +308,15 @@ public class WishDAO extends AbstractDAO {
         ResultSet rs;
         Wish wish;
         try {
+            ps = connection.prepareStatement(SQL_SELECT_WISH_CONSIDERED_BY_MAKING_USER_ID);
+            ps.setInt(1,userId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                wish = new Wish(rs.getInt(1),rs.getString(2));
+                wish.setOwner(new User(rs.getInt(3),rs.getString(4),rs.getString(5)));
+                wish.setFulfilled(false);
+                wishes.add(wish);
+            }
             ps = connection.prepareStatement(SQL_SELECT_FULFILLED_WISH_BY_MAKING_USER_ID);
             ps.setInt(1,userId);
             rs = ps.executeQuery();
@@ -318,15 +327,7 @@ public class WishDAO extends AbstractDAO {
                 wish.setFulfilled(true);
                 wishes.add(wish);
             }
-            ps = connection.prepareStatement(SQL_SELECT_WISH_CONSIDERED_BY_MAKING_USER_ID);
-            ps.setInt(1,userId);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                wish = new Wish(rs.getInt(1),rs.getString(2));
-                wish.setOwner(new User(rs.getInt(3),rs.getString(4)));
-                wish.setFulfilled(false);
-                wishes.add(wish);
-            }
+
             return wishes;
         }
         catch (SQLException e) {

@@ -19,6 +19,24 @@ public class CancelApplicationCommand extends ActionSupport implements SessionAw
     private Exception exception;
     private int wishId;
     private int userId;
+    private int pageCode;
+    private int currentUserId;
+
+    public int getCurrentUserId() {
+        return currentUserId;
+    }
+
+    public void setCurrentUserId(int currentUserId) {
+        this.currentUserId = currentUserId;
+    }
+
+    public int getPageCode() {
+        return pageCode;
+    }
+
+    public void setPageCode(int pageCode) {
+        this.pageCode = pageCode;
+    }
 
     public Exception getException() {
         return exception;
@@ -53,12 +71,15 @@ public class CancelApplicationCommand extends ActionSupport implements SessionAw
     public String execute() {
         String result = SUCCESS;
         User currentUser = (User)sessionAttributes.get("user");
-        int currentUserId = currentUser.getUserId();
+        currentUserId = currentUser.getUserId();
         int receiverId;
         try {
             int applicantId = userId;
             int wishOwnerId = WishLogic.cancelApplication(wishId, applicantId);
             if(currentUserId == applicantId) {
+                if(pageCode != 0) {
+                    result = "myPage";
+                }
                 receiverId = wishOwnerId;
                 userId = wishOwnerId;
             } else {

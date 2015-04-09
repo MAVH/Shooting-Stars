@@ -97,7 +97,7 @@ public class WishListTag extends TagSupport {
                                 + wish.getWishId() + "><input type=submit value=" + buttonDelete + "></form>";
                     } else {
                         if(wish.getCandidates().contains(currentUser)) {
-                            formAction = "<form action=cancelApplication method=post><input type=hidden name=wishId value=" + wish.getWishId()
+                            formAction = "<form action=cancelApplication method=post><input type=hidden name=pageCode value=0> <input type=hidden name=wishId value=" + wish.getWishId()
                                     + "><input type=hidden name=userId value=" + currentUser.getUserId() + "><input type=submit value="
                                     + "Cancel my application" + "></form>";
                         } else {

@@ -36,13 +36,19 @@
                           </c:choose>
                     </c:when>
                      <c:otherwise>
-                         <c:if test="${isPageOwner}">
+                         <c:choose>
+                         <c:when test="${isPageOwner}">
                              <form action="cancelApplication" method="post">
+                                 <input type="hidden" name="pageCode" value="1">
                                  <input type="hidden" name="wishId" value="${wish.wishId}"/>
                                  <input type=hidden name=userId value="${user.userId}">
                                  <input type=submit value="<fmt:message key="cancel"/>">
                              </form>
-                         </c:if>
+                         </c:when>
+                             <c:otherwise>
+                                 <fmt:message key="application_made"/>
+                             </c:otherwise>
+                         </c:choose>
                      </c:otherwise>
                  </c:choose>
             </td>
