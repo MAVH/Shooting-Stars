@@ -6,7 +6,9 @@
 <html>
 <head>
     <title></title>
-    <meta http-equiv="Cache-Control" content="no-cache">
+    <!--
+    <meta http-equiv="Cache-Control" content="no-cache">    -->
+    <meta http-equiv="Cache-Control" content="private">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css" media="screen"/>
 </head>
 <body>

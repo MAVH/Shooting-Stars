@@ -7,8 +7,9 @@
 <fmt:setBundle basename="resources.pagecontent"/>
 <html>
 <head>
-    <title></title>
-    <meta http-equiv="Cache-Control" content="no-cache">
+    <title></title><!--
+    <meta http-equiv="Cache-Control" content="no-cache">    -->
+    <meta http-equiv="Cache-Control" content="private">
     <script type="text/javascript" src="js/script.js"></script>
 </head>
 <body>
@@ -21,8 +22,16 @@
     <h5>${userInfo.city}</h5>
     <h5><fmt:formatDate value="${userInfo.dateOfBirth}" dateStyle="short"/> </h5>
     <a href = "/editUserInfo"><fmt:message key="edit"/></a>
+    <h4><fmt:message key="abilities"/> </h4>
     <h5>${userInfo.abilities}</h5>
-    <a href = "/editUserAbilities"><fmt:message key="edit"/></a>
+     <c:choose>
+          <c:when test="${not empty userInfo.abilities}">
+                <a href = "/editUserAbilities"><fmt:message key="edit"/></a>
+          </c:when>
+          <c:otherwise>
+                <a href = "/editUserAbilities"><fmt:message key="add_abilities"/></a>
+           </c:otherwise>
+    </c:choose>
     <h3>${status}</h3>
     <div id="userPhoto">
         <c:choose>

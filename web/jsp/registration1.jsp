@@ -25,5 +25,6 @@
 ${registrationError}
 ${registrationLoginError}
 ${registrationPasswordError}
+${registrationInvalidPasswordError}
 </body>
 </html>

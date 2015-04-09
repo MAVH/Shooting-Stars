@@ -15,7 +15,10 @@
 <h5>${userInfo.country}</h5>
 <h5>${userInfo.city}</h5>
 <h5>${userInfo.dateOfBirth}</h5>
-<h5>${userInfo.abilities}</h5>
+<c:if test="${not empty userInfo.abilities}">
+    <h4><fmt:message key="abilities"/></h4>
+    <h5>${userInfo.abilities}</h5>
+</c:if>
 <h3>${status}</h3>
 <div id="userPhoto">
     <c:choose>

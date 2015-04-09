@@ -5,21 +5,15 @@ import com.shooting_stars.project.controller.Controller;
 import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.entity.UserToBeRegistered;
 import com.shooting_stars.project.exception.CommandException;
-import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.exception.RegistrationException;
 import com.shooting_stars.project.logic.RegistrationLogic;
-import com.shooting_stars.project.logic.WishLogic;
-import com.shooting_stars.project.manager.ConfigManager;
 import com.shooting_stars.project.validation.Validation;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.awt.*;
-import java.io.InputStream;
 import java.sql.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -48,7 +42,16 @@ public class PreparingRegistrationCommand extends ActionSupport implements Servl
     private String registrationError;
     private String registrationLoginError;
     private String registrationPasswordError;
+    private String registrationInvalidPasswordError;
     private Exception exception;
+
+    public String getRegistrationInvalidPasswordError() {
+        return registrationInvalidPasswordError;
+    }
+
+    public void setRegistrationInvalidPasswordError(String registrationInvalidPasswordError) {
+        this.registrationInvalidPasswordError = registrationInvalidPasswordError;
+    }
 
     public int getPart() {
         return part;
@@ -196,7 +199,7 @@ public class PreparingRegistrationCommand extends ActionSupport implements Servl
             user = (UserToBeRegistered) sessionAttributes.get("user_registry");
         }
         boolean forward = false;
-        if(!Validation.isEmpty(submitAction)) {
+        if(!StringUtils.isEmpty(submitAction)) {
             if (submitAction.equals(ResourceBundle.getBundle("resources.pagecontent", (Locale) sessionAttributes.get("currentLocale")).getString("continue"))) {
                 forward = true;
             }
@@ -215,7 +218,7 @@ public class PreparingRegistrationCommand extends ActionSupport implements Servl
                         user.setLogin(login);
                     }
                 } catch (RegistrationException e) {
-                    logger.error(e.getMessage(), e.getCause());
+                    LOG.error(e.getMessage(), e.getCause());
                     exception =  new CommandException(e.getCause());
                     return ERROR;
                 }
@@ -226,8 +229,12 @@ public class PreparingRegistrationCommand extends ActionSupport implements Servl
                     registrationPasswordError = Controller.messageManager.getMessage("message.passwords.unequal");
                     error = true;
                 }
-                if(Validation.isEmpty(login) || Validation.isEmpty(password) || Validation.isEmpty(password_repeat)) {
+                if(StringUtils.isEmpty(login) || StringUtils.isEmpty(password) || StringUtils.isEmpty(password_repeat)) {
                     registrationError = Controller.messageManager.getMessage("message.fields.empty");
+                    error = true;
+                }
+                if(!Validation.checkPassword(password)) {
+                    registrationInvalidPasswordError = Controller.messageManager.getMessage("message.password.invalid");
                     error = true;
                 }
                 if(error) {
@@ -241,14 +248,14 @@ public class PreparingRegistrationCommand extends ActionSupport implements Servl
                 user.setSurname(surname);
                 user.setCountry(country);
                 user.setCity(city);
-                if(!Validation.isEmpty(dateOfBirth)) {
+                if(!StringUtils.isEmpty(dateOfBirth)) {
                     user.setDateOfBirth(Date.valueOf(dateOfBirth));
                 } else {
                     user.setDateOfBirth(null);
                 }
                 if(!forward) {
                     result = STEP1;
-                } else if(Validation.isEmpty(name)) {
+                } else if(StringUtils.isEmpty(name)) {
                     registrationError = Controller.messageManager.getMessage("message.fields.empty");
                     result = STEP2;
                 } else {
@@ -274,7 +281,7 @@ public class PreparingRegistrationCommand extends ActionSupport implements Servl
                             result = STEP3;
                         }
                     } catch (RegistrationException e) {
-                        logger.error(e.getMessage(), e.getCause());
+                        LOG.error(e.getMessage(), e.getCause());
                         exception =  new CommandException(e.getCause());
                         result = ERROR;
                     }
