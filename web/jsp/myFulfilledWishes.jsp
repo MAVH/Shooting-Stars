@@ -11,14 +11,28 @@
 </head>
 <body>
      <c:import url="header.jsp"/>
-     <table class="table">
-    <c:forEach var="wish" items="${wishes}">
-         <tr>
-             <td>${wish.wish}</td>
-             <td><a href="userPage?userId=${wish.candidate.userId}">${wish.candidate.name} ${wish.candidate.surname}</a></td>
-             <td><fmt:formatDate value="${wish.date}"/></td>
-         </tr>
-    </c:forEach>
-     </table>
+     <c:choose>
+         <c:when test="${not empty wishes}">
+             <table class="table">
+                 <tr>
+                     <th><fmt:message key="wish"/> </th>
+                     <th><fmt:message key="made_by"/> </th>
+                     <th><fmt:message key="date"/></th>
+                 </tr>
+            <c:forEach var="wish" items="${wishes}">
+                 <tr>
+                     <td>${wish.wish}</td>
+                     <td><a href="userPage?userId=${wish.candidate.userId}">${wish.candidate.name} ${wish.candidate.surname}</a></td>
+                     <td><fmt:formatDate value="${wish.date}"/></td>
+                 </tr>
+            </c:forEach>
+             </table>
+         </c:when>
+         <c:otherwise>
+             <p>
+                 <fmt:message key="not_found"/>
+             </p>
+         </c:otherwise>
+     </c:choose>
 </body>
 </html>
