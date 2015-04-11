@@ -14,8 +14,6 @@
 </head>
 <body>
     <c:import url="header.jsp"/>
-    Hello
-    ${user.login}
     <h4>${userInfo.name}</h4>
     <h4>${userInfo.surname}</h4>
     <h5>${userInfo.country}</h5>

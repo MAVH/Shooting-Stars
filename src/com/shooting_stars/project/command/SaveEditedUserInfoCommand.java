@@ -2,12 +2,12 @@ package com.shooting_stars.project.command;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.shooting_stars.project.controller.Controller;
 import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.entity.UserInfo;
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.UserLogic;
+import com.shooting_stars.project.manager.MessageManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -20,10 +20,12 @@ public class SaveEditedUserInfoCommand extends ActionSupport implements SessionA
     private String date;
     private UserInfo userInfo = new UserInfo();
     private Map<String, Object> sessionAttributes = null;
+    private MessageManager messageManager;
     @Override
     public void validate() {
+        messageManager = (MessageManager)sessionAttributes.get("messageManager");
         if(StringUtils.isEmpty(userInfo.getName())) {
-            addFieldError("name", Controller.messageManager.getMessage("message.name.input"));
+            addFieldError("name", messageManager.getMessage("message.name.input"));
         }
     }
     @Override

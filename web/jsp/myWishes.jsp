@@ -48,8 +48,6 @@
                                          <input type=submit value="<fmt:message key="cancel"/>">
                                      </form>
                                  </c:if>
-
-
                              </c:otherwise>
                          </c:choose>
                     </td>

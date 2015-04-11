@@ -17,16 +17,16 @@
             <div class="form-group">
                 <div class="col-lg-10">
                     <s:textfield key="login" class="form-control">
-            <jsp:attribute name="label">
-                      <fmt:message key="login"/>
-            </jsp:attribute>
+                        <jsp:attribute name="label">
+                                  <fmt:message key="login"/>
+                        </jsp:attribute>
                     </s:textfield>
                 </div>
             </div>
             <s:password key="password" class="form-control">
-        <jsp:attribute name="label">
-                      <fmt:message key="password"/>
-        </jsp:attribute>
+                    <jsp:attribute name="label">
+                                  <fmt:message key="password"/>
+                    </jsp:attribute>
             </s:password>
             <s:submit class="btn btn-primary">
           <jsp:attribute name="value" >

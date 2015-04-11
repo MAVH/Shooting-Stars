@@ -5,6 +5,7 @@ import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.UserLogic;
+import com.shooting_stars.project.manager.MessageManager;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -24,11 +25,12 @@ public class ChangePhotoCommand extends ActionSupport implements SessionAware, S
 
     @Override
     public void validate() {
+        MessageManager messageManager = (MessageManager)sessionAttributes.get("messageManager");
         if(photo == null) {
-            addFieldError("photo", "incorrect format = null");
+            addFieldError("photo", messageManager.getMessage("message.photo.empty"));
         }
-        if(FileUtils.sizeOf(photo) > 1000000) {
-            addFieldError("photo", "too large size");
+        if(FileUtils.sizeOf(photo) > 5000000) {
+            addFieldError("photo", messageManager.getMessage("message.photo.large.size"));
         }
     }
     @Override
@@ -79,8 +81,6 @@ public class ChangePhotoCommand extends ActionSupport implements SessionAware, S
     @Override
     public String execute() {
         String result = SUCCESS;
-
-
         try{
             User currentUser = (User)sessionAttributes.get("user");
             String path = request.getServletContext().getRealPath("/img/userPhoto");

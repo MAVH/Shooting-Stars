@@ -12,7 +12,7 @@
 <body>
 <c:import url="../header.jsp"/>
 <s:form action="changePhoto" method="post" enctype="multipart/form-data">
-    <s:file key="photo">
+    <s:file key="photo" accept="image/*">
         <jsp:attribute name="label">
               load your photo
         </jsp:attribute>

@@ -9,7 +9,7 @@ public class LogoutCommand extends ActionSupport implements ServletRequestAware 
     private HttpServletRequest request = null;
     @Override
     public String execute() {
-       request.getSession().invalidate();
+       request.getSession().removeAttribute("user");
        return SUCCESS;
     }
     @Override

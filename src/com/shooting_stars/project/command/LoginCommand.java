@@ -1,14 +1,12 @@
 package com.shooting_stars.project.command;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.ModelDriven;
-import com.shooting_stars.project.controller.Controller;
 import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.LoginLogic;
+import com.shooting_stars.project.manager.MessageManager;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 
 import java.util.Map;
@@ -18,6 +16,7 @@ public class LoginCommand extends ActionSupport implements SessionAware {
     private String password;
     private String loginOrPasswordErrorMessage;
     private Exception exception;
+    private MessageManager messageManager;
     private final static String LOGIN_FAILED = "login_failed";
 
     private Map<String, Object> sessionAttributes = null;
@@ -25,11 +24,12 @@ public class LoginCommand extends ActionSupport implements SessionAware {
 
     @Override
     public void validate() {
+        messageManager = (MessageManager)sessionAttributes.get("messageManager");
         if(StringUtils.isEmpty(login)) {
-            addFieldError("login",Controller.messageManager.getMessage("message.fields.empty"));
+            addFieldError("login",messageManager.getMessage("message.fields.empty"));
         }
         if( StringUtils.isEmpty(password)) {
-            addFieldError("password",Controller.messageManager.getMessage("message.fields.empty"));
+            addFieldError("password",messageManager.getMessage("message.fields.empty"));
         }
     }
     @Override
@@ -37,7 +37,7 @@ public class LoginCommand extends ActionSupport implements SessionAware {
         String result;
         /*
         if(Validation.isEmpty(login) || Validation.isEmpty(password)) {
-            loginOrPasswordErrorMessage = Controller.messageManager.getMessage("message.fields.empty");
+            loginOrPasswordErrorMessage = messageManager.getMessage("message.fields.empty");
             result  LOGIN;
         }  else { */
             try {
@@ -46,7 +46,7 @@ public class LoginCommand extends ActionSupport implements SessionAware {
                     sessionAttributes.put("user", user);
                     result = SUCCESS;
                 } else {
-                    loginOrPasswordErrorMessage = Controller.messageManager.getMessage("message.login.error");
+                    loginOrPasswordErrorMessage = messageManager.getMessage("message.login.error");
                     result = LOGIN_FAILED;
                 }
             } catch (LogicException e) {

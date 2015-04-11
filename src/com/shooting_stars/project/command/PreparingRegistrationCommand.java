@@ -1,15 +1,14 @@
 package com.shooting_stars.project.command;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.shooting_stars.project.controller.Controller;
 import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.entity.UserToBeRegistered;
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.RegistrationException;
 import com.shooting_stars.project.logic.RegistrationLogic;
+import com.shooting_stars.project.manager.MessageManager;
 import com.shooting_stars.project.validation.Validation;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -20,7 +19,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class PreparingRegistrationCommand extends ActionSupport implements ServletRequestAware,SessionAware {
-    static Logger logger = Logger.getLogger(PreparingRegistrationCommand.class);
+
     private HttpServletRequest request = null;
     private Map<String, Object> sessionAttributes = null;
     private int part;
@@ -191,6 +190,7 @@ public class PreparingRegistrationCommand extends ActionSupport implements Servl
 
     @Override
     public String execute() throws CommandException {
+        MessageManager messageManager = (MessageManager)sessionAttributes.get("messageManager");
         UserToBeRegistered user;
         if(sessionAttributes.get("user_registry") == null) {
             user = new UserToBeRegistered();
@@ -213,7 +213,7 @@ public class PreparingRegistrationCommand extends ActionSupport implements Servl
                     if(RegistrationLogic.userLoginExists(login)) {
                         user.setLogin("");
                         error = true;
-                        registrationLoginError = Controller.messageManager.getMessage("message.login.exists");
+                        registrationLoginError = messageManager.getMessage("message.login.exists");
                     } else {
                         user.setLogin(login);
                     }
@@ -226,15 +226,15 @@ public class PreparingRegistrationCommand extends ActionSupport implements Servl
                     user.setPassword(password);
                 } else {
                     user.setPassword("");
-                    registrationPasswordError = Controller.messageManager.getMessage("message.passwords.unequal");
+                    registrationPasswordError = messageManager.getMessage("message.passwords.unequal");
                     error = true;
                 }
                 if(StringUtils.isEmpty(login) || StringUtils.isEmpty(password) || StringUtils.isEmpty(password_repeat)) {
-                    registrationError = Controller.messageManager.getMessage("message.fields.empty");
+                    registrationError = messageManager.getMessage("message.fields.empty");
                     error = true;
                 }
                 if(!Validation.checkPassword(password)) {
-                    registrationInvalidPasswordError = Controller.messageManager.getMessage("message.password.invalid");
+                    registrationInvalidPasswordError = messageManager.getMessage("message.password.invalid");
                     error = true;
                 }
                 if(error) {
@@ -256,7 +256,7 @@ public class PreparingRegistrationCommand extends ActionSupport implements Servl
                 if(!forward) {
                     result = STEP1;
                 } else if(StringUtils.isEmpty(name)) {
-                    registrationError = Controller.messageManager.getMessage("message.fields.empty");
+                    registrationError = messageManager.getMessage("message.fields.empty");
                     result = STEP2;
                 } else {
                     result = STEP3;
@@ -277,7 +277,7 @@ public class PreparingRegistrationCommand extends ActionSupport implements Servl
                             sessionAttributes.remove("user_registry");
                             result = SUCCESS;
                         } else {
-                            registrationError = Controller.messageManager.getMessage("message.registration.error");
+                            registrationError = messageManager.getMessage("message.registration.error");
                             result = STEP3;
                         }
                     } catch (RegistrationException e) {
