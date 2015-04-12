@@ -3,22 +3,18 @@ package com.shooting_stars.project.entity;
 import java.sql.Date;
 import java.sql.Time;
 
-/**
- * Created by Пользователь on 02.04.2015.
- */
 public class Message {
-    private int messageId;
+    //private int messageId;
     private String message;
+    private User sender;
     private Date date;
     private Time time;
-    private User sender;
 
-    public int getMessageId() {
-        return messageId;
-    }
-
-    public void setMessageId(int messageId) {
-        this.messageId = messageId;
+    public Message(String message, User sender, Date date, Time time) {
+        this.message = message;
+        this.sender = sender;
+        this.date = date;
+        this.time = time;
     }
 
     public String getMessage() {

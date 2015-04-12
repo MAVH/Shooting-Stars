@@ -1,13 +1,11 @@
 package com.shooting_stars.project.dao;
 
 import com.shooting_stars.project.entity.Chat;
+import com.shooting_stars.project.entity.Message;
 import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.exception.DAOException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +23,12 @@ public class MessageDAO extends AbstractDAO {
     public static final String SQL_INSERT_CHAT = "INSERT INTO chat (userId1,userId2) VALUES (?,?)";
     public static final String SQL_SELECT_CHAT_ID = "SELECT chatId FROM chat WHERE (userId1 = ? AND userId2 = ?) " +
             "OR (userId1 = ? AND userId2 = ?)";
-    public static final String SQL_SELECT_MESSAGES_BY_CHAT_ID = "SELECT messageId, message, date, time, sender, login" +
-            " FROM user JOIN message ON user.userId = message.sender WHERE chatId = ?";
+    public static final String SQL_SELECT_MESSAGES_BY_CHAT_ID = "SELECT sender, user_name, surname, message, message.date, message.time" +
+            " FROM message JOIN user_info ON sender = userId WHERE chatId = ? ORDER BY message.date DESC, message.time DESC";
     public static final String SQL_INSERT_MESSAGE = "INSERT INTO message (chatId, message, date, time, sender)" +
             "VALUES (?,?,?,?,?) ";
+    public static final String SQL_UPDATE_MESSAGE_STATUS = "UPDATE message SET isRead = 1 " +
+            "WHERE chatId = ? AND NOT sender = ? AND isRead = 0";
     public MessageDAO(Connection connection) {
         super(connection);
     }
@@ -78,5 +78,62 @@ public class MessageDAO extends AbstractDAO {
         }
         return amount;
     }
-
+    public List<Message> getMessagesByChatId(int chatId) throws DAOException {
+        PreparedStatement ps = null;
+        ResultSet rs;
+        ArrayList<Message> messages = new ArrayList<Message>();
+        try {
+            ps = connection.prepareStatement(SQL_SELECT_MESSAGES_BY_CHAT_ID);
+            ps.setInt(1, chatId);
+            rs = ps.executeQuery();
+            User user;
+            String message;
+            Date date;
+            Time time;
+            while (rs.next()) {
+                user = new User(rs.getInt(1),rs.getString(2), rs.getString(3));
+                message = rs.getString(4);
+                date = rs.getDate(5);
+                time = rs.getTime(6);
+                messages.add(new Message(message,user, date,time));
+            }
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+        return messages;
+    }
+    public void insertMessage(int chatId, String message, int senderId, Date date, Time time) throws DAOException {
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement(SQL_INSERT_MESSAGE);
+            ps.setInt(1, chatId);
+            ps.setString(2, message);
+            ps.setDate(3,date);
+            ps.setTime(4,time);
+            ps.setInt(5, senderId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+    }
+    public void updateMessagesStatus(int chatId, int userId) throws DAOException {
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement(SQL_UPDATE_MESSAGE_STATUS);
+            ps.setInt(1, chatId);
+            ps.setInt(2,userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+    }
 }

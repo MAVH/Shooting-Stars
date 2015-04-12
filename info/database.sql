@@ -3,7 +3,7 @@
 -- Server version:               5.6.21-log - MySQL Community Server (GPL)
 -- Server OS:                    Win64
 -- HeidiSQL version:             7.0.0.4053
--- Date/time:                    2015-04-12 12:03:45
+-- Date/time:                    2015-04-12 18:20:23
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -78,17 +78,23 @@ CREATE TABLE IF NOT EXISTS `message` (
   `chatId` int(10) DEFAULT NULL,
   `message` longtext,
   `date` date DEFAULT NULL,
-  `time` timestamp NULL DEFAULT NULL,
+  `time` time DEFAULT NULL,
   `sender` int(11) DEFAULT NULL,
   `isRead` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`messageId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table shooting_stars_database.message: ~0 rows (approximately)
 DELETE FROM `message`;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
 INSERT INTO `message` (`messageId`, `chatId`, `message`, `date`, `time`, `sender`, `isRead`) VALUES
-	(1, 1, 'bbjj', '2015-04-12', '2015-04-12 11:02:26', 2, 0);
+	(1, 1, 'bbjj', '2015-04-12', '11:02:26', 2, 1),
+	(2, 1, 'hjghdjghdhkg', '2015-04-12', '18:13:11', 2, 1),
+	(3, 1, 'fjgfjgjg', '2015-04-12', '18:13:27', 2, 1),
+	(4, 1, 'hgjkfdhgfdg', '2015-04-12', '18:14:15', 14, 1),
+	(5, 1, 'hgghfgkfdg', '2015-04-12', '18:17:06', 2, 1),
+	(6, 1, 'jghjghjgj', '2015-04-12', '18:17:19', 2, 1),
+	(7, 1, 'gjhgjhgjyj', '2015-04-12', '18:19:22', 14, 1);
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 
 
@@ -107,14 +113,14 @@ CREATE TABLE IF NOT EXISTS `user` (
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`userId`, `login`, `password`, `userInfoId`, `userStatusId`) VALUES
-	(2, 'v', 'c4ca4238a0b923820dcc509a6f75849b', NULL, 0),
+	(2, 'v', 'c4ca4238a0b923820dcc509a6f75849b', NULL, 1),
 	(8, 'bbbv', 'c4ca4238a0b923820dcc509a6f75849b', NULL, NULL),
 	(9, 'ghg', 'c4ca4238a0b923820dcc509a6f75849b', NULL, NULL),
 	(10, 'gdfgd', 'c4ca4238a0b923820dcc509a6f75849b', NULL, NULL),
 	(11, 'hfhfh', 'c4ca4238a0b923820dcc509a6f75849b', NULL, NULL),
 	(12, 'fg', 'c4ca4238a0b923820dcc509a6f75849b', NULL, NULL),
 	(13, 'fdgfg', 'c4ca4238a0b923820dcc509a6f75849b', NULL, NULL),
-	(14, 'h', 'c4ca4238a0b923820dcc509a6f75849b', NULL, 0),
+	(14, 'h', 'c4ca4238a0b923820dcc509a6f75849b', NULL, 1),
 	(15, 'htbh', 'c4ca4238a0b923820dcc509a6f75849b', NULL, NULL),
 	(16, '1', 'c4ca4238a0b923820dcc509a6f75849b', NULL, NULL),
 	(17, 's', '202cb962ac59075b964b07152d234b70', NULL, NULL);

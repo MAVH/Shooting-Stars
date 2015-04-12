@@ -207,5 +207,29 @@
                 /jsp/error/error.jsp
             </result>
         </action>
-    </package>
+        <action name="sendMessage" class="com.shooting_stars.project.command.SendMessageCommand">
+            <result name="success" type="redirectAction">
+                getMessages?chatId=${chatId}
+            </result>
+            <result name="input">
+                getMessages?chatId=${chatId}
+            </result>
+            <result name="error">
+                /jsp/error/error.jsp
+            </result>
+        </action>
+
+        <action name="getMessages" class="com.shooting_stars.project.command.GetMessagesCommand">
+            <result name="success">
+                /jsp/messages.jsp
+            </result>
+            <result name="input" type="redirectAction">
+                index.jsp
+            </result>
+            <result name="error">
+                /jsp/error/error.jsp
+            </result>
+        </action>
+
+</package>
 </struts>
