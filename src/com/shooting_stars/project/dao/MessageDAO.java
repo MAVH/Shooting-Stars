@@ -24,7 +24,8 @@ public class MessageDAO extends AbstractDAO {
     public static final String SQL_SELECT_CHAT_ID = "SELECT chatId FROM chat WHERE (user1Id = ? AND user2Id = ?) " +
             "OR (user1Id = ? AND user2Id = ?)";
     public static final String SQL_SELECT_MESSAGES_BY_CHAT_ID = "SELECT sender, user_name, surname, message, message.date, message.time" +
-            " FROM message JOIN user_info ON sender = userId WHERE chatId = ? ORDER BY message.date DESC, message.time DESC";
+            " FROM message JOIN user_info ON sender = userId WHERE chatId = ?  ORDER BY message.date DESC, message.time DESC " +
+            "LIMIT ?,?";
     public static final String SQL_INSERT_MESSAGE = "INSERT INTO message (chatId, message, date, time, sender)" +
             "VALUES (?,?,?,?,?) ";
     public static final String SQL_UPDATE_MESSAGE_STATUS = "UPDATE message SET isRead = 1 " +
@@ -80,13 +81,15 @@ public class MessageDAO extends AbstractDAO {
         }
         return amount;
     }
-    public List<Message> getMessagesByChatId(int chatId) throws DAOException {
+    public List<Message> getMessagesByChatId(int chatId,int from, int to) throws DAOException {
         PreparedStatement ps = null;
         ResultSet rs;
         ArrayList<Message> messages = new ArrayList<Message>();
         try {
             ps = connection.prepareStatement(SQL_SELECT_MESSAGES_BY_CHAT_ID);
             ps.setInt(1, chatId);
+            ps.setInt(2,from);
+            ps.setInt(3,to);
             rs = ps.executeQuery();
             User user;
             String message;

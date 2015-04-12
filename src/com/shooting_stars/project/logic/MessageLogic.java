@@ -17,6 +17,7 @@ import java.util.List;
 
 
 public class MessageLogic {
+    private static final int MESSAGES_AMOUNT_ON_ONE_PAGE = 10;
     public static void sendMessage(int userFromId, int userToId, String message) throws LogicException {
         Connection connection = null;
         try {
@@ -53,13 +54,14 @@ public class MessageLogic {
             Pool.getPool().returnConnection(connection);
         }
     }
-    public static List<Message> getMessages(int chatId,int userId) throws LogicException {
+    public static List<Message> getMessages(int chatId,int userId, int page) throws LogicException {
         Connection connection = null;
         try {
             connection = Pool.getPool().getConnection();
             MessageDAO messageDAO = new MessageDAO(connection);
-
-            List<Message> messages = messageDAO.getMessagesByChatId(chatId);
+            int from = MESSAGES_AMOUNT_ON_ONE_PAGE * (page - 1);
+            int to = MESSAGES_AMOUNT_ON_ONE_PAGE * page;
+            List<Message> messages = messageDAO.getMessagesByChatId(chatId,from,to);
             messageDAO.updateMessagesStatus(chatId, userId);
             return messages;
         } catch(PoolConnectionException | DAOException e ) {

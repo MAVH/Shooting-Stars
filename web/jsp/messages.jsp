@@ -38,6 +38,11 @@
                 </tr>
             </c:forEach>
         </table>
+        <form action="getMessages">
+            <input type="hidden" name="page" value="${page + 1}"/>
+            <input type="hidden" name="chatId" value="${chatId}">
+            <input type="submit" value="next page"/>
+        </form>
     </c:when>
     <c:otherwise>
         <p>
