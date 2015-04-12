@@ -51,7 +51,7 @@ public class AcceptApplicationCommand extends ActionSupport implements SessionAw
         try {
               //TODO change message
             //change message
-            MessageLogic.sendMessage(currentUser.getUserId(),userId,"message");
+            MessageLogic.sendMessage(currentUser.getUserId(),userId,"application was accepted");
             WishLogic.takeApplication(wishId,userId);
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());

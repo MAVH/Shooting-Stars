@@ -20,15 +20,17 @@ public class MessageDAO extends AbstractDAO {
     public static final String SQL_GET_AMOUNT_UNREAD_MESSAGES_BY_CHAT_ID = "SELECT COUNT(*) " +
             "FROM message JOIN chat ON message.chatId = chat.chatId " +
             "WHERE chat.chatId = ? AND isRead = 0 AND NOT sender = ?";
-    public static final String SQL_INSERT_CHAT = "INSERT INTO chat (userId1,userId2) VALUES (?,?)";
-    public static final String SQL_SELECT_CHAT_ID = "SELECT chatId FROM chat WHERE (userId1 = ? AND userId2 = ?) " +
-            "OR (userId1 = ? AND userId2 = ?)";
+    public static final String SQL_INSERT_CHAT = "INSERT INTO chat (user1Id,user2Id) VALUES (?,?)";
+    public static final String SQL_SELECT_CHAT_ID = "SELECT chatId FROM chat WHERE (user1Id = ? AND user2Id = ?) " +
+            "OR (user1Id = ? AND user2Id = ?)";
     public static final String SQL_SELECT_MESSAGES_BY_CHAT_ID = "SELECT sender, user_name, surname, message, message.date, message.time" +
             " FROM message JOIN user_info ON sender = userId WHERE chatId = ? ORDER BY message.date DESC, message.time DESC";
     public static final String SQL_INSERT_MESSAGE = "INSERT INTO message (chatId, message, date, time, sender)" +
             "VALUES (?,?,?,?,?) ";
     public static final String SQL_UPDATE_MESSAGE_STATUS = "UPDATE message SET isRead = 1 " +
             "WHERE chatId = ? AND NOT sender = ? AND isRead = 0";
+    public static final String SQL_GET_CHATS_AMOUNT_BY_USERS_ID = "SELECT COUNT(*) FROM chat " +
+            "WHERE (user1Id = ? AND user2Id = ?) OR (user1Id = ? AND user2Id = ?)";
     public MessageDAO(Connection connection) {
         super(connection);
     }
@@ -135,5 +137,63 @@ public class MessageDAO extends AbstractDAO {
         finally {
             close(ps);
         }
+    }
+    public int getChatId(int user1Id, int user2Id)throws DAOException {
+        PreparedStatement ps = null;
+        ResultSet rs;
+
+        try {
+            ps = connection.prepareStatement(SQL_SELECT_CHAT_ID);
+            ps.setInt(1,user1Id);
+            ps.setInt(2,user2Id);
+            ps.setInt(3,user2Id);
+            ps.setInt(4,user1Id);
+            rs = ps.executeQuery();
+            int chatId = 0;
+            if(rs.next()) {
+                chatId = rs.getInt(1);
+            }
+            return chatId;
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+    }
+    public void insertChat(int user1Id, int user2Id) throws DAOException {
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement(SQL_INSERT_CHAT);
+            ps.setInt(1, user1Id);
+            ps.setInt(2, user2Id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+    }
+    public int getChatsAmountByUsers(int user1Id, int user2Id) throws DAOException {
+        PreparedStatement ps = null;
+        ResultSet rs;
+        int amount;
+        try {
+            ps = connection.prepareStatement(SQL_GET_CHATS_AMOUNT_BY_USERS_ID);
+            ps.setInt(1,user1Id);
+            ps.setInt(2,user2Id);
+            ps.setInt(3,user2Id);
+            ps.setInt(4,user1Id);
+            rs = ps.executeQuery();
+            rs.next();
+            amount = rs.getInt(1);
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+        return amount;
     }
 }

@@ -87,7 +87,7 @@ public class CancelApplicationCommand extends ActionSupport implements SessionAw
                 userId = currentUserId;
             }
             //change message
-            MessageLogic.sendMessage(currentUserId, receiverId, "message");
+            MessageLogic.sendMessage(currentUserId, receiverId, "cancel application");
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());
             exception = new CommandException(e.getCause());

@@ -17,8 +17,21 @@ import java.util.List;
 
 
 public class MessageLogic {
-    public static void sendMessage(int userId1, int userId2, String message) {
-         //if chat doesn't exist --> insert in table chat
+    public static void sendMessage(int userFromId, int userToId, String message) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            MessageDAO messageDAO = new MessageDAO(connection);
+            if(messageDAO.getChatsAmountByUsers(userFromId,userToId) == 0) {
+                messageDAO.insertChat(userFromId,userToId);
+            }
+            int chatId = messageDAO.getChatId(userFromId,userToId);
+            MessageLogic.sendMessage(chatId,message,userFromId);
+        } catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        } finally {
+            Pool.getPool().returnConnection(connection);
+        }
     }
 
     public static Date getCurrentDate() {

@@ -44,7 +44,7 @@ public class CancelMakingWishCommand extends ActionSupport implements SessionAwa
 
             int userId = WishLogic.cancelWishMaking(wishId);
             //change message
-            MessageLogic.sendMessage(currentUser.getUserId(), userId, "message");
+            MessageLogic.sendMessage(currentUser.getUserId(), userId, "cancel making wish");
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());
             exception = new CommandException(e.getCause());

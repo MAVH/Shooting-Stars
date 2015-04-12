@@ -44,7 +44,7 @@ public class MarkWishMadeCommand extends ActionSupport implements SessionAware {
 
             int userId = WishLogic.markWishMade(wishId);
             //change message
-            MessageLogic.sendMessage(currentUser.getUserId(), userId, "message");
+            MessageLogic.sendMessage(currentUser.getUserId(), userId, "wish was made");
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());
             exception = new CommandException(e.getCause());

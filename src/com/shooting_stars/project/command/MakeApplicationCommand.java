@@ -55,7 +55,7 @@ public class MakeApplicationCommand extends ActionSupport implements SessionAwar
         try {
             userId = WishLogic.makeApplication(wishId, currentUserId);
             //change message
-            MessageLogic.sendMessage(currentUserId, userId, "message");
+            MessageLogic.sendMessage(currentUserId, userId, "application was made");
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());
             exception = new CommandException(e.getCause());
