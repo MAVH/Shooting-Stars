@@ -3,7 +3,7 @@
 -- Server version:               5.6.21-log - MySQL Community Server (GPL)
 -- Server OS:                    Win64
 -- HeidiSQL version:             7.0.0.4053
--- Date/time:                    2015-04-08 21:25:48
+-- Date/time:                    2015-04-12 12:03:45
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -23,11 +23,13 @@ CREATE TABLE IF NOT EXISTS `chat` (
   `user1Id` int(10) DEFAULT NULL,
   `user2Id` int(10) DEFAULT NULL,
   PRIMARY KEY (`chatId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table shooting_stars_database.chat: ~0 rows (approximately)
 DELETE FROM `chat`;
 /*!40000 ALTER TABLE `chat` DISABLE KEYS */;
+INSERT INTO `chat` (`chatId`, `user1Id`, `user2Id`) VALUES
+	(1, 14, 2);
 /*!40000 ALTER TABLE `chat` ENABLE KEYS */;
 
 
@@ -43,8 +45,8 @@ CREATE TABLE IF NOT EXISTS `considered_wish` (
 DELETE FROM `considered_wish`;
 /*!40000 ALTER TABLE `considered_wish` DISABLE KEYS */;
 INSERT INTO `considered_wish` (`wishId`, `userId`) VALUES
-	(22, 14),
-	(29, 2);
+	(21, 2),
+	(22, 14);
 /*!40000 ALTER TABLE `considered_wish` ENABLE KEYS */;
 
 
@@ -64,6 +66,7 @@ DELETE FROM `fulfilled_wish`;
 INSERT INTO `fulfilled_wish` (`wishId`, `userId`, `wishStatusId`, `date`) VALUES
 	(7, 14, 2, '2015-03-19'),
 	(17, 14, 2, '2015-03-19'),
+	(20, 2, 2, '2015-04-09'),
 	(27, 14, 3, NULL);
 /*!40000 ALTER TABLE `fulfilled_wish` ENABLE KEYS */;
 
@@ -71,14 +74,21 @@ INSERT INTO `fulfilled_wish` (`wishId`, `userId`, `wishStatusId`, `date`) VALUES
 -- Dumping structure for table shooting_stars_database.message
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE IF NOT EXISTS `message` (
+  `messageId` int(10) NOT NULL AUTO_INCREMENT,
   `chatId` int(10) DEFAULT NULL,
   `message` longtext,
-  `time` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `date` date DEFAULT NULL,
+  `time` timestamp NULL DEFAULT NULL,
+  `sender` int(11) DEFAULT NULL,
+  `isRead` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`messageId`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table shooting_stars_database.message: ~0 rows (approximately)
 DELETE FROM `message`;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
+INSERT INTO `message` (`messageId`, `chatId`, `message`, `date`, `time`, `sender`, `isRead`) VALUES
+	(1, 1, 'bbjj', '2015-04-12', '2015-04-12 11:02:26', 2, 0);
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 
 
@@ -122,15 +132,15 @@ CREATE TABLE IF NOT EXISTS `user_info` (
   `city` varchar(50) DEFAULT NULL,
   `dateOfBirth` date DEFAULT NULL,
   `abilities` varchar(50) DEFAULT NULL,
-  `photoURL` varchar(50) DEFAULT NULL,
+  `photoName` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Dumping data for table shooting_stars_database.user_info: ~10 rows (approximately)
 DELETE FROM `user_info`;
 /*!40000 ALTER TABLE `user_info` DISABLE KEYS */;
-INSERT INTO `user_info` (`userId`, `user_name`, `surname`, `email`, `country`, `city`, `dateOfBirth`, `abilities`, `photoURL`) VALUES
-	(2, 'veronica', 'haritonova', 'veronica_haritonova@mail.ru', 'belarus', 'Minsk', NULL, 'fnjfdj nc, jdgj', '2.jpg'),
+INSERT INTO `user_info` (`userId`, `user_name`, `surname`, `email`, `country`, `city`, `dateOfBirth`, `abilities`, `photoName`) VALUES
+	(2, 'veronica', 'haritonova', 'veronica_haritonova@mail.ru', 'belarus', 'Minsk', NULL, 'jhjhj', '2.jpg'),
 	(8, 'gfg', 'gfg', '', '', '', NULL, '', NULL),
 	(9, 'wj', 'wqh', '', '', '', NULL, 'gff', NULL),
 	(10, 'tr', 'gfgf', '', '', '', NULL, '', NULL),
@@ -168,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `wish` (
   `wish` tinytext,
   `wishStatusId` int(10) DEFAULT '0',
   PRIMARY KEY (`wishId`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table shooting_stars_database.wish: ~21 rows (approximately)
 DELETE FROM `wish`;
@@ -181,7 +191,7 @@ INSERT INTO `wish` (`wishId`, `userId`, `wish`, `wishStatusId`) VALUES
 	(14, 13, 'dgdgd', 0),
 	(15, 13, 'dgdgdfg', 0),
 	(17, 2, 'fsdfsdf', 2),
-	(20, 14, 'gsdgdsg', 0),
+	(20, 14, 'gsdgdsg', 2),
 	(21, 14, 'gdfgfdgf', 0),
 	(27, 2, 'vfvrfv', 0),
 	(29, 15, 'yuryfh', 0),
@@ -193,7 +203,7 @@ INSERT INTO `wish` (`wishId`, `userId`, `wish`, `wishStatusId`) VALUES
 	(36, 14, 'sss', 0),
 	(38, 17, 'Parachute jump', 0),
 	(39, 17, 'Drums', 0),
-	(40, 2, 'jjgjgjhj', 0);
+	(41, 14, 'ghghh', 0);
 /*!40000 ALTER TABLE `wish` ENABLE KEYS */;
 
 

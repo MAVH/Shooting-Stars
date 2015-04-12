@@ -16,7 +16,7 @@ public class UserDAO extends AbstractDAO {
     public static final String SQL_INSERT_USER_INFO =
             "INSERT INTO user_info (userId, email, user_name, surname, country, city, dateOfBirth, abilities) VALUES (?,?,?,?,?,?,?,?)";
     public static final String SQL_CHECK_LOGIN_EXISTENCE = "SELECT COUNT(login) FROM user WHERE login = ?";
-    public static final  String SQL_UPDATE_PHOTO_URL = "UPDATE user_info SET photoURL = ? WHERE userId = ?";
+    public static final  String SQL_UPDATE_PHOTO_NAME = "UPDATE user_info SET photoName = ? WHERE userId = ?";
     public static final String SQL_FIND_USER_BY_LOGIN = "SELECT userId, login FROM user WHERE login LIKE ?";
     public static final String SQL_SELECT_USER_INFO = "SELECT * FROM user_info WHERE userId = ?";
     public static final String SQL_GET_STATUS = "SELECT status FROM user_status JOIN user ON user.userStatusId = user_status.userStatusId WHERE user.userId = ?";
@@ -113,11 +113,11 @@ public class UserDAO extends AbstractDAO {
         return exist;
     }
 
-    public void updatePhotoURL(int userId, String photoURL) throws DAOException {
+    public void updatePhotoName(int userId, String photoName) throws DAOException {
         PreparedStatement ps = null;
         try {
-            ps = connection.prepareStatement(SQL_UPDATE_PHOTO_URL);
-            ps.setString(1, photoURL);
+            ps = connection.prepareStatement(SQL_UPDATE_PHOTO_NAME);
+            ps.setString(1, photoName);
             ps.setInt(2, userId);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -193,7 +193,7 @@ public class UserDAO extends AbstractDAO {
                 userInfo.setCity(rs.getString("city"));
                 userInfo.setDateOfBirth(rs.getDate("dateOfBirth"));
                 userInfo.setAbilities(rs.getString("abilities"));
-                userInfo.setPhotoName(rs.getString("photoURL"));
+                userInfo.setPhotoName(rs.getString("photoName"));
             }
         } catch (SQLException e) {
             throw new DAOException("SQL exception (request or table failed): ", e);

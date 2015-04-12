@@ -66,7 +66,7 @@ public class UserLogic {
             try {
                 connection = Pool.getPool().getConnection();
                 UserDAO userDAO = new UserDAO(connection);
-                userDAO.updatePhotoURL(userId,fileName);
+                userDAO.updatePhotoName(userId, fileName);
             } catch(PoolConnectionException | DAOException e ) {
                 throw new LogicException(e.getCause());
             } finally {
