@@ -30,6 +30,11 @@
         </c:otherwise>
     </c:choose>
 </div>
+
+<form action="toChat"  method="post">
+    <input type="hidden" name="userId" value="${userId}">
+    <input type="submit" value="Send message"/>
+</form>
 <div>
     <form action="fulfilledWishes"  method="get">
         <input type="hidden" name="userId" value="${userId}">

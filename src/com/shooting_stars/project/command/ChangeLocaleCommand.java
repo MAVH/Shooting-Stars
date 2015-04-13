@@ -8,14 +8,9 @@ import org.apache.struts2.interceptor.SessionAware;
 import java.util.Locale;
 import java.util.Map;
 
-public class ChangeLocaleCommand extends ActionSupport implements SessionAware {
+public class ChangeLocaleCommand extends SessionAwareCommand {
     private static final String PARAM_MESSAGE_MANAGER = "messageManager";
     private String localeValue;
-    private Map<String, Object> sessionAttributes = null;
-    @Override
-    public void setSession(Map<String, Object> stringObjectMap) {
-        sessionAttributes = stringObjectMap;
-    }
     @Override
     public String execute() {
         String newLocale = localeValue;

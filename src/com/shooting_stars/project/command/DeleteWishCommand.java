@@ -10,11 +10,9 @@ import org.apache.struts2.interceptor.SessionAware;
 import java.util.Map;
 
 
-public class DeleteWishCommand extends ActionSupport implements SessionAware {
-    private Exception exception;
+public class DeleteWishCommand extends SessionAwareCommand {
     private int wishId;
     private String messageError;
-    private Map<String, Object> sessionAttributes = null;
 
     public String getMessageError() {
         return messageError;
@@ -32,13 +30,6 @@ public class DeleteWishCommand extends ActionSupport implements SessionAware {
         this.wishId = wishId;
     }
 
-    public Exception getException() {
-        return exception;
-    }
-
-    public void setException(Exception exception) {
-        this.exception = exception;
-    }
 
     @Override
     public String execute() {
@@ -53,10 +44,5 @@ public class DeleteWishCommand extends ActionSupport implements SessionAware {
             result = ERROR;
         }
         return result;
-    }
-
-    @Override
-    public void setSession(Map<String, Object> stringObjectMap) {
-        sessionAttributes = stringObjectMap;
     }
 }

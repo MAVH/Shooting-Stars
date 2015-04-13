@@ -6612,3 +6612,6 @@ button.close {
     display: inline-block;
     width: 200px;
 }
+.userColor {
+    color: #9451ff;
+}

@@ -19,15 +19,20 @@ import java.util.List;
 public class MessageLogic {
     private static final int MESSAGES_AMOUNT_ON_ONE_PAGE = 10;
     public static void sendMessage(int userFromId, int userToId, String message) throws LogicException {
+            int chatId = MessageLogic.getChatId(userFromId,userToId);
+            MessageLogic.sendMessage(chatId,message,userFromId);
+    }
+
+    public static int getChatId(int user1Id, int user2Id) throws LogicException {
         Connection connection = null;
         try {
             connection = Pool.getPool().getConnection();
             MessageDAO messageDAO = new MessageDAO(connection);
-            if(messageDAO.getChatsAmountByUsers(userFromId,userToId) == 0) {
-                messageDAO.insertChat(userFromId,userToId);
+            if(messageDAO.getChatsAmountByUsers(user1Id,user2Id) == 0) {
+                messageDAO.insertChat(user1Id,user2Id);
             }
-            int chatId = messageDAO.getChatId(userFromId,userToId);
-            MessageLogic.sendMessage(chatId,message,userFromId);
+            int chatId = messageDAO.getChatId(user1Id,user2Id);
+            return chatId;
         } catch(PoolConnectionException | DAOException e ) {
             throw new LogicException(e.getCause());
         } finally {
@@ -62,6 +67,13 @@ public class MessageLogic {
             int from = MESSAGES_AMOUNT_ON_ONE_PAGE * (page - 1);
             int to = MESSAGES_AMOUNT_ON_ONE_PAGE * page;
             List<Message> messages = messageDAO.getMessagesByChatId(chatId,from,to);
+            for(Message message : messages) {
+                 if(userId == message.getSender().getUserId()) {
+                     message.setLoggedInUser(true);
+                 } else {
+                     message.setLoggedInUser(false);
+                 }
+            }
             messageDAO.updateMessagesStatus(chatId, userId);
             return messages;
         } catch(PoolConnectionException | DAOException e ) {

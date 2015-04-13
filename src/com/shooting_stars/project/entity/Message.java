@@ -9,6 +9,7 @@ public class Message {
     private User sender;
     private Date date;
     private Time time;
+    private boolean isLoggedInUser;
 
     public Message(String message, User sender, Date date, Time time) {
         this.message = message;
@@ -47,5 +48,13 @@ public class Message {
 
     public void setSender(User sender) {
         this.sender = sender;
+    }
+
+    public boolean isLoggedInUser() {
+        return isLoggedInUser;
+    }
+
+    public void setLoggedInUser(boolean isLoggedInUser) {
+        this.isLoggedInUser = isLoggedInUser;
     }
 }

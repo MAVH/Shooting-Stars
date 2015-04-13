@@ -13,14 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.util.Map;
 
-public class ChangePhotoCommand extends ActionSupport implements SessionAware, ServletRequestAware {
+public class ChangePhotoCommand extends SessionAwareCommand implements ServletRequestAware {
     private File photo;
     private String photoContentType;
     private String photoFileName;
     private String destPath;
-    private Exception exception;
-
-    private Map<String, Object> sessionAttributes = null;
     private HttpServletRequest request = null;
 
     @Override
@@ -32,10 +29,6 @@ public class ChangePhotoCommand extends ActionSupport implements SessionAware, S
         if(FileUtils.sizeOf(photo) > 5000000) {
             addFieldError("photo", messageManager.getMessage("message.photo.large.size"));
         }
-    }
-    @Override
-    public void setSession(Map<String, Object> stringObjectMap) {
-        sessionAttributes = stringObjectMap;
     }
 
     public File getPhoto() {
@@ -68,14 +61,6 @@ public class ChangePhotoCommand extends ActionSupport implements SessionAware, S
 
     public void setPhotoFileName(String photoFileName) {
         this.photoFileName = photoFileName;
-    }
-
-    public Exception getException() {
-        return exception;
-    }
-
-    public void setException(Exception exception) {
-        this.exception = exception;
     }
 
     @Override

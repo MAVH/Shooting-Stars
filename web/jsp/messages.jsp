@@ -8,6 +8,7 @@
 <html>
 <head>
     <title></title>
+    <meta http-equiv="Cache-Control" content="private">
 </head>
 <body>
 <c:import url="header.jsp"/>
@@ -24,7 +25,12 @@
             <c:forEach var="message" items="${messages}">
                 <tr>
                     <td>
-                        <a href="userPage?userId=${message.sender.userId}">${message.sender.name} ${message.sender.surname}</a>
+                        <a href="userPage?userId=${message.sender.userId}" class="<c:if test="${message.isLoggedInUser()}">
+                                   userColor
+                            </c:if>">
+
+                            ${message.sender.name} ${message.sender.surname}
+                        </a>
 
                         <p>
                             ${message.message}

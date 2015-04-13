@@ -173,5 +173,11 @@
             </result>
         </action>
 
+        <action name="toChat" class="com.shooting_stars.project.command.GoToChatCommand">
+            <result name="success" type="redirectAction">
+                getMessages?chatId=${chatId}
+            </result>
+        </action>
+
 </package>
 </struts>

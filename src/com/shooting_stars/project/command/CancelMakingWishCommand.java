@@ -1,41 +1,17 @@
 package com.shooting_stars.project.command;
 
-import com.opensymphony.xwork2.ActionSupport;
 import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.MessageLogic;
 import com.shooting_stars.project.logic.WishLogic;
-import org.apache.struts2.interceptor.SessionAware;
 
 import java.util.Map;
 
 
-public class CancelMakingWishCommand extends ActionSupport implements SessionAware {
-    private Exception exception;
+public class CancelMakingWishCommand extends SessionAwareCommand {
     private int wishId;
 
-    public Exception getException() {
-        return exception;
-    }
-
-    public void setException(Exception exception) {
-        this.exception = exception;
-    }
-
-    public int getWishId() {
-        return wishId;
-    }
-
-    public void setWishId(int wishId) {
-        this.wishId = wishId;
-    }
-
-    private Map<String, Object> sessionAttributes = null;
-    @Override
-    public void setSession(Map<String, Object> stringObjectMap) {
-        sessionAttributes = stringObjectMap;
-    }
     @Override
     public String execute() {
         String result = SUCCESS;
@@ -51,5 +27,20 @@ public class CancelMakingWishCommand extends ActionSupport implements SessionAwa
             result = ERROR;
         }
         return result;
+    }
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception exception) {
+        this.exception = exception;
+    }
+
+    public int getWishId() {
+        return wishId;
+    }
+
+    public void setWishId(int wishId) {
+        this.wishId = wishId;
     }
 }
