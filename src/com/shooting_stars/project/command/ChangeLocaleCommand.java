@@ -34,7 +34,6 @@ public class ChangeLocaleCommand extends ActionSupport implements SessionAware {
         return SUCCESS;
 
     }
-
     public String getLocaleValue() {
         return localeValue;
     }

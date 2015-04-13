@@ -8,6 +8,11 @@
     <!--
     <constant name="struts.multipart.maxSize" value="1000000" />   -->
     <package name="default" namespace="/" extends="struts-default">
+        <global-results>
+            <result name="error">
+                /jsp/error/error.jsp
+            </result>
+        </global-results>
         <action name="login" class="com.shooting_stars.project.command.LoginCommand">
             <result name="success" type="redirectAction">
                 userPage
@@ -17,9 +22,6 @@
             </result>
             <result name="input">
                 /index.jsp
-            </result>
-            <result name="error">
-                /jsp/error/error.jsp
             </result>
         </action>
         <action name="logout" class="com.shooting_stars.project.command.LogoutCommand">
@@ -39,9 +41,6 @@
             <result name="other_user">
                 /jsp/userPage.jsp
             </result>
-            <result name="error">
-                /jsp/error/error.jsp
-            </result>
         </action>
 
         <action name="registration" class="com.shooting_stars.project.command.PreparingRegistrationCommand">
@@ -56,9 +55,6 @@
             </result>
             <result name="step3">
                 /jsp/registration3.jsp
-            </result>
-            <result name="error">
-                /jsp/error/error.jsp
             </result>
         </action>
 
@@ -76,41 +72,26 @@
             <result name="input">
                 /jsp/changingData/changePhoto.jsp
             </result>
-            <result name="error">
-                /jsp/error/error.jsp
-            </result>
         </action>
 
         <action name="saveWishes" class="com.shooting_stars.project.command.SaveWishesCommand">
             <result name="success" type="redirectAction">
                 userPage
             </result>
-            <result name="error">
-                /jsp/error/error.jsp
-            </result>
         </action>
         <action name="deleteWish" class="com.shooting_stars.project.command.DeleteWishCommand">
             <result name="success" type="redirectAction">
                 userPage
-            </result>
-            <result name="error">
-                /jsp/error/error.jsp
             </result>
         </action>
         <action name="acceptApplication" class="com.shooting_stars.project.command.AcceptApplicationCommand">
             <result name="success" type="redirectAction">
                 userPage
             </result>
-            <result name="error">
-                /jsp/error/error.jsp
-            </result>
         </action>
         <action name="cancelMakingWish" class="com.shooting_stars.project.command.CancelMakingWishCommand">
             <result name="success" type="redirectAction">
                 userPage
-            </result>
-            <result name="error">
-                /jsp/error/error.jsp
             </result>
         </action>
         <action name="cancelApplication" class="com.shooting_stars.project.command.CancelApplicationCommand">
@@ -120,56 +101,35 @@
             <result name="myPage" type="redirectAction" >
                 fulfilledWishes?userId=${currentUserId}
             </result>
-            <result name="error">
-                /jsp/error/error.jsp
-            </result>
         </action>
         <action name="makeApplication" class="com.shooting_stars.project.command.MakeApplicationCommand">
             <result name="success" type="redirectAction" >
                 userPage?userId=${userId}
-            </result>
-            <result name="error">
-                /jsp/error/error.jsp
             </result>
         </action>
         <action name="wishMade" class="com.shooting_stars.project.command.MarkWishMadeCommand">
             <result name="success" type="redirectAction" >
                 userPage
             </result>
-            <result name="error">
-                /jsp/error/error.jsp
-            </result>
         </action>
         <action name="myFulfilledWishes" class="com.shooting_stars.project.command.GetUsersWishesFulfilledCommand">
             <result name="success">
                 /jsp/myFulfilledWishes.jsp
-            </result>
-            <result name="error">
-                /jsp/error/error.jsp
             </result>
         </action>
         <action name="fulfilledWishes" class="com.shooting_stars.project.command.GetWishesUserParticipatesInCommand">
             <result name="success">
                 /jsp/myWishes.jsp
             </result>
-            <result name="error">
-                /jsp/error/error.jsp
-            </result>
         </action>
         <action name="searchByLogin" class="com.shooting_stars.project.command.SearchByLoginCommand">
             <result name="success">
                 /jsp/search.jsp
             </result>
-            <result name="error">
-                /jsp/error/error.jsp
-            </result>
         </action>
         <action name="editUserInfo" class="com.shooting_stars.project.command.EditUserInfoCommand">
             <result name="success">
                 /jsp/infoEditor.jsp
-            </result>
-            <result name="error">
-                /jsp/error/error.jsp
             </result>
         </action>
         <action name="saveEditedUserInfo" class="com.shooting_stars.project.command.SaveEditedUserInfoCommand">
@@ -179,32 +139,20 @@
             <result name="input">
                 /jsp/infoEditor.jsp
             </result>
-            <result name="error">
-                /jsp/error/error.jsp
-            </result>
         </action>
         <action name="editUserAbilities" class="com.shooting_stars.project.command.EditUserAbilitiesCommand">
             <result name="success">
                 /jsp/abilitiesEditor.jsp
-            </result>
-            <result name="error">
-                /jsp/error/error.jsp
             </result>
         </action>
         <action name="saveEditedUserAbilities" class="com.shooting_stars.project.command.SaveEditedUserAbilitiesCommand">
             <result name="success" type="redirectAction" >
                 userPage
             </result>
-            <result name="error">
-                /jsp/error/error.jsp
-            </result>
         </action>
         <action name="getChats" class="com.shooting_stars.project.command.GetUserChatsCommand">
             <result name="success"  >
                 /jsp/chats.jsp
-            </result>
-            <result name="error">
-                /jsp/error/error.jsp
             </result>
         </action>
         <action name="sendMessage" class="com.shooting_stars.project.command.SendMessageCommand">
@@ -214,9 +162,6 @@
             <result name="input">
                 getMessages?chatId=${chatId}
             </result>
-            <result name="error">
-                /jsp/error/error.jsp
-            </result>
         </action>
 
         <action name="getMessages" class="com.shooting_stars.project.command.GetMessagesCommand">
@@ -225,9 +170,6 @@
             </result>
             <result name="input" type="redirectAction">
                 index.jsp
-            </result>
-            <result name="error">
-                /jsp/error/error.jsp
             </result>
         </action>
 
