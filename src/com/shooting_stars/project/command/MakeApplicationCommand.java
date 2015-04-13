@@ -13,9 +13,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-public class MakeApplicationCommand extends ActionSupport implements SessionAware {
-    private Map<String, Object> sessionAttributes = null;
-    private Exception exception;
+public class MakeApplicationCommand extends SessionAwareCommand {
     private int wishId;
     private int userId;
 
@@ -25,19 +23,6 @@ public class MakeApplicationCommand extends ActionSupport implements SessionAwar
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    @Override
-    public void setSession(Map<String, Object> stringObjectMap) {
-        sessionAttributes = stringObjectMap;
-    }
-
-    public Exception getException() {
-        return exception;
-    }
-
-    public void setException(Exception exception) {
-        this.exception = exception;
     }
 
     public int getWishId() {
@@ -50,8 +35,7 @@ public class MakeApplicationCommand extends ActionSupport implements SessionAwar
     @Override
     public String execute() {
         String result = SUCCESS;
-        User currentUser = (User)sessionAttributes.get("user");
-        int currentUserId = currentUser.getUserId();
+        int currentUserId = getCurrentUserId();
         try {
             userId = WishLogic.makeApplication(wishId, currentUserId);
             //change message

@@ -11,10 +11,8 @@ import org.apache.struts2.interceptor.SessionAware;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class GetWishesUserParticipatesInCommand extends ActionSupport implements SessionAware {
-    private Map<String, Object> sessionAttributes = null;
+public class GetWishesUserParticipatesInCommand extends SessionAwareCommand {
     private int userId;
-    private Exception exception;
     private ArrayList<Wish> wishes;
     private boolean isPageOwner;
 
@@ -42,25 +40,16 @@ public class GetWishesUserParticipatesInCommand extends ActionSupport implements
         this.wishes = wishes;
     }
 
-    public Exception getException() {
-        return exception;
-    }
-
-    public void setException(Exception exception) {
-        this.exception = exception;
-    }
-
     @Override
     public String execute() {
         String result = SUCCESS;
         try {
-            User user = (User)sessionAttributes.get("user");
-            if(user.getUserId() == userId) {
+            int currentUserId = getCurrentUserId();
+            if(currentUserId == userId) {
                 isPageOwner = true;
             } else {
                 isPageOwner = false;
             }
-            System.out.println(isPageOwner);
             wishes = WishLogic.getWishesByMakerId(userId);
         } catch (LogicException e) {
             LOG.error(e.getMessage(), e.getCause());
@@ -68,9 +57,5 @@ public class GetWishesUserParticipatesInCommand extends ActionSupport implements
             result = ERROR;
         }
         return result;
-    }
-    @Override
-    public void setSession(Map<String, Object> stringObjectMap) {
-        this.sessionAttributes = stringObjectMap;
     }
 }

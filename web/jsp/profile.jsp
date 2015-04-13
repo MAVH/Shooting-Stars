@@ -45,11 +45,11 @@
     </div>
     <div>
         <form class="formWishes" action="fulfilledWishes"  method="get">
-            <input type="hidden" name="userId" value="${user.userId}">
+            <input type="hidden" name="userId" value="${currentUserId}">
             <input type="submit" value="The wishes I've fulfilled"/>
         </form>
         <form class="formWishes" action="myFulfilledWishes" method="get">
-            <input type="hidden" name="userId" value="${user.userId}">
+            <input type="hidden" name="userId" value="${currentUserId}">
             <input type="submit" value="My fulfilled wishes"/>
         </form>
     </div>

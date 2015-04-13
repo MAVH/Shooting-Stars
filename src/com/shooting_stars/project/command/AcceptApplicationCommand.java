@@ -1,6 +1,5 @@
 package com.shooting_stars.project.command;
 
-import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.MessageLogic;
@@ -12,11 +11,11 @@ public class AcceptApplicationCommand extends SessionAwareCommand {
     @Override
     public String execute() {
         String result = SUCCESS;
-        User currentUser = (User)sessionAttributes.get("user");
+        int currentUserId = getCurrentUserId();
         try {
               //TODO change message
-            //change message
-            MessageLogic.sendMessage(currentUser.getUserId(),userId,"application was accepted");
+
+            MessageLogic.sendMessage(currentUserId, userId,"application was accepted");
             WishLogic.takeApplication(wishId,userId);
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());

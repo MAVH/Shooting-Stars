@@ -11,15 +11,14 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import java.util.Map;
 
-public class LoginCommand extends ActionSupport implements SessionAware {
+public class LoginCommand extends SessionAwareCommand {
     private String login;
     private String password;
     private String loginOrPasswordErrorMessage;
-    private Exception exception;
     private MessageManager messageManager;
     private final static String LOGIN_FAILED = "login_failed";
+    private static final String PARAM_CURRENT_USER_ID = "currentUserId";
 
-    private Map<String, Object> sessionAttributes = null;
 
 
     @Override
@@ -43,7 +42,8 @@ public class LoginCommand extends ActionSupport implements SessionAware {
             try {
                 User user = LoginLogic.checkUser(login, password);
                 if (user != null) {
-                    sessionAttributes.put("user", user);
+                    sessionAttributes.put(PARAM_CURRENT_USER_ID,user.getUserId());
+                    //sessionAttributes.put("user", user);
                     result = SUCCESS;
                 } else {
                     loginOrPasswordErrorMessage = messageManager.getMessage("message.login.error");
@@ -80,18 +80,5 @@ public class LoginCommand extends ActionSupport implements SessionAware {
 
     public void setLoginOrPasswordErrorMessage(String loginOrPasswordErrorMessage) {
         this.loginOrPasswordErrorMessage = loginOrPasswordErrorMessage;
-    }
-
-    public Exception getException() {
-        return exception;
-    }
-
-    public void setException(Exception exception) {
-        this.exception = exception;
-    }
-
-    @Override
-    public void setSession(Map<String, Object> stringObjectMap) {
-        this.sessionAttributes = stringObjectMap;
     }
 }

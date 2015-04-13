@@ -11,17 +11,15 @@ import org.apache.struts2.interceptor.SessionAware;
 import java.util.List;
 import java.util.Map;
 
-public class GetMessagesCommand extends ActionSupport implements SessionAware {
+public class GetMessagesCommand extends SessionAwareCommand {
     private int chatId;
     private int page = 1;
-    private Exception exception;
     private List<Message> messages;
-    private Map<String, Object> sessionAttributes = null;
 
 
     int currentUserId;
     public void validate() {
-        currentUserId = ((User)sessionAttributes.get("user")).getUserId();
+        currentUserId = getCurrentUserId();
         //проверка, является ли текущий пользователь участником чата
     }
     @Override
@@ -36,9 +34,6 @@ public class GetMessagesCommand extends ActionSupport implements SessionAware {
         }
         return result;
     }
-    public void setSession(Map<String, Object> stringObjectMap) {
-        sessionAttributes = stringObjectMap;
-    }
 
     public int getChatId() {
         return chatId;
@@ -46,14 +41,6 @@ public class GetMessagesCommand extends ActionSupport implements SessionAware {
 
     public void setChatId(int chatId) {
         this.chatId = chatId;
-    }
-
-    public Exception getException() {
-        return exception;
-    }
-
-    public void setException(Exception exception) {
-        this.exception = exception;
     }
 
     public List<Message> getMessages() {

@@ -67,9 +67,9 @@ public class ChangePhotoCommand extends SessionAwareCommand implements ServletRe
     public String execute() {
         String result = SUCCESS;
         try{
-            User currentUser = (User)sessionAttributes.get("user");
+            int currentUserId = getCurrentUserId();
             String path = request.getServletContext().getRealPath("/img/userPhoto");
-            UserLogic.changePhotoURL(currentUser.getUserId(),path,photoFileName,photo);
+            UserLogic.changePhotoURL(currentUserId,path,photoFileName,photo);
         } catch (LogicException e) {
             exception = new CommandException(e.getCause());
             LOG.error(exception.getMessage(), exception.getCause());

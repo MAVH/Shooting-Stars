@@ -18,10 +18,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class PreparingRegistrationCommand extends ActionSupport implements ServletRequestAware,SessionAware {
+public class PreparingRegistrationCommand extends SessionAwareCommand implements ServletRequestAware {
 
     private HttpServletRequest request = null;
-    private Map<String, Object> sessionAttributes = null;
     private int part;
     private  String login;
     private String password;
@@ -42,7 +41,6 @@ public class PreparingRegistrationCommand extends ActionSupport implements Servl
     private String registrationLoginError;
     private String registrationPasswordError;
     private String registrationInvalidPasswordError;
-    private Exception exception;
 
     public String getRegistrationInvalidPasswordError() {
         return registrationInvalidPasswordError;
@@ -180,14 +178,6 @@ public class PreparingRegistrationCommand extends ActionSupport implements Servl
         this.registrationPasswordError = registrationPasswordError;
     }
 
-    public Exception getException() {
-        return exception;
-    }
-
-    public void setException(Exception exception) {
-        this.exception = exception;
-    }
-
     @Override
     public String execute() throws CommandException {
         MessageManager messageManager = (MessageManager)sessionAttributes.get("messageManager");
@@ -273,7 +263,7 @@ public class PreparingRegistrationCommand extends ActionSupport implements Servl
                     try {
                         User newUser = RegistrationLogic.addUser(user);
                         if (newUser != null) {
-                            sessionAttributes.put("user", newUser);
+                            sessionAttributes.put("currentUserId", newUser.getUserId());
                             sessionAttributes.remove("user_registry");
                             result = SUCCESS;
                         } else {
@@ -289,10 +279,6 @@ public class PreparingRegistrationCommand extends ActionSupport implements Servl
                 return result;
         }
         return null;
-    }
-    @Override
-    public void setSession(Map<String, Object> stringObjectMap) {
-        this.sessionAttributes = stringObjectMap;
     }
 
     @Override

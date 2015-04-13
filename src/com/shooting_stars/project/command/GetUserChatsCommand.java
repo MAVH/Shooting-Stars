@@ -12,33 +12,22 @@ import org.apache.struts2.interceptor.SessionAware;
 import java.util.List;
 import java.util.Map;
 
-public class GetUserChatsCommand extends ActionSupport implements SessionAware {
-    private Exception exception;
-    private Map<String, Object> sessionAttributes = null;
+public class GetUserChatsCommand extends SessionAwareCommand {
+
     private List<Chat> chats;
 
-    public void setSession(Map<String, Object> stringObjectMap) {
-        sessionAttributes = stringObjectMap;
-    }
     @Override
     public String execute() {
         String result = SUCCESS;
-        User currentUser = (User)sessionAttributes.get("user");
+        int currentUserId = getCurrentUserId();
         try {
-            chats = MessageLogic.getUserChats(currentUser.getUserId());
+            chats = MessageLogic.getUserChats(currentUserId);
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());
             exception = new CommandException(e.getCause());
             result = ERROR;
         }
         return result;
-    }
-    public Exception getException() {
-        return exception;
-    }
-
-    public void setException(Exception exception) {
-        this.exception = exception;
     }
 
     public List<Chat> getChats() {

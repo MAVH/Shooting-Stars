@@ -7,8 +7,12 @@ import java.util.Map;
 
 public class SessionAwareCommand extends Command implements SessionAware {
     protected Map<String, Object> sessionAttributes = null;
+    private static final String PARAM_CURRENT_USER_ID = "currentUserId";
     @Override
     public void setSession(Map<String, Object> stringObjectMap) {
         sessionAttributes = stringObjectMap;
+    }
+    protected int getCurrentUserId() {
+        return (Integer)sessionAttributes.get(PARAM_CURRENT_USER_ID);
     }
 }

@@ -11,11 +11,9 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import java.util.Map;
 
-public class SendMessageCommand extends ActionSupport implements SessionAware {
+public class SendMessageCommand extends SessionAwareCommand {
     private String message;
     private int chatId;
-    private Exception exception;
-    private Map<String, Object> sessionAttributes = null;
 
     @Override
     public void validate() {
@@ -27,7 +25,7 @@ public class SendMessageCommand extends ActionSupport implements SessionAware {
     public String execute() {
         String result = SUCCESS;
         try {
-            int currentUserId = ((User)sessionAttributes.get("user")).getUserId();
+            int currentUserId = getCurrentUserId();
             MessageLogic.sendMessage(chatId, message, currentUserId);
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());
@@ -56,13 +54,5 @@ public class SendMessageCommand extends ActionSupport implements SessionAware {
 
     public void setChatId(int chatId) {
         this.chatId = chatId;
-    }
-
-    public Exception getException() {
-        return exception;
-    }
-
-    public void setException(Exception exception) {
-        this.exception = exception;
     }
 }

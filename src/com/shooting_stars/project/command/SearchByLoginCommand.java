@@ -11,8 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by Пользователь on 02.04.2015.
  */
-public class SearchByLoginCommand extends ActionSupport {
-    private Exception exception;
+public class SearchByLoginCommand extends Command {
     private String login;
     private ArrayList<User> foundUsers;
 
@@ -22,14 +21,6 @@ public class SearchByLoginCommand extends ActionSupport {
 
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public Exception getException() {
-        return exception;
-    }
-
-    public void setException(Exception exception) {
-        this.exception = exception;
     }
 
     public ArrayList<User> getFoundUsers() {

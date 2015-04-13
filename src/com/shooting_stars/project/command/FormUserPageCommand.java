@@ -15,26 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class FormUserPageCommand extends ActionSupport implements ServletRequestAware,SessionAware {
+public class FormUserPageCommand extends SessionAwareCommand implements ServletRequestAware {
 
     private HttpServletRequest request = null;
-    private Map<String, Object> sessionAttributes = null;
-
     private int userId;
-    private Exception exception;
     private ArrayList<Wish> wishes;
     private String status;
     private static final String USER = "user";
     private static final String OTHER_USER = "other_user";
     private UserInfo userInfo;
-
-    public Exception getException() {
-        return exception;
-    }
-
-    public void setException(Exception exception) {
-        this.exception = exception;
-    }
 
     public int getUserId() {
         return userId;
@@ -72,12 +61,11 @@ public class FormUserPageCommand extends ActionSupport implements ServletRequest
     public String execute() {
         String result = OTHER_USER;
         try {
-            User user = (User)sessionAttributes.get("user");
-            int id = user.getUserId();
+            int currentUserId = getCurrentUserId();
             if(request.getParameter("userId") == null) {
-                    userId = id;
+                    userId = currentUserId;
             }
-            if (userId == id) {
+            if (userId == currentUserId) {
                 result = USER;
             }
             userInfo = UserLogic.getUserInfo(userId);
@@ -90,11 +78,6 @@ public class FormUserPageCommand extends ActionSupport implements ServletRequest
             result = ERROR;
         }
         return result;
-    }
-
-    @Override
-    public void setSession(Map<String, Object> stringObjectMap) {
-          this.sessionAttributes = stringObjectMap;
     }
 
     @Override

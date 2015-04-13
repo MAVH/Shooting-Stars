@@ -14,12 +14,10 @@ import org.apache.struts2.interceptor.SessionAware;
 import java.sql.Date;
 import java.util.Map;
 
-public class SaveEditedUserInfoCommand extends ActionSupport implements SessionAware, ModelDriven<UserInfo> {
+public class SaveEditedUserInfoCommand extends SessionAwareCommand implements ModelDriven<UserInfo> {
 
-    private Exception exception;
     private String date;
     private UserInfo userInfo = new UserInfo();
-    private Map<String, Object> sessionAttributes = null;
     private MessageManager messageManager;
     @Override
     public void validate() {
@@ -33,11 +31,11 @@ public class SaveEditedUserInfoCommand extends ActionSupport implements SessionA
         String result = SUCCESS;
         try {
 
-            int userId = ((User) sessionAttributes.get("user")).getUserId();
+            int currentUserId = getCurrentUserId();
             if(!StringUtils.isEmpty(date)) {
                 userInfo.setDateOfBirth(Date.valueOf(date));
             }
-            UserLogic.updateUserInfo(userId, userInfo);
+            UserLogic.updateUserInfo(currentUserId, userInfo);
         } catch (LogicException e) {
             LOG.error(e.getMessage(), e.getCause());
             result = ERROR;
@@ -52,19 +50,6 @@ public class SaveEditedUserInfoCommand extends ActionSupport implements SessionA
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public Exception getException() {
-        return exception;
-    }
-
-    public void setException(Exception exception) {
-        this.exception = exception;
-    }
-
-    @Override
-    public void setSession(Map<String, Object> stringObjectMap) {
-        this.sessionAttributes = stringObjectMap;
     }
 
     @Override

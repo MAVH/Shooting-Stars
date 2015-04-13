@@ -9,9 +9,8 @@ import com.shooting_stars.project.logic.WishLogic;
 
 import java.util.ArrayList;
 
-public class GetUsersWishesFulfilledCommand extends ActionSupport {
+public class GetUsersWishesFulfilledCommand extends Command {
     private int userId;
-    private Exception exception;
     private ArrayList<Wish> wishes;
 
     public int getUserId() {
@@ -30,13 +29,6 @@ public class GetUsersWishesFulfilledCommand extends ActionSupport {
         this.wishes = wishes;
     }
 
-    public Exception getException() {
-        return exception;
-    }
-
-    public void setException(Exception exception) {
-        this.exception = exception;
-    }
 
     @Override
     public String execute() {

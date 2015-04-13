@@ -1,6 +1,5 @@
 package com.shooting_stars.project.command;
 
-import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.MessageLogic;
@@ -14,8 +13,7 @@ public class CancelApplicationCommand extends SessionAwareCommand {
     @Override
     public String execute() {
         String result = SUCCESS;
-        User currentUser = (User)sessionAttributes.get("user");
-        currentUserId = currentUser.getUserId();
+        currentUserId = getCurrentUserId();
         int receiverId;
         try {
             int applicantId = userId;
@@ -30,7 +28,7 @@ public class CancelApplicationCommand extends SessionAwareCommand {
                 receiverId = applicantId;
                 userId = currentUserId;
             }
-            //change message
+            //TODO change message
             MessageLogic.sendMessage(currentUserId, receiverId, "cancel application");
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());

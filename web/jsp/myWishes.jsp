@@ -44,7 +44,7 @@
                                      <form action="cancelApplication" method="post">
                                          <input type="hidden" name="pageCode" value="1">
                                          <input type="hidden" name="wishId" value="${wish.wishId}"/>
-                                         <input type=hidden name=userId value="${user.userId}">
+                                         <input type=hidden name=userId value="${currentUserId}">
                                          <input type=submit value="<fmt:message key="cancel"/>">
                                      </form>
                                  </c:if>

@@ -10,37 +10,22 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import java.util.Map;
 
-public class EditUserInfoCommand extends ActionSupport implements SessionAware {
+public class EditUserInfoCommand extends SessionAwareCommand {
 
-    private Exception exception;
     private UserInfo userInfo;
-    private Map<String, Object> sessionAttributes = null;
 
     @Override
     public String execute() {
         String result = SUCCESS;
         try {
-            int userId = ((User) sessionAttributes.get("user")).getUserId();
-            userInfo = UserLogic.getUserInfo(userId);
+            int currentUserId = getCurrentUserId();
+            userInfo = UserLogic.getUserInfo(currentUserId);
         } catch (LogicException e) {
             LOG.error(e.getMessage(), e.getCause());
             result = ERROR;
             exception = new CommandException(e.getCause());
         }
         return result;
-    }
-
-    public Exception getException() {
-        return exception;
-    }
-
-    public void setException(Exception exception) {
-        this.exception = exception;
-    }
-
-    @Override
-    public void setSession(Map<String, Object> stringObjectMap) {
-        this.sessionAttributes = stringObjectMap;
     }
 
     public UserInfo getUserInfo() {

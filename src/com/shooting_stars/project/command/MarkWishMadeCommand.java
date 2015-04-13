@@ -11,17 +11,8 @@ import org.apache.struts2.interceptor.SessionAware;
 import java.util.Map;
 
 
-public class MarkWishMadeCommand extends ActionSupport implements SessionAware {
-    private Exception exception;
+public class MarkWishMadeCommand extends SessionAwareCommand {
     private int wishId;
-
-    public Exception getException() {
-        return exception;
-    }
-
-    public void setException(Exception exception) {
-        this.exception = exception;
-    }
 
     public int getWishId() {
         return wishId;
@@ -31,20 +22,15 @@ public class MarkWishMadeCommand extends ActionSupport implements SessionAware {
         this.wishId = wishId;
     }
 
-    private Map<String, Object> sessionAttributes = null;
-    @Override
-    public void setSession(Map<String, Object> stringObjectMap) {
-        sessionAttributes = stringObjectMap;
-    }
     @Override
     public String execute() {
         String result = SUCCESS;
-        User currentUser = (User)sessionAttributes.get("user");
+        int currentUserId = getCurrentUserId();
         try {
 
             int userId = WishLogic.markWishMade(wishId);
             //change message
-            MessageLogic.sendMessage(currentUser.getUserId(), userId, "wish was made");
+            MessageLogic.sendMessage(currentUserId, userId, "wish was made");
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());
             exception = new CommandException(e.getCause());

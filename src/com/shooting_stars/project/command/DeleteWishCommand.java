@@ -1,13 +1,10 @@
 package com.shooting_stars.project.command;
 
-import com.opensymphony.xwork2.ActionSupport;
+
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.WishLogic;
 import com.shooting_stars.project.manager.MessageManager;
-import org.apache.struts2.interceptor.SessionAware;
-
-import java.util.Map;
 
 
 public class DeleteWishCommand extends SessionAwareCommand {
@@ -29,7 +26,6 @@ public class DeleteWishCommand extends SessionAwareCommand {
     public void setWishId(int wishId) {
         this.wishId = wishId;
     }
-
 
     @Override
     public String execute() {

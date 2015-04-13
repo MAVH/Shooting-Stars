@@ -30,8 +30,8 @@ public class OnlineListener implements HttpSessionAttributeListener {
     }
 
     private void changeStatus(HttpSessionBindingEvent httpSessionBindingEvent, int newStatusId) {
-        if(httpSessionBindingEvent.getName().equals("user")) {
-            int id = ((User) httpSessionBindingEvent.getValue()).getUserId();
+        if(httpSessionBindingEvent.getName().equals("currentUserId")) {
+            int id = (Integer)httpSessionBindingEvent.getValue();
             try {
                 UserLogic.setUserStatus(id, newStatusId);
             } catch(LogicException e) {

@@ -5,7 +5,7 @@
     <title></title>
   </head>
   <body>
-    <c:if test="${not empty user}">
+    <c:if test="${not empty currentUserId}">
         <c:redirect url="${pageContext.request.contextPath}/userPage"/>
     </c:if>
     <jsp:forward page="jsp/login.jsp"/>
