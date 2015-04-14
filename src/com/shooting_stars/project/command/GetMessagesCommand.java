@@ -15,6 +15,7 @@ public class GetMessagesCommand extends SessionAwareCommand {
     private int chatId;
     private int page = 1;
     private List<Message> messages;
+    private int messagesAmount;
 
 
     int currentUserId;
@@ -26,6 +27,9 @@ public class GetMessagesCommand extends SessionAwareCommand {
     public String execute() {
         String result = SUCCESS;
         try {
+            if(messagesAmount == 0) {
+                messagesAmount = MessageLogic.getMessagesAmount(chatId);
+            }
             messages = MessageLogic.getMessages(chatId, currentUserId, page);
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());
@@ -57,5 +61,13 @@ public class GetMessagesCommand extends SessionAwareCommand {
 
     public void setPage(int page) {
         this.page = page;
+    }
+
+    public int getMessagesAmount() {
+        return messagesAmount;
+    }
+
+    public void setMessagesAmount(int messagesAmount) {
+        this.messagesAmount = messagesAmount;
     }
 }

@@ -14,7 +14,7 @@
 <body>
     <a class="lang" href="${pageContext.request.contextPath}/changeLocale?localeValue=EN">EN</a>
     <a class="lang" href="${pageContext.request.contextPath}/changeLocale?localeValue=RU">РУС</a>
-    <c:if test="${not empty user}">
+    <c:if test="${not empty currentUserId}">
         <a href="${pageContext.request.contextPath}/logout" class="logout"><fmt:message key="logout"/></a>
         <form action="searchByLogin" method="get">
             <input type="search" name="login" class="searchField" placeholder="<fmt:message key="search"/>"/>

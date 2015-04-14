@@ -32,6 +32,9 @@ public class MessageDAO extends AbstractDAO {
             "WHERE chatId = ? AND NOT sender = ? AND isRead = 0";
     public static final String SQL_GET_CHATS_AMOUNT_BY_USERS_ID = "SELECT COUNT(*) FROM chat " +
             "WHERE (user1Id = ? AND user2Id = ?) OR (user1Id = ? AND user2Id = ?)";
+
+    public static final String SQL_COUNT_MESSAGES_BY_CHAT_ID = "SELECT COUNT(*) FROM message WHERE chatId = ?";
+
     public MessageDAO(Connection connection) {
         super(connection);
     }
@@ -188,6 +191,24 @@ public class MessageDAO extends AbstractDAO {
             ps.setInt(2,user2Id);
             ps.setInt(3,user2Id);
             ps.setInt(4,user1Id);
+            rs = ps.executeQuery();
+            rs.next();
+            amount = rs.getInt(1);
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+        return amount;
+    }
+    public int countMessages(int chatId) throws DAOException {
+        PreparedStatement ps = null;
+        ResultSet rs;
+        int amount;
+        try {
+            ps = connection.prepareStatement(SQL_COUNT_MESSAGES_BY_CHAT_ID);
+            ps.setInt(1,chatId);
             rs = ps.executeQuery();
             rs.next();
             amount = rs.getInt(1);

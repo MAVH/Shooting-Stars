@@ -1,6 +1,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="ctg" uri="customtags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <fmt:setLocale value="${currentLocale}" scope="session" />
@@ -44,11 +45,7 @@
                 </tr>
             </c:forEach>
         </table>
-        <form action="getMessages">
-            <input type="hidden" name="page" value="${page + 1}"/>
-            <input type="hidden" name="chatId" value="${chatId}">
-            <input type="submit" value="next page"/>
-        </form>
+        <ctg:messagesPager chatId="${chatId}" currentPage="${page}" generalAmount="${messagesAmount}"/>
     </c:when>
     <c:otherwise>
         <p>
