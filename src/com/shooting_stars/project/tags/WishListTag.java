@@ -37,7 +37,8 @@ public class WishListTag extends TagSupport {
             //isProfilePage = true;
             HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
             HttpSession session = request.getSession();
-            User currentUser = (User)session.getAttribute("user");
+            //User currentUser = (User)session.getAttribute("user");
+            int currentUserId = (Integer)session.getAttribute("currentUserId");
             /*
             if(request.getParameter("userId") != null) {
                 if(currentUser.getUserId() != Integer.parseInt(request.getParameter("userId"))) {
@@ -96,9 +97,9 @@ public class WishListTag extends TagSupport {
                         formAction = "<form action=deleteWish method=post><input type=hidden name=wishId value="
                                 + wish.getWishId() + "><input type=submit value=" + buttonDelete + "></form>";
                     } else {
-                        if(wish.getCandidates().contains(currentUser)) {
+                        if(wish.getCandidates().contains(new User(currentUserId))) {
                             formAction = "<form action=cancelApplication method=post><input type=hidden name=pageCode value=0> <input type=hidden name=wishId value=" + wish.getWishId()
-                                    + "><input type=hidden name=userId value=" + currentUser.getUserId() + "><input type=submit value="
+                                    + "><input type=hidden name=userId value=" + currentUserId + "><input type=submit value="
                                     + "Cancel my application" + "></form>";
                         } else {
                             if(candidate == null) {
