@@ -14,6 +14,9 @@
 </head>
 <body>
     <c:import url="header.jsp"/>
+    <button onclick="window.location.href = '${pageContext.request.contextPath}/jsp/changePassword.jsp'">
+        <fmt:message key="change_password"/>
+    </button>
     <h4>${userInfo.name}</h4>
     <h4>${userInfo.surname}</h4>
     <h5>${userInfo.country}</h5>

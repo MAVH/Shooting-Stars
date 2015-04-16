@@ -17,7 +17,6 @@ public class UserDAO extends AbstractDAO {
             "INSERT INTO user_info (userId, email, user_name, surname, country, city, dateOfBirth, abilities) VALUES (?,?,?,?,?,?,?,?)";
     public static final String SQL_CHECK_LOGIN_EXISTENCE = "SELECT COUNT(login) FROM user WHERE login = ?";
     public static final  String SQL_UPDATE_PHOTO_NAME = "UPDATE user_info SET photoName = ? WHERE userId = ?";
-    public static final String SQL_FIND_USER_BY_LOGIN = "SELECT userId, login FROM user WHERE login LIKE ?";
     public static final String SQL_SELECT_USER_INFO = "SELECT * FROM user_info WHERE userId = ?";
     public static final String SQL_GET_STATUS = "SELECT status FROM user_status JOIN user ON user.userStatusId = user_status.userStatusId WHERE user.userId = ?";
     public static final String SQL_SET_STATUS = "UPDATE user SET userStatusId = ? WHERE userId = ?";
@@ -25,6 +24,8 @@ public class UserDAO extends AbstractDAO {
             "UPDATE user_info SET user_name = ?, surname = ?, country = ?, city = ?, dateOfBirth = ?, email = ? WHERE userId = ?";
     public static final String SQL_SELECT_ABILITIES = "SELECT abilities FROM user_info WHERE userId = ?";
     public static final String SQL_UPDATE_ABILITIES = "UPDATE user_info SET abilities = ? WHERE userId = ?";
+    public static final String SQL_GET_PASSWORD_BY_USER_ID = "SELECT password FROM user WHERE userId = ?";
+    public static final String SQL_UPDATE_PASSWORD = "UPDATE user SET password = ? WHERE userId = ?";
 
     public UserDAO(Connection connection) {
         super(connection);
@@ -126,55 +127,6 @@ public class UserDAO extends AbstractDAO {
         finally {
             close(ps);
         }
-    }
-
-    //Полное совпадение Логина
-    public User findUserByLogin(String login) throws DAOException {
-        User user = null;
-        PreparedStatement ps = null;
-        ResultSet rs;
-        try {
-            ps = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN);
-            ps.setString(1, "%"+login+"%");
-            rs = ps.executeQuery();
-            int userId;
-            if(rs.next()) {
-                userId = rs.getInt(1);
-                user = new User(userId, login);
-            }
-        } catch (SQLException e) {
-            throw new DAOException("SQL exception (request or table failed): ", e);
-        }
-        finally {
-            close(ps);
-        }
-        return user;
-    }
-
-    //Находит пользователей с логином, часть которого - введенный
-    public ArrayList<User> findUsersByLogin(String login) throws DAOException {
-        User user = null;
-        PreparedStatement ps = null;
-        ResultSet rs;
-        ArrayList<User> users = new ArrayList<User>();
-        try {
-            ps = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN);
-            ps.setString(1, "%"+login+"%");
-            rs = ps.executeQuery();
-            int userId;
-            while (rs.next()) {
-                userId = rs.getInt(1);
-                login = rs.getString(2);
-                user = new User(userId, login);
-                users.add(user);
-            }
-        } catch (SQLException e) {
-            throw new DAOException("SQL exception (request or table failed): ", e);
-        }
-        finally {
-            close(ps);
-        }
-        return users;
     }
 
     public UserInfo findUserInfoByUserId(int userId) throws DAOException {
@@ -284,6 +236,41 @@ public class UserDAO extends AbstractDAO {
         try {
             ps = connection.prepareStatement(SQL_UPDATE_ABILITIES);
             ps.setString(1, abilities);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+    }
+
+    public String getPasswordByUserId(int userId) throws DAOException {
+        PreparedStatement ps = null;
+        ResultSet rs;
+        String password = "";
+        try {
+            ps = connection.prepareStatement(SQL_GET_PASSWORD_BY_USER_ID);
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+            if(rs.next()) {
+                password = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+        return password;
+    }
+
+    public void updatePassword(int userId, String password) throws DAOException {
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement(SQL_UPDATE_PASSWORD);
+            ps.setString(1, password);
             ps.setInt(2, userId);
             ps.executeUpdate();
         } catch (SQLException e) {

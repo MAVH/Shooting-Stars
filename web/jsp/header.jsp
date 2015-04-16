@@ -16,9 +16,9 @@
     <a class="lang" href="${pageContext.request.contextPath}/changeLocale?localeValue=RU">РУС</a>
     <c:if test="${not empty currentUserId}">
         <a href="${pageContext.request.contextPath}/logout" class="logout"><fmt:message key="logout"/></a>
-        <form action="searchByLogin" method="get">
-            <input type="search" name="login" class="searchField" placeholder="<fmt:message key="search"/>"/>
-        </form>
+        <button onclick="window.location.href = '${pageContext.request.contextPath}/jsp/search.jsp'">
+            <fmt:message key="search"/>
+        </button>
     </c:if>
     <a href="${pageContext.request.contextPath}/index.jsp"><img class="logo" src="${pageContext.request.contextPath}/img/logo.png"></a>
     <h2 class="header_name">Shooting Stars</h2>

@@ -17,6 +17,10 @@
         <exception-type>java.lang.RuntimeException</exception-type>
         <location>/jsp/error/error.jsp</location>
     </error-page>
+    <error-page>
+        <exception-type>java.lang.ExceptionInInitializerError</exception-type>
+        <location>/jsp/error/error.jsp</location>
+    </error-page>
     <filter>
         <filter-name>struts2</filter-name>
         <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>

@@ -10,8 +10,13 @@
 </head>
 <body>
 <c:import url="header.jsp"/>
-<form action="searchByLogin" method="get">
-    <input type="search" name="login" class="searchField" />
+<form action="usersSearch" method="get">
+    <input type="text" name="name" value="${name}" class="searchField" />
+    <input type="text" name="surname" value="${surname}" class="searchField" />
+    <input type="text" name="country" value="${country}" class="searchField"/>
+    <input type="text" name="city" value="${city}" class="searchField"/>
+    <input type="date" name="dateOfBirthMin" value="${dateOfBirthMin}" class="searchField"/>
+    <input type="date" name="dateOfBirthMax" value="${dateOfBirthMax}" class="searchField"/>
     <input type="submit" value="<fmt:message key="find"/>" class="btn btn-default">
 </form>
      <c:choose>
@@ -20,7 +25,7 @@
                    <c:forEach var="foundUser" items="${foundUsers}">
                        <tr class="active">
                            <td>
-                               <a href="userPage?userId=${foundUser.userId}">${foundUser.login}</a>
+                               <a href="userPage?userId=${foundUser.userId}">${foundUser.name} ${foundUser.surname}</a>
                            </td>
                        </tr>
                    </c:forEach>

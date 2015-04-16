@@ -122,11 +122,6 @@
                 /jsp/myWishes.jsp
             </result>
         </action>
-        <action name="searchByLogin" class="com.shooting_stars.project.command.SearchByLoginCommand">
-            <result name="success">
-                /jsp/search.jsp
-            </result>
-        </action>
         <action name="editUserInfo" class="com.shooting_stars.project.command.EditUserInfoCommand">
             <result name="success">
                 /jsp/infoEditor.jsp
@@ -178,6 +173,21 @@
                 getMessages?chatId=${chatId}
             </result>
         </action>
-
+        <action name="usersSearch" class="com.shooting_stars.project.command.UsersSearchCommand">
+            <result name="success">
+                /jsp/search.jsp
+            </result>
+            <result name="input">
+                /jsp/search.jsp
+            </result>
+        </action>
+        <action name="changePassword" class="com.shooting_stars.project.command.ChangePasswordCommand">
+            <result name="success">
+                /jsp/changePassword.jsp
+            </result>
+            <result name="input">
+                /jsp/changePassword.jsp
+            </result>
+        </action>
 </package>
 </struts>

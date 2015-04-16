@@ -2,31 +2,19 @@ package com.shooting_stars.project.entity;
 
 import java.sql.Date;
 
-public class UserInfo {
-    private String login;
+public class UserInfo extends User {
+    //private String login;
     private String email;
-    private String name;
-    private String surname;
+   // private String name;
+   // private String surname;
     private String country;
     private String city;
     private Date dateOfBirth;
     private String abilities;
-    private String photoName;
-
-    public String getLogin() {
-        return login;
-    }
+    //private String photoName;
 
     public String getEmail() {
         return email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
     }
 
     public String getCountry() {
@@ -45,20 +33,8 @@ public class UserInfo {
         return abilities;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public void setCountry(String country) {
@@ -75,13 +51,5 @@ public class UserInfo {
 
     public void setAbilities(String abilities) {
         this.abilities = abilities;
-    }
-
-    public String getPhotoName() {
-        return photoName;
-    }
-
-    public void setPhotoName(String photoName) {
-        this.photoName = photoName;
     }
 }

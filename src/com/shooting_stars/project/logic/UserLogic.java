@@ -3,8 +3,10 @@ package com.shooting_stars.project.logic;
 import com.shooting_stars.project.dao.UserDAO;
 import com.shooting_stars.project.entity.UserInfo;
 import com.shooting_stars.project.exception.DAOException;
+import com.shooting_stars.project.exception.HashingException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.exception.PoolConnectionException;
+import com.shooting_stars.project.hashing.MD5Hashing;
 import com.shooting_stars.project.pool.Pool;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -137,6 +139,32 @@ public class UserLogic {
             UserDAO userDAO = new UserDAO(connection);
             userDAO.updateUserAbilities(userId, abilities);
         }  catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        }  finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
+
+    public static boolean passwordsEqual(int userId, String password) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            UserDAO userDAO = new UserDAO(connection);
+            return MD5Hashing.hashingPassword(password).equals(userDAO.getPasswordByUserId(userId));
+        }  catch(PoolConnectionException | DAOException | HashingException e ) {
+            throw new LogicException(e.getCause());
+        }  finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
+
+    public static void changePassword(int userId, String password) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            UserDAO userDAO = new UserDAO(connection);
+            userDAO.updatePassword(userId, MD5Hashing.hashingPassword(password));
+        }  catch(PoolConnectionException | DAOException | HashingException e ) {
             throw new LogicException(e.getCause());
         }  finally {
             Pool.getPool().returnConnection(connection);

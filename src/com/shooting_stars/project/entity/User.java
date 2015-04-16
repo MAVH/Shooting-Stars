@@ -5,6 +5,10 @@ public class User {
     private String login;
     private String name;
     private String surname;
+    private String photoName;
+
+    public User() {
+    }
 
     public User(int userId) {
         this.userId = userId;
@@ -19,6 +23,13 @@ public class User {
         this(userId);
         this.name = name;
         this.surname = surname;
+    }
+
+    public User(int userId, String name, String surname, String photoName) {
+        this.userId = userId;
+        this.name = name;
+        this.surname = surname;
+        this.photoName = photoName;
     }
 
     public String getName() {
@@ -51,6 +62,14 @@ public class User {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getPhotoName() {
+        return photoName;
+    }
+
+    public void setPhotoName(String photoName) {
+        this.photoName = photoName;
     }
 
     @Override
