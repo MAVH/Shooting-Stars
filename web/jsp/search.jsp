@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="ctg" uri="customtags"%>
 <fmt:setLocale value="${currentLocale}" scope="session" />
 <fmt:setBundle basename="resources.pagecontent"/>
 <html>
@@ -25,7 +26,10 @@
                    <c:forEach var="foundUser" items="${foundUsers}">
                        <tr class="active">
                            <td>
-                               <a href="userPage?userId=${foundUser.userId}">${foundUser.name} ${foundUser.surname}</a>
+                               <a href="userPage?userId=${foundUser.userId}">
+                                   <ctg:userPhoto photoName="${foundUser.photoName}" photoClass="iconPhoto"/>
+                                    ${foundUser.name} ${foundUser.surname}
+                               </a>
                            </td>
                        </tr>
                    </c:forEach>
