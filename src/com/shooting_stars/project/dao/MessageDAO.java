@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MessageDAO extends AbstractDAO {
-    public static final String SQL_SELECT_CHATS_BY_USER_ID = "SELECT chatId, chat.user1Id, user_name, surname " +
+    public static final String SQL_SELECT_CHATS_BY_USER_ID = "SELECT chatId, chat.user1Id, user_name, surname, photoName " +
             "FROM user_info JOIN chat ON user_info.userId = chat.user1Id " +
             "WHERE user2Id = ? " +
             "UNION " +
-            "SELECT chatId, chat.user2Id, user_name, surname " +
+            "SELECT chatId, chat.user2Id, user_name, surname, photoName " +
             "FROM user_info JOIN chat ON user_info.userId = chat.user2Id " +
             "WHERE user1Id = ?";
     public static final String SQL_GET_AMOUNT_UNREAD_MESSAGES_BY_CHAT_ID = "SELECT COUNT(*) " +
@@ -23,7 +23,7 @@ public class MessageDAO extends AbstractDAO {
     public static final String SQL_INSERT_CHAT = "INSERT INTO chat (user1Id,user2Id) VALUES (?,?)";
     public static final String SQL_SELECT_CHAT_ID = "SELECT chatId FROM chat WHERE (user1Id = ? AND user2Id = ?) " +
             "OR (user1Id = ? AND user2Id = ?)";
-    public static final String SQL_SELECT_MESSAGES_BY_CHAT_ID = "SELECT sender, user_name, surname, message, message.date, message.time" +
+    public static final String SQL_SELECT_MESSAGES_BY_CHAT_ID = "SELECT sender, user_name, surname, photoName, message, message.date, message.time" +
             " FROM message JOIN user_info ON sender = userId WHERE chatId = ?  ORDER BY message.date DESC, message.time DESC " +
             "LIMIT ?,?";
     public static final String SQL_INSERT_MESSAGE = "INSERT INTO message (chatId, message, date, time, sender)" +
@@ -53,7 +53,7 @@ public class MessageDAO extends AbstractDAO {
             int amount;
             while (rs.next()) {
                 chatId = rs.getInt(1);
-                user = new User(rs.getInt(2),rs.getString(3), rs.getString(4));
+                user = new User(rs.getInt(2),rs.getString(3), rs.getString(4),rs.getString(5));
                 amount = getAmountUnreadMessages(chatId,userId);
                 chats.add(new Chat(chatId,user,amount));
             }
@@ -99,10 +99,10 @@ public class MessageDAO extends AbstractDAO {
             Date date;
             Time time;
             while (rs.next()) {
-                user = new User(rs.getInt(1),rs.getString(2), rs.getString(3));
-                message = rs.getString(4);
-                date = rs.getDate(5);
-                time = rs.getTime(6);
+                user = new User(rs.getInt(1),rs.getString(2), rs.getString(3),rs.getString(4));
+                message = rs.getString(5);
+                date = rs.getDate(6);
+                time = rs.getTime(7);
                 messages.add(new Message(message,user, date,time));
             }
         } catch (SQLException e) {

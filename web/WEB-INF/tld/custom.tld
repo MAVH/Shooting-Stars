@@ -43,4 +43,19 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
+    <tag>
+        <name>userPhoto</name>
+        <tag-class>com.shooting_stars.project.tags.UserPhotoTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <name>photoName</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>photoClass</name>
+            <required>true</required>
+        </attribute>
+    </tag>
 </taglib>

@@ -6615,3 +6615,9 @@ button.close {
 .userColor {
     color: #9451ff;
 }
+.iconPhoto {
+    display: inline-block;
+    float: left;
+    width: 20px;
+    height: 20px;
+}

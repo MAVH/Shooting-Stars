@@ -22,7 +22,12 @@
             <c:forEach var="wish" items="${wishes}">
                  <tr>
                      <td>${wish.wish}</td>
-                     <td><a href="userPage?userId=${wish.candidate.userId}">${wish.candidate.name} ${wish.candidate.surname}</a></td>
+                     <td>
+                         <a href="userPage?userId=${wish.candidate.userId}">
+                             <ctg:userPhoto photoName="${wish.candidate.photoName}" photoClass="iconPhoto"/>
+                            ${wish.candidate.name} ${wish.candidate.surname}
+                        </a>
+                     </td>
                      <td><fmt:formatDate value="${wish.date}"/></td>
                  </tr>
             </c:forEach>

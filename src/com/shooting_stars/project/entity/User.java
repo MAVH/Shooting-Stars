@@ -26,9 +26,7 @@ public class User {
     }
 
     public User(int userId, String name, String surname, String photoName) {
-        this.userId = userId;
-        this.name = name;
-        this.surname = surname;
+        this(userId,name,surname);
         this.photoName = photoName;
     }
 

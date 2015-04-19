@@ -2,6 +2,8 @@ package com.shooting_stars.project.tags;
 
 import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.entity.Wish;
+import org.apache.commons.lang3.StringUtils;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
@@ -18,6 +20,7 @@ public class WishListTag extends TagSupport {
     private static final int MAX_SIZE = 5;
     private ArrayList<Wish> list;
     private boolean isProfilePage;
+
 
     public void setList(ArrayList<Wish> list) {
         this.list = list;
@@ -55,6 +58,7 @@ public class WishListTag extends TagSupport {
                 User candidate = null;
                 String label = null;
                 String formAction;
+                String photoName;
                 String buttonTake = rs.getString("take_application");
                 String buttonCancel = rs.getString("cancel");
                 for(Wish wish:list) {
@@ -62,7 +66,14 @@ public class WishListTag extends TagSupport {
                     if ((candidate = wish.getCandidate()) != null) {
                         label = rs.getString("wish_performed");
                         candidatesList = "<h5>" + label + "</h5><table><tr><td><a href=userPage?userId=" +
-                                candidate.getUserId() + ">" + candidate.getName() + " " + candidate.getSurname() + "</a></td>";
+                                candidate.getUserId() + ">";
+                        photoName = candidate.getPhotoName();
+                        if(StringUtils.isEmpty(photoName)) {
+                            photoName = UserPhotoTag.DEFAULT_IMAGE_NAME;
+                        }
+                        candidatesList += "<img src=" + pageContext.getServletContext().getContextPath() + UserPhotoTag.PATH + photoName +
+                                " class=iconPhoto />"
+                                + candidate.getName() + " " + candidate.getSurname() + "</a></td>";
                         if(isProfilePage) {
                             candidatesList += "<td><form action=cancelMakingWish method=post><input type=hidden name=wishId value=" + wish.getWishId()
                                     + "><input type=submit value="
@@ -79,7 +90,14 @@ public class WishListTag extends TagSupport {
                             candidatesList = "<h5>" + label + "</h5>";
                             for (Object user : wish) {
 
-                                candidatesList += "<a href=userPage?userId=" + ((User) user).getUserId() + ">" + ((User) user).getName()
+                                candidatesList += "<a href=userPage?userId=" + ((User) user).getUserId() + ">";
+                                photoName = ((User) user).getPhotoName();
+                                if(StringUtils.isEmpty(photoName)) {
+                                    photoName = UserPhotoTag.DEFAULT_IMAGE_NAME;
+                                }
+                                candidatesList += "<img src=" + pageContext.getServletContext().getContextPath() + UserPhotoTag.PATH + photoName +
+                                        " class=iconPhoto />";
+                                candidatesList += ((User) user).getName()
                                          + " " + ((User) user).getSurname()+ "</a>";
                                 if(isProfilePage) {
                                     candidatesList += "<form action=acceptApplication method=post><input type=hidden name=wishId value=" + wish.getWishId()
