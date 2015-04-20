@@ -1,5 +1,7 @@
 package com.shooting_stars.project.validation;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,5 +23,14 @@ public class Validation {
         return result;
 
         //Pattern pattern = Pattern.compile("/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])\\w{6,}$/");
+    }
+    public static boolean isDateBeforeCurrent(Date date) {
+       return date.before(Date.valueOf(LocalDate.now()));
+    }
+
+    public static boolean isDate(String stringDate) {
+        Pattern pattern = Pattern.compile("\\d{4}(-)\\d{2}(-)\\d{2}");
+        Matcher matcher = pattern.matcher(stringDate);
+        return matcher.matches();
     }
 }

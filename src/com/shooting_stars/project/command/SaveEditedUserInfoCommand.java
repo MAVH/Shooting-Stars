@@ -1,18 +1,16 @@
 package com.shooting_stars.project.command;
 
-import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.entity.UserInfo;
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.UserLogic;
 import com.shooting_stars.project.manager.MessageManager;
+import com.shooting_stars.project.validation.Validation;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.struts2.interceptor.SessionAware;
+import org.apache.commons.lang3.time.DateUtils;
 
 import java.sql.Date;
-import java.util.Map;
 
 public class SaveEditedUserInfoCommand extends SessionAwareCommand implements ModelDriven<UserInfo> {
 
@@ -20,6 +18,7 @@ public class SaveEditedUserInfoCommand extends SessionAwareCommand implements Mo
     private UserInfo userInfo = new UserInfo();
     private MessageManager messageManager;
     private String messageEmailEmpty;
+    private String messageDateIncorrect;
     @Override
     public void validate() {
         messageManager = (MessageManager)sessionAttributes.get("messageManager");
@@ -29,6 +28,12 @@ public class SaveEditedUserInfoCommand extends SessionAwareCommand implements Mo
         if(StringUtils.isEmpty(userInfo.getEmail())) {
             messageEmailEmpty =  messageManager.getMessage("message.email.empty");
             addFieldError("email",messageManager.getMessage("message.email.empty"));
+        }
+        if(StringUtils.isNotEmpty(date)) {
+            if (!Validation.isDateBeforeCurrent(Date.valueOf(date))) {
+                messageDateIncorrect = messageManager.getMessage("message.date.more.current");
+                addFieldError(date, messageManager.getMessage("message.date.more.current"));
+            }
         }
     }
     @Override
@@ -68,5 +73,21 @@ public class SaveEditedUserInfoCommand extends SessionAwareCommand implements Mo
 
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
+    }
+
+    public String getMessageEmailEmpty() {
+        return messageEmailEmpty;
+    }
+
+    public void setMessageEmailEmpty(String messageEmailEmpty) {
+        this.messageEmailEmpty = messageEmailEmpty;
+    }
+
+    public String getMessageDateIncorrect() {
+        return messageDateIncorrect;
+    }
+
+    public void setMessageDateIncorrect(String messageDateIncorrect) {
+        this.messageDateIncorrect = messageDateIncorrect;
     }
 }

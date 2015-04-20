@@ -41,6 +41,15 @@ public class PreparingRegistrationCommand extends SessionAwareCommand implements
     private String registrationLoginError;
     private String registrationPasswordError;
     private String registrationInvalidPasswordError;
+    private String registrationDateError;
+
+    public String getRegistrationDateError() {
+        return registrationDateError;
+    }
+
+    public void setRegistrationDateError(String registrationDateError) {
+        this.registrationDateError = registrationDateError;
+    }
 
     public String getRegistrationInvalidPasswordError() {
         return registrationInvalidPasswordError;
@@ -235,15 +244,6 @@ public class PreparingRegistrationCommand extends SessionAwareCommand implements
                 }
                 return result;
             case 2:
-                user.setName(name);
-                user.setSurname(surname);
-                user.setCountry(country);
-                user.setCity(city);
-                if(!StringUtils.isEmpty(dateOfBirth)) {
-                    user.setDateOfBirth(Date.valueOf(dateOfBirth));
-                } else {
-                    user.setDateOfBirth(null);
-                }
                 if(!forward) {
                     result = STEP1;
                 } else if(StringUtils.isEmpty(name)) {
@@ -252,6 +252,23 @@ public class PreparingRegistrationCommand extends SessionAwareCommand implements
                 } else {
                     result = STEP3;
                 }
+                user.setName(name);
+                user.setSurname(surname);
+                user.setCountry(country);
+                user.setCity(city);
+                Date date;
+
+                if(StringUtils.isNotEmpty(dateOfBirth)) {
+                    date = Date.valueOf(dateOfBirth);
+                    if(!Validation.isDateBeforeCurrent(date)) {
+                         result = STEP2;
+                         registrationDateError  = messageManager.getMessage("message.date.more.current");
+                    }
+                    user.setDateOfBirth(date);
+                } else {
+                    user.setDateOfBirth(null);
+                }
+
                 return result;
             case 3:
                 user.setAbilities(abilities);

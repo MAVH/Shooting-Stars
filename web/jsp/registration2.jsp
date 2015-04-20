@@ -25,6 +25,7 @@
   <input type="submit" name="submitAction" value="<fmt:message key="back"/>">
 </form>
 ${registrationError}
+${registrationDateError}
 </body>
 </html>
 

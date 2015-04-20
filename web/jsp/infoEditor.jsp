@@ -38,5 +38,6 @@
     <input type="submit" name="submitAction" value="<fmt:message key="save"/>"/>
   </form>
 <p>${messageEmailEmpty}</p>
+<p>${messageDateIncorrect}</p>
 </body>
 </html>
