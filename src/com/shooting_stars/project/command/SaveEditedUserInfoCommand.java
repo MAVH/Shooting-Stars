@@ -19,11 +19,16 @@ public class SaveEditedUserInfoCommand extends SessionAwareCommand implements Mo
     private String date;
     private UserInfo userInfo = new UserInfo();
     private MessageManager messageManager;
+    private String messageEmailEmpty;
     @Override
     public void validate() {
         messageManager = (MessageManager)sessionAttributes.get("messageManager");
         if(StringUtils.isEmpty(userInfo.getName())) {
             addFieldError("name", messageManager.getMessage("message.name.input"));
+        }
+        if(StringUtils.isEmpty(userInfo.getEmail())) {
+            messageEmailEmpty =  messageManager.getMessage("message.email.empty");
+            addFieldError("email",messageManager.getMessage("message.email.empty"));
         }
     }
     @Override

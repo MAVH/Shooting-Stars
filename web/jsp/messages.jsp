@@ -10,8 +10,10 @@
 <head>
     <title></title>
     <meta http-equiv="Cache-Control" content="private">
+
 </head>
-<body>
+<body onunload="toChat()">
+
 <c:import url="header.jsp"/>
 
 <form action="sendMessage" method = "POST">
@@ -54,5 +56,21 @@
         </p>
     </c:otherwise>
 </c:choose>
+<script type="text/javascript">
+    window.onbeforeunload = function(e) {
+        alert('!!!!');
+        window.location.href="/getChats";
+        return;
+    };
+    window.onunload = function() {
+        alert('fagfg');
+        window.location.href="/getChats";
+    };
+    function toChat() {
+        alert('fagfg');
+        window.location.href="/getChats";
+    }
+    window.addEventListener("unload", toChat);
+</script>
 </body>
 </html>

@@ -37,5 +37,6 @@
     <input type="email" name="email" id="email"  value="${userInfo.email}"/>
     <input type="submit" name="submitAction" value="<fmt:message key="save"/>"/>
   </form>
+<p>${messageEmailEmpty}</p>
 </body>
 </html>

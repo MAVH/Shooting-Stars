@@ -5,7 +5,6 @@
 <fmt:setBundle basename="resources.pagecontent"/>
 <html>
 <head>
-    <title></title>
     <!--
     <meta http-equiv="Cache-Control" content="no-cache">    -->
     <meta http-equiv="Cache-Control" content="private">

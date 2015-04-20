@@ -219,7 +219,8 @@ public class PreparingRegistrationCommand extends SessionAwareCommand implements
                     registrationPasswordError = messageManager.getMessage("message.passwords.unequal");
                     error = true;
                 }
-                if(StringUtils.isEmpty(login) || StringUtils.isEmpty(password) || StringUtils.isEmpty(password_repeat)) {
+                if(StringUtils.isEmpty(login) || StringUtils.isEmpty(password) || StringUtils.isEmpty(password_repeat)
+                        || StringUtils.isEmpty(email)) {
                     registrationError = messageManager.getMessage("message.fields.empty");
                     error = true;
                 }
