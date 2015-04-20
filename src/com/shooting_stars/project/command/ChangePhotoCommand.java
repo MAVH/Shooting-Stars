@@ -26,9 +26,6 @@ public class ChangePhotoCommand extends SessionAwareCommand implements ServletRe
         if(photo == null) {
             addFieldError("photo", messageManager.getMessage("message.photo.empty"));
         }
-        if(FileUtils.sizeOf(photo) > 5000000) {
-            addFieldError("photo", messageManager.getMessage("message.photo.large.size"));
-        }
     }
 
     public File getPhoto() {

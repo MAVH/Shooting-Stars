@@ -5,9 +5,7 @@
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-
-    <!--
-    <constant name="struts.multipart.maxSize" value="1000000" />   -->
+    <constant name="struts.multipart.maxSize" value="1000000" />
     <package name="default" namespace="/" extends="struts-default">
         <global-results>
             <result name="error">
@@ -60,13 +58,13 @@
         </action>
 
         <action name="changePhoto" class="com.shooting_stars.project.command.ChangePhotoCommand">
-            <!--
-            <interceptor-ref name="basicStack"/>
             <interceptor-ref name="fileUpload">
+                <param name="allowedTypes">image/jpeg, image/png, image/jpg</param>
                 <param name="maximumSize">5000000</param>
             </interceptor-ref>
+            <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="validation"/>
-            <interceptor-ref name="workflow"/>   -->
+            <interceptor-ref name="workflow"/>
              <result name="success" type="redirectAction">
                  userPage
              </result>
