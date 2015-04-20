@@ -9,8 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchDAO extends AbstractDAO{
-    private static final String SQL_FIND_USER_BY_NAME_AND_SURNAME = "SELECT userId, user_name, surname, photoName FROM user_info "
-        + "WHERE user_name LIKE ? AND surname LIKE ? AND country LIKE ? AND city LIKE ? ";
+    private static final String SQL_FIND_USER_BY_NAME_AND_SURNAME = "SELECT userId, user_name, surname, photoName, " +
+            "MATCH (user_name) AGAINST (?) AS REL1, " +
+            "MATCH (surname) AGAINST (?) AS REL2 " +
+            "FROM user_info " +
+            "WHERE user_name LIKE ? AND surname LIKE ? AND country LIKE ? AND city LIKE ? ";
+    private static final String SQL_ORDER_BY = "ORDER BY REL1 DESC, REL2 DESC";
     private static final String SQL_SEARCH_BY_NAME = "WHERE user_name LIKE ? ";
     private static final String SQL_SEARCH_BY_SURNAME = "WHERE surname LIKE ? ";
     private static final String SQL_SEARCH_BY_NAME_AND_SURNAME = "WHERE user_name LIKE ? AND surname LIKE ? ";
@@ -30,8 +34,10 @@ public class SearchDAO extends AbstractDAO{
         ArrayList<User> users = new ArrayList<User>();
         try {
             ps = connection.prepareStatement(SQL_FIND_USER_BY_NAME_AND_SURNAME);
-            ps.setString(1, "%" + name + "%");
-            ps.setString(2, "%" + surname + "%");
+            ps.setString(1,  name);
+            ps.setString(2, surname);
+            ps.setString(3, "%" + name + "%");
+            ps.setString(4, "%" + surname + "%");
             rs = ps.executeQuery();
             int userId;
             while (rs.next()) {
@@ -61,19 +67,22 @@ public class SearchDAO extends AbstractDAO{
         if(dateMax != null) {
             query += SQL_SEARCH_FILTER_DATE_OF_BIRTH_MAX;
         }
+        query += SQL_ORDER_BY;
         try {
             ps = connection.prepareStatement(query);
-            ps.setString(1, "%" + name + "%");
-            ps.setString(2, "%" + surname + "%");
-            ps.setString(3, "%" + country + "%");
-            ps.setString(4, "%" + city + "%");
+            ps.setString(1, name);
+            ps.setString(2,  surname );
+            ps.setString(3, "%" + name + "%");
+            ps.setString(4, "%" + surname + "%");
+            ps.setString(5, "%" + country + "%");
+            ps.setString(6, "%" + city + "%");
             if(dateMax == null) {
-                ps.setDate(5, dateMin);
+                ps.setDate(7, dateMin);
             } else if(dateMin == null) {
-                ps.setDate(5, dateMax);
+                ps.setDate(7, dateMax);
             } else {
-                ps.setDate(5, dateMin);
-                ps.setDate(6, dateMax);
+                ps.setDate(7, dateMin);
+                ps.setDate(8, dateMax);
             }
             rs = ps.executeQuery();
             int userId;
@@ -97,11 +106,13 @@ public class SearchDAO extends AbstractDAO{
         ResultSet rs;
         ArrayList<User> users = new ArrayList<User>();
         try {
-            ps = connection.prepareStatement(SQL_FIND_USER_BY_NAME_AND_SURNAME);
-            ps.setString(1, "%" + name + "%");
-            ps.setString(2, "%" + surname + "%");
-            ps.setString(3, "%" + country + "%");
-            ps.setString(4, "%" + city + "%");
+            ps = connection.prepareStatement(SQL_FIND_USER_BY_NAME_AND_SURNAME + SQL_ORDER_BY);
+            ps.setString(1, name);
+            ps.setString(2,  surname );
+            ps.setString(3, "%" + name + "%");
+            ps.setString(4, "%" + surname + "%");
+            ps.setString(5, "%" + country + "%");
+            ps.setString(6, "%" + city + "%");
             rs = ps.executeQuery();
             int userId;
             while (rs.next()) {

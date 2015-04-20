@@ -152,12 +152,12 @@ public class WishDAO extends AbstractDAO {
         PreparedStatement ps = null;
         try {
             ps = connection.prepareStatement(SQL_CHANGE_FULFILLED_WISH_STATUS);
-            ps.setString(1,"Выполнено");
+            ps.setString(1,"Fulfilled");
             ps.setDate(2,date);
             ps.setInt(3,wishId);
             ps.executeUpdate();
             ps = connection.prepareStatement(SQL_CHANGE_FULFILLED_WISH_STATUS_TABLE_WISH);
-            ps.setString(1,"Выполнено");
+            ps.setString(1,"Fulfilled");
             ps.setInt(2,wishId);
             ps.executeUpdate();
         }
@@ -288,7 +288,7 @@ public class WishDAO extends AbstractDAO {
         try {
             ps = connection.prepareStatement(SQL_SELECT_FULFILLED_WISH_BY_OWNER_ID);
             ps.setInt(1,userId);
-            ps.setString(2,"Выполнено");
+            ps.setString(2,"Fulfilled");
             rs = ps.executeQuery();
             User user;
             while (rs.next()) {
