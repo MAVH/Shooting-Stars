@@ -4,7 +4,6 @@ import com.shooting_stars.project.entity.Chat;
 import com.shooting_stars.project.entity.Message;
 import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.exception.DAOException;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,9 @@ public class MessageDAO extends AbstractDAO {
             "UNION " +
             "SELECT chatId, chat.user2Id, user_name, surname, photoName " +
             "FROM user_info JOIN chat ON user_info.userId = chat.user2Id " +
-            "WHERE user1Id = ?";
+            "WHERE user1Id = ? " +
+            "ORDER BY chatId " +
+            "LIMIT ?,?";
     public static final String SQL_GET_AMOUNT_UNREAD_MESSAGES_BY_USER_ID = "SELECT COUNT(*) FROM message " +
             "WHERE chatId IN (SELECT chatId FROM  chat  WHERE user2Id = ? " +
             "UNION " +
@@ -29,7 +30,7 @@ public class MessageDAO extends AbstractDAO {
     public static final String SQL_SELECT_CHAT_ID = "SELECT chatId FROM chat WHERE (user1Id = ? AND user2Id = ?) " +
             "OR (user1Id = ? AND user2Id = ?)";
     public static final String SQL_SELECT_MESSAGES_BY_CHAT_ID = "SELECT sender, user_name, surname, photoName, message, message.date, message.time" +
-            " FROM message JOIN user_info ON sender = userId WHERE chatId = ?  ORDER BY message.date DESC, message.time DESC " +
+            " FROM message JOIN user_info ON sender = userId WHERE chatId = ? ORDER BY message.date DESC, message.time DESC " +
             "LIMIT ?,?";
     public static final String SQL_INSERT_MESSAGE = "INSERT INTO message (chatId, message, date, time, sender)" +
             "VALUES (?,?,?,?,?) ";
@@ -37,21 +38,24 @@ public class MessageDAO extends AbstractDAO {
             "WHERE chatId = ? AND NOT sender = ? AND isRead = 0";
     public static final String SQL_GET_CHATS_AMOUNT_BY_USERS_ID = "SELECT COUNT(*) FROM chat " +
             "WHERE (user1Id = ? AND user2Id = ?) OR (user1Id = ? AND user2Id = ?)";
-
+    public static final String SQL_GET_GIVEN_USER_CHATS_AMOUNT = "SELECT COUNT(*) FROM chat " +
+            "WHERE user1Id = ? OR user2Id = ?";
     public static final String SQL_COUNT_MESSAGES_BY_CHAT_ID = "SELECT COUNT(*) FROM message WHERE chatId = ?";
 
     public MessageDAO(Connection connection) {
         super(connection);
     }
 
-    public List<Chat> getChatsByUserId(int userId) throws DAOException {
+    public List<Chat> getChatsByUserId(int userId, int from, int to) throws DAOException {
         PreparedStatement ps = null;
         ResultSet rs;
         ArrayList<Chat> chats = new ArrayList<Chat>();
         try {
             ps = connection.prepareStatement(SQL_SELECT_CHATS_BY_USER_ID);
             ps.setInt(1, userId);
-            ps.setInt(2,userId);
+            ps.setInt(2, userId);
+            ps.setInt(3, from);
+            ps.setInt(4, to);
             rs = ps.executeQuery();
             int chatId;
             User user;
@@ -225,15 +229,36 @@ public class MessageDAO extends AbstractDAO {
         }
         return amount;
     }
+
     public int getAmountUnreadMessages(int userId) throws DAOException {
         PreparedStatement ps = null;
         ResultSet rs;
         int amount;
         try {
             ps = connection.prepareStatement(SQL_GET_AMOUNT_UNREAD_MESSAGES_BY_USER_ID);
+            ps.setInt(1, userId);
+            ps.setInt(2, userId);
+            ps.setInt(3, userId);
+            rs = ps.executeQuery();
+            rs.next();
+            amount = rs.getInt(1);
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+        return amount;
+    }
+
+    public int getChatsAmountByUserId(int userId) throws DAOException {
+        PreparedStatement ps = null;
+        ResultSet rs;
+        int amount;
+        try {
+            ps = connection.prepareStatement(SQL_GET_GIVEN_USER_CHATS_AMOUNT);
             ps.setInt(1,userId);
             ps.setInt(2,userId);
-            ps.setInt(3,userId);
             rs = ps.executeQuery();
             rs.next();
             amount = rs.getInt(1);

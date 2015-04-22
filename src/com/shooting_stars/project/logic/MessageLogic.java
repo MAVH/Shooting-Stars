@@ -18,6 +18,7 @@ import java.util.List;
 
 public class MessageLogic {
     public static final int MESSAGES_AMOUNT_ON_ONE_PAGE = 10;
+    public static final int CHATS_AMOUNT_ON_ONE_PAGE = 5;
     public static void sendMessage(int userFromId, int userToId, String message) throws LogicException {
             int chatId = MessageLogic.getChatId(userFromId,userToId);
             MessageLogic.sendMessage(chatId,message,userFromId);
@@ -59,6 +60,7 @@ public class MessageLogic {
             Pool.getPool().returnConnection(connection);
         }
     }
+
     public static List<Message> getMessages(int chatId,int userId, int page) throws LogicException {
         Connection connection = null;
         try {
@@ -83,12 +85,14 @@ public class MessageLogic {
         }
     }
 
-    public static List<Chat> getUserChats(int userId) throws LogicException {
+    public static List<Chat> getUserChats(int userId, int page) throws LogicException {
         Connection connection = null;
         try {
             connection = Pool.getPool().getConnection();
             MessageDAO messageDAO = new MessageDAO(connection);
-            return messageDAO.getChatsByUserId((userId));
+            int from = CHATS_AMOUNT_ON_ONE_PAGE * (page - 1);
+            int to = CHATS_AMOUNT_ON_ONE_PAGE * page;
+            return messageDAO.getChatsByUserId(userId, from, to);
         } catch(PoolConnectionException | DAOException e ) {
             throw new LogicException(e.getCause());
         } finally {
@@ -108,12 +112,27 @@ public class MessageLogic {
             Pool.getPool().returnConnection(connection);
         }
     }
+
     public static int getUnreadMessagesAmount(int userId) throws LogicException {
         Connection connection = null;
         try {
             connection = Pool.getPool().getConnection();
             MessageDAO messageDAO = new MessageDAO(connection);
             int messagesAmount = messageDAO.getAmountUnreadMessages(userId);
+            return messagesAmount;
+        } catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        } finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
+
+    public static int getChatsAmount(int userId) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            MessageDAO messageDAO = new MessageDAO(connection);
+            int messagesAmount = messageDAO.getChatsAmountByUserId(userId);
             return messagesAmount;
         } catch(PoolConnectionException | DAOException e ) {
             throw new LogicException(e.getCause());

@@ -29,6 +29,7 @@
                  </tr>
             </c:forEach>
         </table>
+        <ctg:chatsPager currentPage="${page}" generalAmount="${chatsAmount}"/>
     </c:when>
     <c:otherwise>
         <p>

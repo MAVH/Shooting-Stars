@@ -44,6 +44,22 @@
         </attribute>
     </tag>
     <tag>
+        <name>chatsPager</name>
+        <tag-class>com.shooting_stars.project.tags.ChatsPagerTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <name>currentPage</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>generalAmount</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
         <name>userPhoto</name>
         <tag-class>com.shooting_stars.project.tags.UserPhotoTag</tag-class>
         <body-content>empty</body-content>

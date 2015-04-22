@@ -15,13 +15,18 @@ import java.util.Map;
 public class GetUserChatsCommand extends SessionAwareCommand {
 
     private List<Chat> chats;
+    private int page = 1;
+    private int chatsAmount;
 
     @Override
     public String execute() {
         String result = SUCCESS;
         int currentUserId = getCurrentUserId();
         try {
-            chats = MessageLogic.getUserChats(currentUserId);
+            if(chatsAmount == 0) {
+                chatsAmount = MessageLogic.getChatsAmount(currentUserId);
+            }
+            chats = MessageLogic.getUserChats(currentUserId, page);
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());
             exception = new CommandException(e.getCause());
@@ -36,5 +41,21 @@ public class GetUserChatsCommand extends SessionAwareCommand {
 
     public void setChats(List<Chat> chats) {
         this.chats = chats;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getChatsAmount() {
+        return chatsAmount;
+    }
+
+    public void setChatsAmount(int chatsAmount) {
+        this.chatsAmount = chatsAmount;
     }
 }
