@@ -153,6 +153,12 @@
                 /jsp/chats.jsp
             </result>
         </action>
+
+
+        <action name="updateChats" class="com.shooting_stars.project.command.GetUserChatsCommand">
+            <result type="json"/>
+        </action>
+
         <action name="sendMessage" class="com.shooting_stars.project.command.SendMessageCommand">
             <result name="success" type="redirectAction">
                 getMessages?chatId=${chatId}

@@ -14,7 +14,7 @@
 <c:import url="header.jsp"/>
 <c:choose>
     <c:when test="${not empty chats}">
-        <table class="table">
+        <table class="table" id="chats">
             <c:forEach var="chat" items="${chats}">
                  <tr>
                      <td>
@@ -36,5 +36,40 @@
         </p>
     </c:otherwise>
 </c:choose>
+<script>
+    setInterval(displayChats, 10000);
+    function displayChats() {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                var answer = xmlhttp.responseText;
+                var json = JSON.parse(answer);
+                var chats = json.chats;
+                var table = document.getElementById("chats");
+                table.replaceChild(document.createElement('TBODY'), table.tBodies[0])
+                console.log(chats);
+                for(var i = 0; i < chats.length; i++) {
+                    var chat = chats[i];
+                    var row = table.insertRow(i);
+                    var column;
+                    column = row.insertCell(0);
+                    var link = document.createElement('a');
+                    link.setAttribute('href', "getMessages?chatId=" + chat.chatId );
+                    var photoName = chat.otherParticipant.photoName;
+                    if(photoName == null) {
+                        photoName = "default.png";
+                    }
+                    link.innerHTML = "<img src=../img/userPhoto/" + photoName + " class=iconPhoto />" +
+                            chat.otherParticipant.name + " " + chat.otherParticipant.surname;
+                    column.appendChild(link);
+                    column = row.insertCell(1);
+                    column.innerHTML = chat.amountOfUnreadMessages;
+                }
+            }
+        }
+        xmlhttp.open("GET", "updateChats", true);
+        xmlhttp.send();
+    }
+</script>
 </body>
 </html>

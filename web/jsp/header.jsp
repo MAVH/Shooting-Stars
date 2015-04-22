@@ -24,13 +24,9 @@
             </form>
             <span id="unreadMessagesAmount"></span>
         </div>
-    </c:if>
-    <a href="${pageContext.request.contextPath}/index.jsp"><img class="logo" src="${pageContext.request.contextPath}/img/logo.png"></a>
-    <h2 class="header_name">Shooting Stars</h2>
-    <h5 class="motto"><fmt:message key="motto"/></h5>
-    <script>
-        setInterval(displayAmount, 1000);
-        function displayAmount() {
+        <script>
+            setInterval(displayAmount, 1000);
+            function displayAmount() {
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function() {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -41,7 +37,12 @@
                 }
                 xmlhttp.open("GET", "getUnreadMessagesAmount", true);
                 xmlhttp.send();
-        }
-    </script>
+            }
+        </script>
+    </c:if>
+    <a href="${pageContext.request.contextPath}/index.jsp"><img class="logo" src="${pageContext.request.contextPath}/img/logo.png"></a>
+    <h2 class="header_name">Shooting Stars</h2>
+    <h5 class="motto"><fmt:message key="motto"/></h5>
+
 </body>
 </html>
