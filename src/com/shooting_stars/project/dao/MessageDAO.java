@@ -46,7 +46,7 @@ public class MessageDAO extends AbstractDAO {
         super(connection);
     }
 
-    public List<Chat> getChatsByUserId(int userId, int from, int to) throws DAOException {
+    public List<Chat> getChatsByUserId(int userId, int from, int num) throws DAOException {
         PreparedStatement ps = null;
         ResultSet rs;
         ArrayList<Chat> chats = new ArrayList<Chat>();
@@ -55,7 +55,7 @@ public class MessageDAO extends AbstractDAO {
             ps.setInt(1, userId);
             ps.setInt(2, userId);
             ps.setInt(3, from);
-            ps.setInt(4, to);
+            ps.setInt(4, num);
             rs = ps.executeQuery();
             int chatId;
             User user;
@@ -93,7 +93,7 @@ public class MessageDAO extends AbstractDAO {
         }
         return amount;
     }
-    public List<Message> getMessagesByChatId(int chatId,int from, int to) throws DAOException {
+    public List<Message> getMessagesByChatId(int chatId,int from, int num) throws DAOException {
         PreparedStatement ps = null;
         ResultSet rs;
         ArrayList<Message> messages = new ArrayList<Message>();
@@ -101,7 +101,7 @@ public class MessageDAO extends AbstractDAO {
             ps = connection.prepareStatement(SQL_SELECT_MESSAGES_BY_CHAT_ID);
             ps.setInt(1, chatId);
             ps.setInt(2,from);
-            ps.setInt(3,to);
+            ps.setInt(3,num);
             rs = ps.executeQuery();
             User user;
             String message;

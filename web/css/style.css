@@ -6621,3 +6621,7 @@ button.close {
     width: 20px;
     height: 20px;
 }
+
+.currentPage {
+    color: #298537;
+}

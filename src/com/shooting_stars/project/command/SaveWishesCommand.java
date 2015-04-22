@@ -27,6 +27,6 @@ public class SaveWishesCommand extends SessionAwareCommand implements ServletReq
 
     @Override
     public void setServletRequest(HttpServletRequest httpServletRequest) {
-
+        request = httpServletRequest;
     }
 }

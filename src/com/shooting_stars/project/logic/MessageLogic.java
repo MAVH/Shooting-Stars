@@ -18,7 +18,7 @@ import java.util.List;
 
 public class MessageLogic {
     public static final int MESSAGES_AMOUNT_ON_ONE_PAGE = 10;
-    public static final int CHATS_AMOUNT_ON_ONE_PAGE = 5;
+    public static final int CHATS_AMOUNT_ON_ONE_PAGE = 10;
     public static void sendMessage(int userFromId, int userToId, String message) throws LogicException {
             int chatId = MessageLogic.getChatId(userFromId,userToId);
             MessageLogic.sendMessage(chatId,message,userFromId);
@@ -67,8 +67,7 @@ public class MessageLogic {
             connection = Pool.getPool().getConnection();
             MessageDAO messageDAO = new MessageDAO(connection);
             int from = MESSAGES_AMOUNT_ON_ONE_PAGE * (page - 1);
-            int to = MESSAGES_AMOUNT_ON_ONE_PAGE * page;
-            List<Message> messages = messageDAO.getMessagesByChatId(chatId,from,to);
+            List<Message> messages = messageDAO.getMessagesByChatId(chatId,from,MESSAGES_AMOUNT_ON_ONE_PAGE);
             for(Message message : messages) {
                  if(userId == message.getSender().getUserId()) {
                      message.setLoggedInUser(true);
@@ -91,8 +90,7 @@ public class MessageLogic {
             connection = Pool.getPool().getConnection();
             MessageDAO messageDAO = new MessageDAO(connection);
             int from = CHATS_AMOUNT_ON_ONE_PAGE * (page - 1);
-            int to = CHATS_AMOUNT_ON_ONE_PAGE * page;
-            return messageDAO.getChatsByUserId(userId, from, to);
+            return messageDAO.getChatsByUserId(userId, from, CHATS_AMOUNT_ON_ONE_PAGE);
         } catch(PoolConnectionException | DAOException e ) {
             throw new LogicException(e.getCause());
         } finally {
