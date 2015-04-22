@@ -17,6 +17,11 @@ public class MessageDAO extends AbstractDAO {
             "SELECT chatId, chat.user2Id, user_name, surname, photoName " +
             "FROM user_info JOIN chat ON user_info.userId = chat.user2Id " +
             "WHERE user1Id = ?";
+    public static final String SQL_GET_AMOUNT_UNREAD_MESSAGES_BY_USER_ID = "SELECT COUNT(*) FROM message " +
+            "WHERE chatId IN (SELECT chatId FROM  chat  WHERE user2Id = ? " +
+            "UNION " +
+            "SELECT chatId FROM chat WHERE user1Id = ?) " +
+            "AND isRead = 0 AND NOT sender = ? ";
     public static final String SQL_GET_AMOUNT_UNREAD_MESSAGES_BY_CHAT_ID = "SELECT COUNT(*) " +
             "FROM message JOIN chat ON message.chatId = chat.chatId " +
             "WHERE chat.chatId = ? AND isRead = 0 AND NOT sender = ?";
@@ -209,6 +214,26 @@ public class MessageDAO extends AbstractDAO {
         try {
             ps = connection.prepareStatement(SQL_COUNT_MESSAGES_BY_CHAT_ID);
             ps.setInt(1,chatId);
+            rs = ps.executeQuery();
+            rs.next();
+            amount = rs.getInt(1);
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+        return amount;
+    }
+    public int getAmountUnreadMessages(int userId) throws DAOException {
+        PreparedStatement ps = null;
+        ResultSet rs;
+        int amount;
+        try {
+            ps = connection.prepareStatement(SQL_GET_AMOUNT_UNREAD_MESSAGES_BY_USER_ID);
+            ps.setInt(1,userId);
+            ps.setInt(2,userId);
+            ps.setInt(3,userId);
             rs = ps.executeQuery();
             rs.next();
             amount = rs.getInt(1);

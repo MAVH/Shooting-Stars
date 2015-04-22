@@ -18,9 +18,30 @@
         <button onclick="window.location.href = '${pageContext.request.contextPath}/jsp/search.jsp'">
             <fmt:message key="search"/>
         </button>
+        <div>
+            <form action="getChats">
+                <input type="submit" value="<fmt:message key="messages"/> "/>
+            </form>
+            <span id="unreadMessagesAmount"></span>
+        </div>
     </c:if>
     <a href="${pageContext.request.contextPath}/index.jsp"><img class="logo" src="${pageContext.request.contextPath}/img/logo.png"></a>
     <h2 class="header_name">Shooting Stars</h2>
     <h5 class="motto"><fmt:message key="motto"/></h5>
+    <script>
+        setInterval(displayAmount, 1000);
+        function displayAmount() {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        var answer = xmlhttp.responseText;
+                        var json = JSON.parse(answer);
+                        document.getElementById("unreadMessagesAmount").innerHTML =json.unreadMessagesAmount ;
+                    }
+                }
+                xmlhttp.open("GET", "getUnreadMessagesAmount", true);
+                xmlhttp.send();
+        }
+    </script>
 </body>
 </html>

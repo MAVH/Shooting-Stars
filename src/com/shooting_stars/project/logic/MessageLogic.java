@@ -108,4 +108,17 @@ public class MessageLogic {
             Pool.getPool().returnConnection(connection);
         }
     }
+    public static int getUnreadMessagesAmount(int userId) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            MessageDAO messageDAO = new MessageDAO(connection);
+            int messagesAmount = messageDAO.getAmountUnreadMessages(userId);
+            return messagesAmount;
+        } catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        } finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
 }

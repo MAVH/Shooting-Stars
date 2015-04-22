@@ -56,9 +56,7 @@
             <input type="submit" value="My fulfilled wishes"/>
         </form>
     </div>
-    <form action="getChats">
-        <input type="submit" value="<fmt:message key="messages"/> "/>
-    </form>
+
     <ctg:wishList list="${wishes}" isProfilePage="${true}"/>
 </body>
 </html>

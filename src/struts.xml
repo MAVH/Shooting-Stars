@@ -6,12 +6,16 @@
 
 <struts>
     <constant name="struts.multipart.maxSize" value="1000000" />
-    <package name="default" namespace="/" extends="struts-default">
+
+    <package name="default" namespace="/" extends="json-default">
         <global-results>
             <result name="error">
                 /jsp/error/error.jsp
             </result>
         </global-results>
+        <action name="getUnreadMessagesAmount" class="com.shooting_stars.project.command.GetUnreadMessagesAmountCommand">
+            <result type="json" />
+        </action>
         <action name="login" class="com.shooting_stars.project.command.LoginCommand">
             <result name="success" type="redirectAction">
                 userPage
@@ -188,5 +192,12 @@
                 /jsp/changePassword.jsp
             </result>
         </action>
+        <!--
+        <action name="getUnreadMessagesAmount" class="com.shooting_stars.project.command.GetUnreadMessagesAmountCommand">
+            <result type="json">
+                /index.jsp
+            </result>
+        </action> -->
 </package>
+
 </struts>
