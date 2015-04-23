@@ -45,6 +45,12 @@ public class MessageDAO extends AbstractDAO {
     public static final String SQL_GET_GIVEN_USER_CHATS_AMOUNT = "SELECT COUNT(*) FROM chat " +
             "WHERE user1Id = ? OR user2Id = ?";
     public static final String SQL_COUNT_MESSAGES_BY_CHAT_ID = "SELECT COUNT(*) FROM message WHERE chatId = ?";
+    public static final String SQL_GET_UNREAD_MESSAGES_BY_CHAT_ID_AND_USER_ID =
+            "SELECT sender, user_name, surname, photoName, message, message.date, message.time " +
+            "FROM message JOIN chat ON message.chatId = chat.chatId " +
+            "JOIN user_info ON sender = userId " +
+            "WHERE chat.chatId = ? AND isRead = 0 AND NOT sender = ? ORDER BY message.date DESC, message.time DESC " +
+            "LIMIT ?, ?";
 
     public MessageDAO(Connection connection) {
         super(connection);
@@ -273,5 +279,36 @@ public class MessageDAO extends AbstractDAO {
             close(ps);
         }
         return amount;
+    }
+
+    public List<Message> getUnreadMessages(int chatId, int userId, int count) throws DAOException {
+        PreparedStatement ps = null;
+        ResultSet rs;
+        ArrayList<Message> messages = new ArrayList<Message>();
+        try {
+            ps = connection.prepareStatement(SQL_GET_UNREAD_MESSAGES_BY_CHAT_ID_AND_USER_ID);
+            ps.setInt(1, chatId);
+            ps.setInt(2, userId);
+            ps.setInt(3,0);
+            ps.setInt(4,count);
+            rs = ps.executeQuery();
+            User user;
+            String message;
+            Date date;
+            Time time;
+            while (rs.next()) {
+                user = new User(rs.getInt(1),rs.getString(2), rs.getString(3),rs.getString(4));
+                message = rs.getString(5);
+                date = rs.getDate(6);
+                time = rs.getTime(7);
+                messages.add(new Message(message,user, date,time));
+            }
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+        return messages;
     }
 }

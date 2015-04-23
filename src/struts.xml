@@ -198,6 +198,9 @@
                 /jsp/changePassword.jsp
             </result>
         </action>
+        <action name="newMessages" class="com.shooting_stars.project.command.GetUnreadMessagesCommand">
+            <result type="json"/>
+        </action>
         <!--
         <action name="getUnreadMessagesAmount" class="com.shooting_stars.project.command.GetUnreadMessagesAmountCommand">
             <result type="json">

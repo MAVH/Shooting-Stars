@@ -138,4 +138,26 @@ public class MessageLogic {
             Pool.getPool().returnConnection(connection);
         }
     }
+
+    public static List<Message> getUnreadMessages(int chatId,int userId) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            MessageDAO messageDAO = new MessageDAO(connection);
+            List<Message> messages = messageDAO.getUnreadMessages(chatId,userId,MESSAGES_AMOUNT_ON_ONE_PAGE);
+            for(Message message : messages) {
+                if(userId == message.getSender().getUserId()) {
+                    message.setLoggedInUser(true);
+                } else {
+                    message.setLoggedInUser(false);
+                }
+            }
+            messageDAO.updateMessagesStatus(chatId, userId);
+            return messages;
+        } catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        } finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
 }

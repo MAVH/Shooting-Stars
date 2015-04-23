@@ -38,13 +38,12 @@
     </c:otherwise>
 </c:choose>
 </table>
-<span id="page" class="hidden">${page}</span>
 <ctg:chatsPager currentPage="${page}" generalAmount="${chatsAmount}"/>
 <script>
     setInterval(displayChats, 10000);
     function displayChats() {
         var xmlhttp = new XMLHttpRequest();
-        var page = document.getElementById("page").innerHTML;
+        var page = "${page}";
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 var answer = xmlhttp.responseText;

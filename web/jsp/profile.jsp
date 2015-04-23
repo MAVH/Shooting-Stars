@@ -21,7 +21,7 @@
     <h4>${userInfo.surname}</h4>
     <h5>${userInfo.country}</h5>
     <h5>${userInfo.city}</h5>
-    <h5><fmt:formatDate value="${userInfo.dateOfBirth}" dateStyle="short"/> </h5>
+    <h5><fmt:formatDate value="${userInfo.dateOfBirth}"/> </h5>
     <a href = "/editUserInfo"><fmt:message key="edit"/></a>
     <h4><fmt:message key="abilities"/> </h4>
     <h5>${userInfo.abilities}</h5>
