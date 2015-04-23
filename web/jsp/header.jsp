@@ -25,7 +25,9 @@
             <span id="unreadMessagesAmount"></span>
         </div>
         <script>
-            setInterval(displayAmount, 1000);
+            if("${currentUserId}" != null) {
+                setInterval(displayAmount, 1000);
+            }
             function displayAmount() {
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function() {

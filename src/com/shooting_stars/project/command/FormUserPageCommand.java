@@ -64,6 +64,7 @@ public class FormUserPageCommand extends SessionAwareCommand implements ServletR
             int currentUserId = getCurrentUserId();
             if(request.getParameter("userId") == null) {
                     userId = currentUserId;
+                    UserLogic.setUserStatus(userId,1);
             }
             if (userId == currentUserId) {
                 result = USER;

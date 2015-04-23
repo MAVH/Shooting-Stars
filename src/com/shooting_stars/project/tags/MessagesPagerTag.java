@@ -25,10 +25,9 @@ public class MessagesPagerTag extends TagSupport {
             ResourceBundle rs = ResourceBundle.getBundle("resources.pagecontent", (Locale)session.getAttribute("currentLocale"));
             JspWriter out = pageContext.getOut();
             int generalAmountOfPages = (int) Math.ceil((double) generalAmount / MessageLogic.MESSAGES_AMOUNT_ON_ONE_PAGE);
-            //7
-            int pageNumber; // currentPage = 4
+            int pageNumber;
             int firstPageNumber;
-            int pagerHalf = (int) Math.ceil((double) PAGER_AMOUNT / 2);//3
+            int pagerHalf = (int) Math.ceil((double) PAGER_AMOUNT / 2);
             if(generalAmountOfPages > 1) {
                 if (currentPage > 1) {
                     out.write("<a href=/getMessages?chatId=" + chatId + "&page=" + (currentPage - 1) + ">" +
