@@ -9,14 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MessageDAO extends AbstractDAO {
-    public static final String SQL_SELECT_CHATS_BY_USER_ID = "SELECT chatId, chat.user1Id, user_name, surname, photoName " +
+    public static final String SQL_SELECT_CHATS_BY_USER_ID = "SELECT chatId, chat.user1Id, user_name, surname, photoName, " +
+            "(SELECT  message.date FROM message WHERE message.chatId = chat.chatId ORDER BY message.date DESC LIMIT 1) AS chatDate, " +
+            "(SELECT  message.time FROM message  WHERE message.chatId = chat.chatId AND chatDate = message.date ORDER BY message.time DESC LIMIT 1) AS chatTime " +
             "FROM user_info JOIN chat ON user_info.userId = chat.user1Id " +
             "WHERE user2Id = ? " +
             "UNION " +
-            "SELECT chatId, chat.user2Id, user_name, surname, photoName " +
+            "SELECT chatId, chat.user2Id, user_name, surname, photoName, " +
+            "(SELECT  message.date FROM message WHERE message.chatId = chat.chatId ORDER BY message.date DESC LIMIT 1) AS chatDate, " +
+            "(SELECT  message.time FROM message  WHERE message.chatId = chat.chatId AND chatDate = message.date ORDER BY message.time DESC LIMIT 1) AS chatTime " +
             "FROM user_info JOIN chat ON user_info.userId = chat.user2Id " +
             "WHERE user1Id = ? " +
-            "ORDER BY chatId " +
+            "ORDER BY chatDate DESC, chatTime DESC " +
             "LIMIT ?,?";
     public static final String SQL_GET_AMOUNT_UNREAD_MESSAGES_BY_USER_ID = "SELECT COUNT(*) FROM message " +
             "WHERE chatId IN (SELECT chatId FROM  chat  WHERE user2Id = ? " +

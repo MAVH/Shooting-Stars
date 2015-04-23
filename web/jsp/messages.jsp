@@ -41,8 +41,8 @@
                         </p>
                     </td>
                     <td>
-                            <fmt:formatDate value="${message.date}"/>
-                        <br/>
+                        <fmt:formatDate value="${message.date}"/>
+                           <br/>
                           <fmt:formatDate value="${message.time}" type="time" timeStyle="short"/>
                     </td>
                 </tr>
