@@ -12,9 +12,10 @@
 </head>
 <body>
 <c:import url="header.jsp"/>
+<table class="table" id="chats">
 <c:choose>
     <c:when test="${not empty chats}">
-        <table class="table" id="chats">
+
             <c:forEach var="chat" items="${chats}">
                  <tr>
                      <td>
@@ -28,19 +29,22 @@
                      </td>
                  </tr>
             </c:forEach>
-        </table>
-        <ctg:chatsPager currentPage="${page}" generalAmount="${chatsAmount}"/>
     </c:when>
+
     <c:otherwise>
-        <p>
+        <td>
             <fmt:message key="not_found"/>
-        </p>
+        </td>
     </c:otherwise>
 </c:choose>
+</table>
+<span id="page" class="hidden">${page}</span>
+<ctg:chatsPager currentPage="${page}" generalAmount="${chatsAmount}"/>
 <script>
     setInterval(displayChats, 10000);
     function displayChats() {
         var xmlhttp = new XMLHttpRequest();
+        var page = document.getElementById("page").innerHTML;
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 var answer = xmlhttp.responseText;
@@ -48,7 +52,6 @@
                 var chats = json.chats;
                 var table = document.getElementById("chats");
                 table.replaceChild(document.createElement('TBODY'), table.tBodies[0])
-                console.log(chats);
                 for(var i = 0; i < chats.length; i++) {
                     var chat = chats[i];
                     var row = table.insertRow(i);
@@ -68,7 +71,7 @@
                 }
             }
         }
-        xmlhttp.open("GET", "updateChats", true);
+        xmlhttp.open("GET", "updateChats?page=" + page, true);
         xmlhttp.send();
     }
 </script>

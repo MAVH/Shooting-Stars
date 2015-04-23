@@ -1,16 +1,10 @@
 package com.shooting_stars.project.command;
 
-import com.opensymphony.xwork2.ActionSupport;
 import com.shooting_stars.project.entity.Chat;
-import com.shooting_stars.project.entity.Message;
-import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.MessageLogic;
-import org.apache.struts2.interceptor.SessionAware;
-
 import java.util.List;
-import java.util.Map;
 
 public class GetUserChatsCommand extends SessionAwareCommand {
 

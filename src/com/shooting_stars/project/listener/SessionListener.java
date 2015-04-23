@@ -15,6 +15,6 @@ public class SessionListener implements HttpSessionListener {
     }
 
     public void sessionDestroyed(HttpSessionEvent se){
-
+         se.getSession().removeAttribute("currentUserId");
     }
 }

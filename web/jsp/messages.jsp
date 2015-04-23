@@ -24,7 +24,7 @@
 
 <c:choose>
     <c:when test="${not empty messages}">
-        <table class="table">
+        <table class="table" id="messages">
             <c:forEach var="message" items="${messages}">
                 <tr>
                     <td>
