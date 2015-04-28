@@ -29,6 +29,8 @@ public class ChatsPagerTag extends TagSupport {
             int pagerHalf = (int) Math.ceil((double) PAGER_AMOUNT / 2);
             if(generalAmountOfPages > 1) {
                 if (currentPage > 1) {
+                    out.write("<a href=/getChats?page=" + 1 + ">" +
+                            rs.getString("first_page") + " </a>");
                     out.write("<a href=/getChats?page=" + (currentPage - 1) + ">" +
                             rs.getString("previous_page") + " </a>");
                 }
@@ -50,6 +52,8 @@ public class ChatsPagerTag extends TagSupport {
                 if (currentPage < generalAmountOfPages) {
                     out.write("<a href=/getChats?page=" + (currentPage + 1) + ">" +
                                 rs.getString("next_page") + " </a>");
+                    out.write("<a href=/getChats?page=" + generalAmountOfPages + ">" +
+                            rs.getString("last_page") + " ( " + generalAmountOfPages + " ) </a>");
                 }
             }
         } catch (IOException e) {
