@@ -32,7 +32,7 @@ public class WishDAO extends AbstractDAO {
             " ON fulfilled_wish.wishId = wish.wishId JOIN user ON fulfilled_wish.userId = user.userId " +
             "JOIN user_info ON user.userId = user_info.userId " +
             "JOIN wish_status ON wish.wishStatusId = wish_status.wishStatusId WHERE wish.userId = ? AND wishStatus LIKE ?" +
-            " ORDER BY fulfilled_wish.date";
+            " ORDER BY fulfilled_wish.date DESC";
     public static final String SQL_SELECT_FULFILLED_WISH_BY_MAKING_USER_ID = "SELECT wish.wishId, wish, " +
             "wish.userId, user_name, surname, photoName,  fulfilled_wish.date, wishStatus " +
             "FROM user JOIN wish ON user.userId = wish.userId " +

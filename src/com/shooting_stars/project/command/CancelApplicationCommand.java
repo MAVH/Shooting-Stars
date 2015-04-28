@@ -9,16 +9,16 @@ public class CancelApplicationCommand extends SessionAwareCommand {
     private int wishId;
     private int userId;
     private int pageCode;
-    private int currentUserId;
+    private int sessionUserId;
     @Override
     public String execute() {
         String result = SUCCESS;
-        currentUserId = getCurrentUserId();
+        sessionUserId = getCurrentUserId();
         int receiverId;
         try {
             int applicantId = userId;
             int wishOwnerId = WishLogic.cancelApplication(wishId, applicantId);
-            if(currentUserId == applicantId) {
+            if(sessionUserId == applicantId) {
                 if(pageCode != 0) {
                     result = "myPage";
                 }
@@ -26,10 +26,10 @@ public class CancelApplicationCommand extends SessionAwareCommand {
                 userId = wishOwnerId;
             } else {
                 receiverId = applicantId;
-                userId = currentUserId;
+                userId = sessionUserId;
             }
             //TODO change message
-            MessageLogic.sendMessage(currentUserId, receiverId, "cancel application");
+            MessageLogic.sendMessage(sessionUserId, receiverId, "cancel application");
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());
             exception = new CommandException(e.getCause());
@@ -37,12 +37,12 @@ public class CancelApplicationCommand extends SessionAwareCommand {
         }
         return result;
     }
-    public int getCurrentUserId() {
-        return currentUserId;
+    public int getSessionUserId() {
+        return sessionUserId;
     }
 
-    public void setCurrentUserId(int currentUserId) {
-        this.currentUserId = currentUserId;
+    public void setSessionUserId(int sessionUserId) {
+        this.sessionUserId = sessionUserId;
     }
 
     public int getPageCode() {

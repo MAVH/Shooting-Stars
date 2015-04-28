@@ -45,6 +45,5 @@
     <a href="${pageContext.request.contextPath}/index.jsp"><img class="logo" src="${pageContext.request.contextPath}/img/logo.png"></a>
     <h2 class="header_name">Shooting Stars</h2>
     <h5 class="motto"><fmt:message key="motto"/></h5>
-
 </body>
 </html>

@@ -12,7 +12,7 @@
     <meta http-equiv="Cache-Control" content="private">
 
 </head>
-<body onunload="toChat()">
+<body <!--onunload="toChat()"-->>
 
 <c:import url="header.jsp"/>
 
@@ -58,6 +58,7 @@
 </c:choose>
 
 <script type="text/javascript">
+    /*
     window.onbeforeunload = function(e) {
         alert('!!!!');
         window.location.href="/getChats";
@@ -72,7 +73,7 @@
         window.location.href="/getChats";
     }
     window.addEventListener("unload", toChat);
-
+    */
     setInterval(updateMessages, 10000);
 
     function updateMessages() {
@@ -117,12 +118,12 @@
                     column = row.insertCell(1);
                     column.innerHTML = json.dateValues[i] + "<br/>" + json.timeValues[i];
                 }
+                <ctg:messagesPager chatId="${chatId}" currentPage="1" generalAmount="${messagesAmount + messages.length}"/>
             }
         }
         xmlhttp.open("GET", "newMessages?chatId=" + chatId, true);
         xmlhttp.send();
     }
-
 </script>
 </body>
 </html>

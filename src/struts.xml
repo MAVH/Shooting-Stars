@@ -102,7 +102,7 @@
                 userPage?userId=${userId}
             </result>
             <result name="myPage" type="redirectAction" >
-                fulfilledWishes?userId=${currentUserId}
+                fulfilledWishes?userId=${sessionUserId}
             </result>
         </action>
         <action name="makeApplication" class="com.shooting_stars.project.command.MakeApplicationCommand">
@@ -201,12 +201,9 @@
         <action name="newMessages" class="com.shooting_stars.project.command.GetUnreadMessagesCommand">
             <result type="json"/>
         </action>
-        <!--
-        <action name="getUnreadMessagesAmount" class="com.shooting_stars.project.command.GetUnreadMessagesAmountCommand">
-            <result type="json">
-                /index.jsp
-            </result>
-        </action> -->
+        <action name="updateWishes" class="com.shooting_stars.project.command.UpdateWishesCommand">
+            <result type="json"/>
+        </action>
 </package>
 
 </struts>

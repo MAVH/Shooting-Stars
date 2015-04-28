@@ -53,7 +53,7 @@ public class WishListTag extends TagSupport {
             JspWriter out = pageContext.getOut();
             if(size != 0) {
                 String buttonDelete = rs.getString("delete");
-                out.write("<table id=wish_table class=table><tr><th></th><th>" + rs.getString("wishes") + "</th><th></th></tr>");
+                out.write("<table id=wishes_table class=table><tr><th></th><th>" + rs.getString("wishes") + "</th><th></th></tr>");
                 String candidatesList = "";
                 User candidate = null;
                 String label = null;
@@ -65,7 +65,7 @@ public class WishListTag extends TagSupport {
                     candidatesList = "";
                     if ((candidate = wish.getCandidate()) != null) {
                         label = rs.getString("wish_performed");
-                        candidatesList = "<h5>" + label + "</h5><table><tr><td><a href=userPage?userId=" +
+                        candidatesList = "<h5>" + label + "</h5><table id=candidate><tr><td><a href=userPage?userId=" +
                                 candidate.getUserId() + ">";
                         photoName = candidate.getPhotoName();
                         if(StringUtils.isEmpty(photoName)) {
@@ -87,10 +87,11 @@ public class WishListTag extends TagSupport {
                     if(wish.getCandidates() != null) {
                         if(!wish.getCandidates().isEmpty()) {
                             label = rs.getString("applications");
-                            candidatesList = "<h5>" + label + "</h5>";
-                            for (Object user : wish) {
-
-                                candidatesList += "<a href=userPage?userId=" + ((User) user).getUserId() + ">";
+                            candidatesList = "<h5>" + label + "</h5><table id=candidates>";
+                            //for (Object user : wish) {
+                            for(int j = 0; j < wish.getCandidates().size(); j++) {
+                                User user = wish.getCandidates().get(j);
+                                candidatesList += "<tr><td><a href=userPage?userId=" + ((User) user).getUserId() + ">";
                                 photoName = ((User) user).getPhotoName();
                                 if(StringUtils.isEmpty(photoName)) {
                                     photoName = UserPhotoTag.DEFAULT_IMAGE_NAME;
@@ -98,16 +99,18 @@ public class WishListTag extends TagSupport {
                                 candidatesList += "<img src=" + pageContext.getServletContext().getContextPath() + UserPhotoTag.PATH + photoName +
                                         " class=iconPhoto />";
                                 candidatesList += ((User) user).getName()
-                                         + " " + ((User) user).getSurname()+ "</a>";
+                                         + " " + ((User) user).getSurname()+ "</a></td>";
                                 if(isProfilePage) {
-                                    candidatesList += "<form action=acceptApplication method=post><input type=hidden name=wishId value=" + wish.getWishId()
+                                    candidatesList += "<td><form action=acceptApplication method=post><input type=hidden name=wishId value=" + wish.getWishId()
                                             + "><input type=hidden name=userId value=" + ((User) user).getUserId() + "><input type=submit value="
-                                            + buttonTake + "></form>";
-                                    candidatesList += "<form action=cancelApplication method=post><input type=hidden name=wishId value=" + wish.getWishId()
+                                            + buttonTake + "></form></td>";
+                                    candidatesList += "<td><form action=cancelApplication method=post><input type=hidden name=wishId value=" + wish.getWishId()
                                             + "><input type=hidden name=userId value=" + ((User) user).getUserId() + "><input type=submit value="
-                                            + buttonCancel + "></form>";
+                                            + buttonCancel + "></form></td>";
                                 }
+                                candidatesList += "</tr>";
                             }
+                            candidatesList += "</table>";
                         }
                     }
                     formAction = "";

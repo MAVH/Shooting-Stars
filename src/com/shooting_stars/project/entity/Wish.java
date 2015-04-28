@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Wish implements Iterable {
+public class Wish /*implements Iterable*/ {
     private int wishId;
     private String wish;
     private boolean isFulfilled;
@@ -75,9 +75,9 @@ public class Wish implements Iterable {
     public void setCandidate(User candidate) {
         this.candidate = candidate;
     }
-
+    /*
     @Override
     public Iterator<User> iterator() {
         return candidates.iterator();
-    }
+    }        */
 }

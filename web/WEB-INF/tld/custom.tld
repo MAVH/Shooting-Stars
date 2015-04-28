@@ -74,4 +74,14 @@
             <required>true</required>
         </attribute>
     </tag>
+    <tag>
+        <name>addingWishBlock</name>
+        <tag-class>com.shooting_stars.project.tags.AddWishBlockTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>count</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
 </taglib>

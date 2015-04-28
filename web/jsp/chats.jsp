@@ -43,7 +43,7 @@
     setInterval(displayChats, 10000);
     function displayChats() {
         var xmlhttp = new XMLHttpRequest();
-        var page = "${page}";
+        var currentPage = "${page}";
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 var answer = xmlhttp.responseText;
@@ -57,9 +57,9 @@
                     var column;
                     column = row.insertCell(0);
                     var link = document.createElement('a');
-                    link.setAttribute('href', "getMessages?chatId=" + chat.chatId );
+                    link.setAttribute('href', "getMessages?chatId=" + chat.chatId);
                     var photoName = chat.otherParticipant.photoName;
-                    if(photoName == null) {
+                    if (photoName == null) {
                         photoName = "default.png";
                     }
                     link.innerHTML = "<img src=../img/userPhoto/" + photoName + " class=iconPhoto />" +
@@ -68,9 +68,16 @@
                     column = row.insertCell(1);
                     column.innerHTML = chat.amountOfUnreadMessages;
                 }
+                <%--<ctg:chatsPager currentPage="1" generalAmount="${json.chatsAmount}"/>
+                var msg = {
+                    prop1: "<ctg:chatsPager currentPage="page" generalAmount="json.chatsAmount" />",
+                    prop2: "<fmt:message key="back" />"
+                };  --%>
+                //document.body.appendChild(msg.prop1);
+                //alert(msg.prop2);
             }
         }
-        xmlhttp.open("GET", "updateChats?page=" + page, true);
+        xmlhttp.open("GET", "updateChats?page=" + currentPage, true);
         xmlhttp.send();
     }
 </script>

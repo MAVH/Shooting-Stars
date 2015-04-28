@@ -1,7 +1,5 @@
 package com.shooting_stars.project.command;
 
-import com.opensymphony.xwork2.ActionSupport;
-import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.entity.UserInfo;
 import com.shooting_stars.project.entity.Wish;
 import com.shooting_stars.project.exception.CommandException;
@@ -9,11 +7,9 @@ import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.UserLogic;
 import com.shooting_stars.project.logic.WishLogic;
 import org.apache.struts2.interceptor.ServletRequestAware;
-import org.apache.struts2.interceptor.SessionAware;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class FormUserPageCommand extends SessionAwareCommand implements ServletRequestAware {
 
@@ -24,6 +20,7 @@ public class FormUserPageCommand extends SessionAwareCommand implements ServletR
     private static final String USER = "user";
     private static final String OTHER_USER = "other_user";
     private UserInfo userInfo;
+    private int wishesCount;
 
     public int getUserId() {
         return userId;
@@ -71,6 +68,7 @@ public class FormUserPageCommand extends SessionAwareCommand implements ServletR
             }
             userInfo = UserLogic.getUserInfo(userId);
             wishes = WishLogic.getAllWishes(userId);
+            wishesCount = wishes.size();
             status = UserLogic.getUserStatus(userId);
 
         } catch (LogicException e) {
@@ -84,5 +82,13 @@ public class FormUserPageCommand extends SessionAwareCommand implements ServletR
     @Override
     public void setServletRequest(HttpServletRequest request) {
           this.request = request;
+    }
+
+    public int getWishesCount() {
+        return wishesCount;
+    }
+
+    public void setWishesCount(int wishesCount) {
+        this.wishesCount = wishesCount;
     }
 }
