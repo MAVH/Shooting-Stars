@@ -12,7 +12,7 @@
     <meta http-equiv="Cache-Control" content="private">
 
 </head>
-<body <!--onunload="toChat()"-->>
+<body>
 
 <c:import url="header.jsp"/>
 
@@ -86,7 +86,7 @@
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 var answer = xmlhttp.responseText;
-                document.getElementById("info").innerHTML = answer;
+                //document.getElementById("info").innerHTML = answer;
                 console.log(answer);
                 var json = JSON.parse(answer);
                 var messages = json.newMessages;
@@ -118,7 +118,6 @@
                     column = row.insertCell(1);
                     column.innerHTML = json.dateValues[i] + "<br/>" + json.timeValues[i];
                 }
-                <ctg:messagesPager chatId="${chatId}" currentPage="1" generalAmount="${messagesAmount + messages.length}"/>
             }
         }
         xmlhttp.open("GET", "newMessages?chatId=" + chatId, true);

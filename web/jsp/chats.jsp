@@ -40,7 +40,7 @@
 </table>
 <ctg:chatsPager currentPage="${page}" generalAmount="${chatsAmount}"/>
 <script>
-    setInterval(displayChats, 10000);
+    setInterval(displayChats, 1000);
     function displayChats() {
         var xmlhttp = new XMLHttpRequest();
         var currentPage = "${page}";
