@@ -14,9 +14,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-/**
- * Created by Пользователь on 14.03.2015.
- */
+
 public class WishLogic {
     public static void addWishes(int userId,String[] wishes) throws LogicException {
         Connection connection = null;
@@ -182,6 +180,19 @@ public class WishLogic {
             WishDAO wishDAO = new WishDAO(connection);
             ArrayList<Wish> wishes = wishDAO.getWishesByMakerUserId(userId);
             return wishes;
+        } catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        } finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
+    public static int getCurrentWishesAmount(int userId) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            WishDAO wishDAO = new WishDAO(connection);
+            int amount = wishDAO.countCurrentWishesByUserId(userId);
+            return amount;
         } catch(PoolConnectionException | DAOException e ) {
             throw new LogicException(e.getCause());
         } finally {

@@ -7,7 +7,7 @@
 <html>
 <head>
     <title></title>
-    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/script.js"></script>
 </head>
 <body>
 <c:import url="header.jsp"/>
@@ -38,10 +38,17 @@
     <input type="submit" value="Send message"/>
 </form>
 <div>
+    <%--
     <form action="fulfilledWishes" method="get">
         <input type="hidden" name="userId" value="${userId}">
         <input type="submit" value="The wishes this user has fulfilled"/>
-    </form>
+    </form>  --%>
+    <c:url value="${pageContext.request.contextPath}/jsp/myWishes.jsp" var="myWishesURL">
+        <c:param name="userId" value="${userId}"/>
+    </c:url>
+    <button onclick="window.location.href = '${myWishesURL}'">
+        The wishes this user has fulfilled
+    </button>
     <form action="myFulfilledWishes" method="get">
         <input type="hidden" name="userId" value="${userId}">
         <input type="submit" value="His fulfilled wishes"/>

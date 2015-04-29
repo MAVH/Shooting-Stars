@@ -125,6 +125,9 @@
                 /jsp/myWishes.jsp
             </result>
         </action>
+        <action name="updateMyWishes" class="com.shooting_stars.project.command.GetWishesUserParticipatesInCommand">
+            <result type="json" />
+        </action>
         <action name="editUserInfo" class="com.shooting_stars.project.command.EditUserInfoCommand">
             <result name="success">
                 /jsp/infoEditor.jsp

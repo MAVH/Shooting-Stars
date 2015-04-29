@@ -10,7 +10,7 @@
     <title></title><!--
     <meta http-equiv="Cache-Control" content="no-cache">    -->
     <meta http-equiv="Cache-Control" content="private">
-    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/script.js"></script>
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css" media="screen"/>
 
 </head>
@@ -51,10 +51,18 @@
     </button>
 </div>
 <div>
+    <%--
     <form class="formWishes" action="fulfilledWishes" method="get">
         <input type="hidden" name="userId" value="${currentUserId}">
         <input type="submit" value="The wishes I've fulfilled"/>
-    </form>
+    </form> --%>
+
+        <c:url value="${pageContext.request.contextPath}/jsp/myWishes.jsp" var="myWishesURL">
+            <c:param name="userId" value="${currentUserId}"/>
+        </c:url>
+        <button onclick="window.location.href = '${myWishesURL}'">
+            The wishes I've fulfilled
+        </button>
     <form class="formWishes" action="myFulfilledWishes" method="get">
         <input type="hidden" name="userId" value="${currentUserId}">
         <input type="submit" value="My fulfilled wishes"/>

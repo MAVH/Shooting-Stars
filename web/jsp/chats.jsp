@@ -32,9 +32,11 @@
     </c:when>
 
     <c:otherwise>
-        <td>
-            <fmt:message key="not_found"/>
-        </td>
+        <tr>
+            <td>
+                <fmt:message key="not_found"/>
+            </td>
+        </tr>
     </c:otherwise>
 </c:choose>
 </table>
@@ -49,6 +51,9 @@
                 var answer = xmlhttp.responseText;
                 var json = JSON.parse(answer);
                 var chats = json.chats;
+                if(chats.length == 0) {
+                    return;
+                }
                 var table = document.getElementById("chats");
                 table.replaceChild(document.createElement('TBODY'), table.tBodies[0])
                 for(var i = 0; i < chats.length; i++) {

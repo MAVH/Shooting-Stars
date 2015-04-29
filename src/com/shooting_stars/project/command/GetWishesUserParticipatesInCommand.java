@@ -1,19 +1,18 @@
 package com.shooting_stars.project.command;
 
-import com.opensymphony.xwork2.ActionSupport;
-import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.entity.Wish;
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.WishLogic;
-import org.apache.struts2.interceptor.SessionAware;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.Locale;
 
 public class GetWishesUserParticipatesInCommand extends SessionAwareCommand {
     private int userId;
     private ArrayList<Wish> wishes;
+    String[] dateValues;
     private boolean isPageOwner;
 
     public boolean getIsPageOwner() {
@@ -51,11 +50,29 @@ public class GetWishesUserParticipatesInCommand extends SessionAwareCommand {
                 isPageOwner = false;
             }
             wishes = WishLogic.getWishesByMakerId(userId);
+                dateValues =new String[wishes.size()];
+                Locale locale = (Locale)sessionAttributes.get("currentLocale");
+                DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+                int i = 0;
+                for (Wish wish : wishes) {
+                    if(wish.getDate() != null) {
+                        dateValues[i] = dateFormat.format(wish.getDate());
+                    }
+                    i++;
+                }
         } catch (LogicException e) {
             LOG.error(e.getMessage(), e.getCause());
             exception =  new CommandException(e.getCause());
             result = ERROR;
         }
         return result;
+    }
+
+    public String[] getDateValues() {
+        return dateValues;
+    }
+
+    public void setDateValues(String[] dateValues) {
+        this.dateValues = dateValues;
     }
 }

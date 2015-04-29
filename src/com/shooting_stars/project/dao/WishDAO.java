@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class WishDAO extends AbstractDAO {
     public static final String SQL_INSERT_WISH = "INSERT INTO wish (userId, wish) VALUES (?,?)";
     public static final String SQL_SELECT_WISHES_BY_USER_ID = "SELECT wishId, wish FROM wish WHERE userId = ? AND wishStatusId = 0";
+    public static final String SQL_COUNT_CURRENT_WISHES_BY_USER_ID = "SELECT COUNT(wishId) FROM wish WHERE userId = ? AND wishStatusId = 0";
     public static final String SQL_DELETE_WISH = "DELETE FROM wish WHERE wishId = ?";
     public static final String SQL_DELETE_MAKING_USER = "DELETE FROM fulfilled_wish WHERE wishId = ?";
     public static final String SQL_DELETE_ALL_USERS_CONSIDERED = "DELETE from considered_wish WHERE wishId = ?";
@@ -333,6 +334,24 @@ public class WishDAO extends AbstractDAO {
             }
 
             return wishes;
+        }
+        catch (SQLException e) {
+            throw new DAOException("Problem with connection or statement", e);
+        } finally {
+            close(ps);
+        }
+    }
+    public int countCurrentWishesByUserId(int userId) throws DAOException {
+        PreparedStatement ps = null;
+        ResultSet rs;
+        try {
+            int count = 0;
+            ps = connection.prepareStatement(SQL_COUNT_CURRENT_WISHES_BY_USER_ID);
+            ps.setInt(1,userId);
+            rs = ps.executeQuery();
+            rs.next();
+            count = rs.getInt(1);
+            return count;
         }
         catch (SQLException e) {
             throw new DAOException("Problem with connection or statement", e);

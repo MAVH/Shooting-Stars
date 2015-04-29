@@ -62,13 +62,15 @@ public class FormUserPageCommand extends SessionAwareCommand implements ServletR
             if(request.getParameter("userId") == null) {
                     userId = currentUserId;
                     UserLogic.setUserStatus(userId,1);
+
             }
             if (userId == currentUserId) {
                 result = USER;
+                wishesCount = WishLogic.getCurrentWishesAmount(userId);
             }
             userInfo = UserLogic.getUserInfo(userId);
-            wishes = WishLogic.getAllWishes(userId);
-            wishesCount = wishes.size();
+            //wishes = WishLogic.getAllWishes(userId);
+
             status = UserLogic.getUserStatus(userId);
 
         } catch (LogicException e) {
