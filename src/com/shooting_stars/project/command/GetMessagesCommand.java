@@ -1,36 +1,31 @@
 package com.shooting_stars.project.command;
 
-import com.opensymphony.xwork2.ActionSupport;
 import com.shooting_stars.project.entity.Message;
-import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.MessageLogic;
-import org.apache.struts2.interceptor.SessionAware;
 
 import java.util.List;
-import java.util.Map;
 
 public class GetMessagesCommand extends SessionAwareCommand {
     private int chatId;
     private int page = 1;
     private List<Message> messages;
     private int messagesAmount;
-
-
-    int currentUserId;
-    public void validate() {
-        currentUserId = getCurrentUserId();
-        //проверка, является ли текущий пользователь участником чата
-    }
+    public static final String INVALID = "invalid_chat";
     @Override
     public String execute() {
         String result = SUCCESS;
         try {
-            if(messagesAmount == 0) {
-                messagesAmount = MessageLogic.getMessagesAmount(chatId);
+            int currentUserId = getCurrentUserId();
+            if(!MessageLogic.chatIsBelongedToUser(currentUserId,chatId)){
+                  result = INVALID;
+            } else {
+                if (messagesAmount == 0) {
+                    messagesAmount = MessageLogic.getMessagesAmount(chatId);
+                }
+                messages = MessageLogic.getMessages(chatId, currentUserId, page);
             }
-            messages = MessageLogic.getMessages(chatId, currentUserId, page);
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());
             exception = new CommandException(e.getCause());

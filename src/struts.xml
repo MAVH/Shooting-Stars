@@ -175,8 +175,8 @@
             <result name="success">
                 /jsp/messages.jsp
             </result>
-            <result name="input" type="redirectAction">
-                index.jsp
+            <result name="invalid_chat" type="redirectAction">
+                getChats
             </result>
         </action>
 

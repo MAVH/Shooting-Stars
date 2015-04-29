@@ -51,7 +51,8 @@ public class MessageDAO extends AbstractDAO {
             "JOIN user_info ON sender = userId " +
             "WHERE chat.chatId = ? AND isRead = 0 AND NOT sender = ? ORDER BY message.date DESC, message.time DESC " +
             "LIMIT ?, ?";
-
+    public static final String SQL_COUNT_CHATS_BY_CHAT_ID_AND_USER_ID = "SELECT COUNT(*) FROM chat WHERE chatId = ? AND " +
+            "(user1Id = ? OR user2Id = ?)";
     public MessageDAO(Connection connection) {
         super(connection);
     }
@@ -310,5 +311,25 @@ public class MessageDAO extends AbstractDAO {
             close(ps);
         }
         return messages;
+    }
+    public int getChatsAmountByUserIdAndChatId(int userId, int chatId) throws DAOException {
+        PreparedStatement ps = null;
+        ResultSet rs;
+        int amount;
+        try {
+            ps = connection.prepareStatement(SQL_COUNT_CHATS_BY_CHAT_ID_AND_USER_ID);
+            ps.setInt(1,chatId);
+            ps.setInt(2,userId);
+            ps.setInt(3,userId);
+            rs = ps.executeQuery();
+            rs.next();
+            amount = rs.getInt(1);
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+        return amount;
     }
 }

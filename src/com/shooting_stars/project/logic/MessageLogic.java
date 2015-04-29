@@ -160,4 +160,21 @@ public class MessageLogic {
             Pool.getPool().returnConnection(connection);
         }
     }
+    public static boolean chatIsBelongedToUser(int userId,int chatId) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            MessageDAO messageDAO = new MessageDAO(connection);
+            int count = messageDAO.getChatsAmountByUserIdAndChatId(userId,chatId);
+            if(count == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        } finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
 }
