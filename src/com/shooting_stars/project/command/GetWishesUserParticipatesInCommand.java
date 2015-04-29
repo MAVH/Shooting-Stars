@@ -12,7 +12,7 @@ import java.util.Locale;
 public class GetWishesUserParticipatesInCommand extends SessionAwareCommand {
     private int userId;
     private ArrayList<Wish> wishes;
-    String[] dateValues;
+    private String[] dateValues;
     private boolean isPageOwner;
 
     public boolean getIsPageOwner() {

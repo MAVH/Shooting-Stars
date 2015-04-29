@@ -120,6 +120,9 @@
                 /jsp/myFulfilledWishes.jsp
             </result>
         </action>
+        <action name="updateFulfilledWishes" class="com.shooting_stars.project.command.GetUsersWishesFulfilledCommand">
+            <result type="json" />
+        </action>
         <action name="fulfilledWishes" class="com.shooting_stars.project.command.GetWishesUserParticipatesInCommand">
             <result name="success">
                 /jsp/myWishes.jsp
