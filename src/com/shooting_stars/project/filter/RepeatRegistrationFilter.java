@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/jsp/authorised/*")
-public class AccessFilter implements Filter {
+@WebFilter(urlPatterns = "/jsp/guest/*")
+public class RepeatRegistrationFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -18,7 +18,7 @@ public class AccessFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         HttpSession session = httpRequest.getSession();
-        if (session.getAttribute("currentUserId") == null) {
+        if (session.getAttribute("currentUserId") != null) {
             HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/index.jsp");
         }

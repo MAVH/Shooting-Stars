@@ -39,10 +39,10 @@
         </action>
         <action name="userPage" class="com.shooting_stars.project.command.FormUserPageCommand">
             <result name="user">
-                /jsp/profile.jsp
+                /jsp/authorised/profile.jsp
             </result>
             <result name="other_user">
-                /jsp/userPage.jsp
+                /jsp/authorised/userPage.jsp
             </result>
         </action>
 
@@ -51,13 +51,13 @@
                 userPage
             </result>
             <result name="step1">
-                /jsp/registration1.jsp
+                /jsp/guest/registration1.jsp
             </result>
             <result name="step2">
-                /jsp/registration2.jsp
+                /jsp/guest/registration2.jsp
             </result>
             <result name="step3">
-                /jsp/registration3.jsp
+                /jsp/guest/registration3.jsp
             </result>
         </action>
 
@@ -73,7 +73,7 @@
                  userPage
              </result>
             <result name="input">
-                /jsp/changingData/changePhoto.jsp
+                /jsp/authorised/changePhoto.jsp
             </result>
         </action>
 
@@ -117,7 +117,7 @@
         </action>
         <action name="myFulfilledWishes" class="com.shooting_stars.project.command.GetUsersWishesFulfilledCommand">
             <result name="success">
-                /jsp/myFulfilledWishes.jsp
+                /jsp/authorised/myFulfilledWishes.jsp
             </result>
         </action>
         <action name="updateFulfilledWishes" class="com.shooting_stars.project.command.GetUsersWishesFulfilledCommand">
@@ -125,7 +125,7 @@
         </action>
         <action name="fulfilledWishes" class="com.shooting_stars.project.command.GetWishesUserParticipatesInCommand">
             <result name="success">
-                /jsp/myWishes.jsp
+                /jsp/authorised/myWishes.jsp
             </result>
         </action>
         <action name="updateMyWishes" class="com.shooting_stars.project.command.GetWishesUserParticipatesInCommand">
@@ -133,7 +133,7 @@
         </action>
         <action name="editUserInfo" class="com.shooting_stars.project.command.EditUserInfoCommand">
             <result name="success">
-                /jsp/infoEditor.jsp
+                /jsp/authorised/infoEditor.jsp
             </result>
         </action>
         <action name="saveEditedUserInfo" class="com.shooting_stars.project.command.SaveEditedUserInfoCommand">
@@ -141,12 +141,12 @@
                 userPage
             </result>
             <result name="input">
-                /jsp/infoEditor.jsp
+                /jsp/authorised/infoEditor.jsp
             </result>
         </action>
         <action name="editUserAbilities" class="com.shooting_stars.project.command.EditUserAbilitiesCommand">
             <result name="success">
-                /jsp/abilitiesEditor.jsp
+                /jsp/authorised/abilitiesEditor.jsp
             </result>
         </action>
         <action name="saveEditedUserAbilities" class="com.shooting_stars.project.command.SaveEditedUserAbilitiesCommand">
@@ -156,7 +156,7 @@
         </action>
         <action name="getChats" class="com.shooting_stars.project.command.GetUserChatsCommand">
             <result name="success"  >
-                /jsp/chats.jsp
+                /jsp/authorised/chats.jsp
             </result>
         </action>
 
@@ -176,7 +176,7 @@
 
         <action name="getMessages" class="com.shooting_stars.project.command.GetMessagesCommand">
             <result name="success">
-                /jsp/messages.jsp
+                /jsp/authorised/messages.jsp
             </result>
             <result name="invalid_chat" type="redirectAction">
                 getChats
@@ -190,18 +190,18 @@
         </action>
         <action name="usersSearch" class="com.shooting_stars.project.command.UsersSearchCommand">
             <result name="success">
-                /jsp/search.jsp
+                /jsp/authorised/search.jsp
             </result>
             <result name="input">
-                /jsp/search.jsp
+                /jsp/authorised/search.jsp
             </result>
         </action>
         <action name="changePassword" class="com.shooting_stars.project.command.ChangePasswordCommand">
             <result name="success">
-                /jsp/changePassword.jsp
+                /jsp/authorised/changePassword.jsp
             </result>
             <result name="input">
-                /jsp/changePassword.jsp
+                /jsp/authorised/changePassword.jsp
             </result>
         </action>
         <action name="newMessages" class="com.shooting_stars.project.command.GetUnreadMessagesCommand">
