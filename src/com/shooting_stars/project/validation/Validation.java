@@ -33,4 +33,7 @@ public class Validation {
         Matcher matcher = pattern.matcher(stringDate);
         return matcher.matches();
     }
+    public static boolean containsEnoughSymbols(String string, int number) {
+        return string.length() >= number;
+    }
 }

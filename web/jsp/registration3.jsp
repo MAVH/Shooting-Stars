@@ -25,5 +25,8 @@
 </form>
 <button id = "button_add_wish"><fmt:message key="wish_add"/> </button>
 ${registrationError}
+<button onclick="window.location.href = '${pageContext.request.contextPath}/index.jsp'">
+  <fmt:message key="quit"/>
+</button>
 </body>
 </html>

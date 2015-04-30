@@ -14,6 +14,7 @@
     <a class="lang" href="${pageContext.request.contextPath}/changeLocale?localeValue=EN">EN</a>
     <a class="lang" href="${pageContext.request.contextPath}/changeLocale?localeValue=RU">РУС</a>
     <c:if test="${not empty currentUserId}">
+        <a href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="profile"/></a>
         <a href="${pageContext.request.contextPath}/logout" class="logout"><fmt:message key="logout"/></a>
         <button onclick="window.location.href = '${pageContext.request.contextPath}/jsp/search.jsp'">
             <fmt:message key="search"/>

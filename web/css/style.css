@@ -6625,3 +6625,7 @@ button.close {
 .currentPage {
     color: #298537;
 }
+
+input:invalid {
+    border: solid 2px red;
+}

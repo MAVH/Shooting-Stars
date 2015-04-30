@@ -42,6 +42,7 @@ public class PreparingRegistrationCommand extends SessionAwareCommand implements
     private String registrationPasswordError;
     private String registrationInvalidPasswordError;
     private String registrationDateError;
+    private static final int AMOUNT_OF_SYMBOLS = 5;
 
     public String getRegistrationDateError() {
         return registrationDateError;
@@ -231,6 +232,10 @@ public class PreparingRegistrationCommand extends SessionAwareCommand implements
                 if(StringUtils.isEmpty(login) || StringUtils.isEmpty(password) || StringUtils.isEmpty(password_repeat)
                         || StringUtils.isEmpty(email)) {
                     registrationError = messageManager.getMessage("message.fields.empty");
+                    error = true;
+                }
+                if(!Validation.containsEnoughSymbols(login,AMOUNT_OF_SYMBOLS)) {
+                    registrationLoginError = messageManager.getMessage("message.login.short");
                     error = true;
                 }
                 if(!Validation.checkPassword(password)) {

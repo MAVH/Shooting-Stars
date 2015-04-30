@@ -12,13 +12,13 @@
 <form method="POST" action="${pageContext.request.contextPath}/registration">
   <input type="hidden" name="part" value="2"/>
   <label for="name"><fmt:message key="name"/></label>
-  <input type="text" name="name" id="name"  value="${user_registry.name}"/>
+  <input type="text" name="name" id="name"  value="${user_registry.name}" pattern="[A-Za-zА-Яа-я\s]+"/>
   <label for="surname"><fmt:message key="surname"/></label>
-  <input type="text" name="surname" id="surname"  value="${user_registry.surname}"/>
+  <input type="text" name="surname" id="surname"  value="${user_registry.surname}" pattern="[A-Za-zА-Яа-я\s]+"/>
   <label for="country"><fmt:message key="country"/></label>
   <input type="text" name="country" id="country"  value="${user_registry.country}"/>
   <label for="city"><fmt:message key="city"/></label>
-  <input type="text" name="city" id="city" value="${user_registry.city}"/>
+  <input type="text" name="city" id="city" value="${user_registry.city}" pattern="[A-Za-zА-Яа-я\s]+"/>
   <label for="dateOfBirth"><fmt:message key="date_of_birth"/></label>
   <input type="date" name="dateOfBirth" id="dateOfBirth" value="${user_registry.dateOfBirth}"/>
   <input type="submit" name="submitAction" value="<fmt:message key="continue"/>"/>
@@ -26,6 +26,9 @@
 </form>
 ${registrationError}
 ${registrationDateError}
+<button onclick="window.location.href = '${pageContext.request.contextPath}/index.jsp'">
+  <fmt:message key="quit"/>
+</button>
 </body>
 </html>
 

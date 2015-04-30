@@ -15,17 +15,17 @@
 <c:import url="header.jsp"/>
 <s:form method="POST" action="changePassword">
     <fieldset>
-        <s:password key="oldPassword">
+        <s:password key="oldPassword" pattern="[\S]+">
               <jsp:attribute name="label">
                      <fmt:message key="old_password"/>
               </jsp:attribute>
         </s:password>
-        <s:password key="newPassword">
+        <s:password key="newPassword" pattern="[\S]+">
               <jsp:attribute name="label">
                      <fmt:message key="new_password"/>
               </jsp:attribute>
         </s:password>
-        <s:password key="repeatPassword">
+        <s:password key="repeatPassword" pattern="[\S]+">
               <jsp:attribute name="label">
                      <fmt:message key="password_repeat"/>
               </jsp:attribute>
