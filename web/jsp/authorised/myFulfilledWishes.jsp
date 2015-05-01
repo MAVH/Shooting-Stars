@@ -8,6 +8,14 @@
     <head>
         <title><fmt:message key="wishes"/></title>
         <script type="text/javascript" src="${pageContext.request.contextPath}/js/script.js"></script>
+        <script>
+            var msg = {
+                wishText: "<fmt:message key="wish" />",
+                madeByText: "<fmt:message key="made_by" />",
+                dateText: "<fmt:message key="date" />"
+            };
+            displayFulfilledWishes("${userId}",msg);
+        </script>
     </head>
     <body>
         <c:import url="../partial/header.jsp"/>
@@ -42,52 +50,5 @@
                 </c:otherwise>
             </c:choose>
         </table>
-        <script>
-            setInterval(displayFulfilledWishes, 10000);
-            function displayFulfilledWishes() {
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                        var answer = xmlhttp.responseText;
-                        var json = JSON.parse(answer);
-                        var wishes = json.wishes;
-                        if (wishes.length == 0) {
-                            return;
-                        }
-                        var msg = {
-                            wishText: "<fmt:message key="wish" />",
-                            madeByText: "<fmt:message key="made_by" />",
-                            dateText: "<fmt:message key="date" />"
-                        };
-                        var table = document.getElementById("fulfilledWishes");
-                        table.replaceChild(document.createElement('TBODY'), table.tBodies[0]);
-                        var nameRow = table.insertRow(0);
-                        var columnName = document.createElement('th');
-                        columnName.innerHTML = msg.wishText;
-                        nameRow.appendChild(columnName);
-                        columnName = document.createElement('th');
-                        columnName.innerHTML = msg.madeByText;
-                        nameRow.appendChild(columnName);
-                        columnName = document.createElement('th');
-                        columnName.innerHTML = msg.dateText;
-                        nameRow.appendChild(columnName);
-                        for (var i = 0; i < wishes.length; i++) {
-                            var wish = wishes[i];
-                            var row = table.insertRow(i + 1);
-                            var column;
-                            column = row.insertCell(0);
-                            column.innerText = wish["wish"];
-                            column = row.insertCell(1);
-                            var link = createUserLink(wish.candidate);
-                            column.appendChild(link);
-                            column = row.insertCell(2);
-                            column.innerText = json.dateValues[i];
-                        }
-                    }
-                }
-                xmlhttp.open("GET", "updateFulfilledWishes?userId=" + "${userId}", true);
-                xmlhttp.send();
-            }
-        </script>
     </body>
 </html>

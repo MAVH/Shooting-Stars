@@ -5,6 +5,7 @@
 <fmt:setBundle basename="resources.pagecontent"/>
 <html>
     <head></head>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/script.js"></script>
     <body>
         <nav>
             <ul>
@@ -31,19 +32,7 @@
             </ul>
         </nav>
         <script>
-            setInterval(displayAmount, 1000);
-            function displayAmount() {
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                        var answer = xmlhttp.responseText;
-                        var json = JSON.parse(answer);
-                        document.getElementById("unreadMessagesAmount").innerHTML = json.unreadMessagesAmount;
-                    }
-                }
-                xmlhttp.open("GET", "getUnreadMessagesAmount", true);
-                xmlhttp.send();
-            }
+            displayAmount();
         </script>
     </body>
 </html>
