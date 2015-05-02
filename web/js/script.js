@@ -2,6 +2,26 @@ document.addEventListener("DOMContentLoaded", function(event) {
     
 });
 
+function displayHiddenForm() {
+    document.getElementsByTagName('form').classList.remove("hidden");
+}
+
+function getEmail() {
+    document.getElementById("buttonChangeEmail").onclick = function() {
+        document.getElementById("formChangeEmail").classList.remove("hidden");
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                var answer = xmlhttp.responseText;
+                var json = JSON.parse(answer);
+                document.getElementById("email").setAttribute('value',json.email);
+            }
+        }
+        xmlhttp.open("GET", "getEmail", true);
+        xmlhttp.send();
+        document.getElementById("buttonChangeEmail").classList.add("hidden");
+    }
+}
 function addPropertiesOnUserPage() {	
     document.getElementById("wishes_table").classList.add("table-striped");
     document.getElementById("wishes_table").classList.add("table-hover");

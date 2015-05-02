@@ -170,4 +170,30 @@ public class UserLogic {
             Pool.getPool().returnConnection(connection);
         }
     }
+
+    public static void changeEmail(int userId, String email) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            UserDAO userDAO = new UserDAO(connection);
+            userDAO.updateUserEmail(userId,email);
+        }  catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        }  finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
+    public static String getEmail(int userId) throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            UserDAO userDAO = new UserDAO(connection);
+            String email = userDAO.findUserEmail(userId);
+            return email;
+        }  catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        }  finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
 }

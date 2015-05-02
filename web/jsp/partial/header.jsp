@@ -19,6 +19,9 @@
     <button onclick="window.location.href = '../authorised/search.jsp'">
         <fmt:message key="search"/>
     </button>
+    <button onclick="window.location.href = '${ pageContext.request.contextPath }/jsp/authorised/changePassword.jsp'">
+        <fmt:message key="settings"/>
+    </button>
 </c:if>
 <a href="${pageContext.request.contextPath}/index.jsp"><img class="logo"
                                                             src="${pageContext.request.contextPath}/img/logo.png"></a>

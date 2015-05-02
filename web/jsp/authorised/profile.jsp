@@ -27,9 +27,7 @@
     <body onload="displayButtonAddWish()">
         <c:import url="../partial/header.jsp"/>
         <c:import url="../partial/menu.jsp"/>
-        <button onclick="window.location.href = 'changePassword.jsp'">
-            <fmt:message key="change_password"/>
-        </button>
+
         <h4>${userInfo.name}</h4>
         <h4>${userInfo.surname}</h4>
         <h5>${userInfo.country}</h5>

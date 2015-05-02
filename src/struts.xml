@@ -210,6 +210,17 @@
         <action name="updateWishes" class="com.shooting_stars.project.command.UpdateWishesCommand">
             <result type="json"/>
         </action>
+        <action name="getEmail" class="com.shooting_stars.project.command.GetEmailCommand">
+            <result type="json"/>
+        </action>
+        <action name="changeEmail" class="com.shooting_stars.project.command.ChangeEmailCommand">
+            <result name="success">
+                /jsp/authorised/changePassword.jsp
+            </result>
+            <result name="input">
+                /jsp/authorised/changePassword.jsp
+            </result>
+        </action>
 </package>
 
 </struts>

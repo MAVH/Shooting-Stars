@@ -1,12 +1,9 @@
 package com.shooting_stars.project.command;
 
-import com.opensymphony.xwork2.ActionSupport;
 import com.shooting_stars.project.manager.LocaleManager;
-import com.shooting_stars.project.manager.MessageManager;
-import org.apache.struts2.interceptor.SessionAware;
+import com.shooting_stars.project.manager.MessageManager;;
 
 import java.util.Locale;
-import java.util.Map;
 
 public class ChangeLocaleCommand extends SessionAwareCommand {
     private static final String PARAM_MESSAGE_MANAGER = "messageManager";
@@ -20,12 +17,6 @@ public class ChangeLocaleCommand extends SessionAwareCommand {
         sessionAttributes.put("currentLocale", locale);
         //messageManager.getMessage("message.login.error");
         //TODO: return current page
-        /*
-        if(sessionAttributes.get("user") != null) {
-            return "user";
-        } else {
-            return "guest";
-        }  */
         return SUCCESS;
 
     }

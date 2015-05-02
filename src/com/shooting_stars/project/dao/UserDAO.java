@@ -26,6 +26,9 @@ public class UserDAO extends AbstractDAO {
     public static final String SQL_UPDATE_ABILITIES = "UPDATE user_info SET abilities = ? WHERE userId = ?";
     public static final String SQL_GET_PASSWORD_BY_USER_ID = "SELECT password FROM user WHERE userId = ?";
     public static final String SQL_UPDATE_PASSWORD = "UPDATE user SET password = ? WHERE userId = ?";
+    public static final String SQL_UPDATE_LOGIN = "UPDATE user SET login = ? WHERE userId = ?";
+    public static final String SQL_UPDATE_EMAIL = "UPDATE user_info SET email = ? WHERE userId = ?";
+    public static final String SQL_SELECT_EMAIL = "SELECT email FROM user_info WHERE userId = ?";
 
     public UserDAO(Connection connection) {
         super(connection);
@@ -273,6 +276,55 @@ public class UserDAO extends AbstractDAO {
             ps.setString(1, password);
             ps.setInt(2, userId);
             ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+    }
+
+    public void updateUserEmail(int userId, String email) throws DAOException {
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement(SQL_UPDATE_EMAIL);
+            ps.setString(1, email);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+    }
+    public void updateUserLogin(int userId, String login) throws DAOException {
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement(SQL_UPDATE_LOGIN);
+            ps.setString(1, login);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+    }
+    public String findUserEmail(int userId) throws DAOException {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String email = null;
+        try {
+            ps = connection.prepareStatement(SQL_SELECT_EMAIL);
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+            if(rs.next()) {
+                email = rs.getString(1);
+            }
+            return email;
+
         } catch (SQLException e) {
             throw new DAOException("SQL exception (request or table failed): ", e);
         }

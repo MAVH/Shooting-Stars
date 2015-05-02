@@ -8,10 +8,13 @@
 <html>
     <head>
         <title><fmt:message key="settings"/></title>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/js/script.js"></script>
     </head>
     <body>
     <c:import url="../partial/header.jsp"/>
     <c:import url="../partial/menu.jsp"/>
+    <button id="buttonChangePassword" ><fmt:message key="password.change"/></button>
+    <div id="formChangePassword" class="hidden">
     <s:form method="POST" action="changePassword">
         <s:password key="oldPassword" pattern="[\S]+">
             <jsp:attribute name="label">
@@ -35,5 +38,35 @@
         </s:submit>
     </s:form>
     <p>${messageOperationInfo}</p>
+    </div>
+    <hr/>
+    <button id="buttonChangeEmail" ><fmt:message key="email.change"/></button>
+    <div id="formChangeEmail" class="hidden">
+    <form action="changeEmail">
+        <input type="email" name="email" id="email"/>
+        <input type="submit" value="<fmt:message key="save"/> ">
+    </form>
+    <p>${operationInfo}</p>
+    </div>
+    <script>
+        document.getElementById("buttonChangeEmail").onclick = function() {
+            document.getElementById("formChangeEmail").classList.remove("hidden");
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    var answer = xmlhttp.responseText;
+                    var json = JSON.parse(answer);
+                    document.getElementById("email").setAttribute('value',json.email);
+                }
+            }
+            xmlhttp.open("GET", "getEmail", true);
+            xmlhttp.send();
+            document.getElementById("buttonChangeEmail").classList.add("hidden");
+        }
+        document.getElementById("buttonChangePassword").onclick = function() {
+        document.getElementById("formChangePassword").classList.remove("hidden");
+        document.getElementById("buttonChangePassword").classList.add("hidden");
+        }
+    </script>
     </body>
 </html>
