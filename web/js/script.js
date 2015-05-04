@@ -40,7 +40,9 @@ function displayButtonAddWish() {
                     break;
                 }
             }
-            document.getElementById("add_wish_form").classList.remove("hidden");
+            if( document.getElementById("add_wish_form") != null) {
+                document.getElementById("add_wish_form").classList.remove("hidden");
+            }
         }
     }
 

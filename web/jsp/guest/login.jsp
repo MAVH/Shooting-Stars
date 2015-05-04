@@ -30,7 +30,7 @@
             </s:submit>
         </s:form>
     </div>
-    <button class="btn btn-default" onclick="window.location.href = 'registration1.jsp'">
+    <button class="btn btn-default" onclick="window.location.href = '${pageContext.request.contextPath}/jsp/guest/registration1.jsp'">
         <fmt:message key="sign_up"/>
     </button>
     <s:property value="loginOrPasswordErrorMessage"/>
