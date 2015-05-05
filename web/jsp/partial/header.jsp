@@ -14,14 +14,16 @@
 <a class="lang" href="${pageContext.request.contextPath}/changeLocale?localeValue=EN">EN</a>
 <a class="lang" href="${pageContext.request.contextPath}/changeLocale?localeValue=RU">РУС</a>
 <c:if test="${not empty currentUserId}">
-    <a href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="profile"/></a>
-    <a href="${pageContext.request.contextPath}/logout" class="logout"><fmt:message key="logout"/></a>
-    <button onclick="window.location.href = '../authorised/search.jsp'">
-        <fmt:message key="search"/>
-    </button>
-    <button onclick="window.location.href = '${ pageContext.request.contextPath }/jsp/authorised/changePassword.jsp'">
-        <fmt:message key="settings"/>
-    </button>
+    <a href="${pageContext.request.contextPath}/logout" class="logout"><fmt:message key="logout"/> </a>
+    <div class="buttons_block">
+        <a href="${pageContext.request.contextPath}/index.jsp" class="profile_button"><%--<fmt:message key="profile"/>--%></a>
+        <a href = "${pageContext.request.contextPath}/jsp/authorised/search.jsp" class="search_button">
+            <%--<fmt:message key="search"/>--%>
+        </a>
+        <a href = "${ pageContext.request.contextPath }/jsp/authorised/changePassword.jsp" class="settings_button">
+            <%--<fmt:message key="settings"/>--%>
+        </a>
+    </div>
 </c:if>
 <a href="${pageContext.request.contextPath}/index.jsp"><img class="logo"
                                                             src="${pageContext.request.contextPath}/img/logo.png"></a>
