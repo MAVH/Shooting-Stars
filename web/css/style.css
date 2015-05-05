@@ -215,32 +215,34 @@ nav.menu li a.messages {
 .login_form {
     width: 300px;
     margin: 100px auto;
-    padding: 40px 40px 20px;
+    padding: 40px;
     background: #FEFFDF;
     border: solid 2px firebrick;
     border-radius: 5px;
     -webkit-box-shadow: 0 5px 18px #3f241d;
     box-shadow: 0 5px 18px #3f241d;
+    text-align: center;
 }
-.login_form .label {
+.login_form .label, .login_form .errorLabel {
     font-size: 20px;
     line-height: 38px;
     margin: 8px;
-}
-.login_form .errorLabel {
-    font-size: 20px;
-    line-height: 38px;
-    margin: 8px;
-    color: firebrick;
 }
 .login_form .form-control {
-    margin-top: 10px;
+    margin: 3px;
 }
 .sign_in_button {
     margin-top: 30px;
+    margin-right: -5px;
 }
 .sign_up_button {
+    display: block;
     margin-top: -57px;
+}
+.login_form .errorMessage {
+    color: firebrick;
+    font-size: 19px;
+    margin: 5px;
 }
 
 

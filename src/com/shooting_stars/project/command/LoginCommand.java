@@ -21,7 +21,7 @@ public class LoginCommand extends SessionAwareCommand {
     public void validate() {
         messageManager = (MessageManager)sessionAttributes.get("messageManager");
         if(StringUtils.isEmpty(login) || StringUtils.isEmpty(password)) {
-            addFieldError("login",messageManager.getMessage("message.fields.empty"));
+            addFieldError("login", messageManager.getMessage("message.fields.empty"));
         }
     }
     @Override

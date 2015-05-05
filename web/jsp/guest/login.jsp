@@ -12,6 +12,7 @@
 <c:import url="../partial/header.jsp"/>
 <section>
     <div class="login_form">
+        <p class="errorMessage"><s:property value="loginOrPasswordErrorMessage"/></p>
         <s:form action="login">
             <s:textfield key="login" class="form-control">
                 <jsp:attribute name="label">
@@ -33,7 +34,6 @@
             <fmt:message key="sign_up"/>
         </button>
     </div>
-    <s:property value="loginOrPasswordErrorMessage"/>
 </section>
 </body>
 </html>
