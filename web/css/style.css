@@ -160,6 +160,45 @@ button:active, html input[type="button"]:active, input[type="reset"]:active, inp
     background-image: url("../img/icons/home_hover.png");
 }
 
+/*********Menu***************/
+nav.menu {
+    text-align: center;
+    border-top: solid 1px chocolate;
+    border-bottom: solid 1px chocolate;
+    margin: 0 auto;
+}
+nav.menu ul {
+    padding-left: 0;
+}
+nav.menu ul li {
+    display: inline-block;
+    list-style-type: none;
+    margin: 15px;
+    margin-top: 110px;
+}
+nav.menu li a {
+    text-decoration: none;
+    color: #050505;
+    font-size: 18px;
+    padding: 5px 10px;
+    padding-top: 110px;
+}
+nav.menu li a:hover {
+    color: firebrick;
+}
+nav.menu li a.myWishes {
+    background: url("../img/icons/home.png") top center no-repeat;
+    background-size: 100px 100px;
+}
+nav.menu li a.wishesByMe {
+    background: url("../img/icons/home.png") top center no-repeat;
+    background-size: 100px 100px;
+}
+nav.menu li a.messages {
+    background: url("../img/icons/home.png") top center no-repeat;
+    background-size: 100px 100px;
+}
+
 .userPhoto {
     display: inline-block;
     float: left;
@@ -200,7 +239,4 @@ input:invalid {
 }
 .hidden {
     display: none;
-}
-nav li {
-    display: inline-block;
 }

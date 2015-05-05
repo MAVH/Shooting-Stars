@@ -7,27 +7,26 @@
     <head></head>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/script.js"></script>
     <body>
-        <nav>
+        <nav class="menu">
             <ul>
                 <li>
                     <c:url value="${pageContext.request.contextPath}/jsp/authorised/myWishes.jsp" var="myWishesURL">
                         <c:param name="userId" value="${currentUserId}"/>
                     </c:url>
-                    <button onclick="window.location.href = '${myWishesURL}'">
-                        The wishes I've fulfilled
-                    </button>
+                    <a href = "${myWishesURL}" class = "myWishes">
+                        <fmt:message key="my_fulfilled_wishes"/>
+                    </a>
                 </li>
                 <li>
-                    <form class="formWishes" action="myFulfilledWishes" method="get">
-                        <input type="hidden" name="userId" value="${currentUserId}">
-                        <input type="submit" value="My fulfilled wishes"/>
-                    </form>
+                    <a href = "${pageContext.request.contextPath}/myFulfilledWishes?userId=${currentUserId}" class = "wishesByMe">
+                        <fmt:message key="wishes_I_fulfilled"/>
+                    </a>
                 </li>
                 <li>
-                    <form action="getChats">
-                        <input type="submit" value="<fmt:message key="messages"/> "/>
-                    </form>
-                    <span id="unreadMessagesAmount"></span>
+                    <a href = "${pageContext.request.contextPath}/getChats" class = "messages">
+                        <fmt:message key="messages"/>
+                    </a>
+                    <span id="unreadMessagesAmount" class="messaged_amount"></span>
                 </li>
             </ul>
         </nav>
