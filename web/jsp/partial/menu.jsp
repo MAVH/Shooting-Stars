@@ -26,7 +26,7 @@
                     <a href = "${pageContext.request.contextPath}/getChats" class = "messages">
                         <fmt:message key="messages"/>
                     </a>
-                    <span id="unreadMessagesAmount" class="messaged_amount"></span>
+                    <span id="unreadMessagesAmount" class="messages_amount"></span>
                 </li>
             </ul>
         </nav>

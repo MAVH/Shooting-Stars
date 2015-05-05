@@ -11,7 +11,7 @@
 <body>
 <c:import url="../partial/header.jsp"/>
 <section>
-    <div class="well bs-component">
+    <div class="login_form">
         <s:form action="login" class="form-horizontal">
             <s:textfield key="login" class="form-control">
                 <jsp:attribute name="label">

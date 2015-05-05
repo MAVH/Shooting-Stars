@@ -169,34 +169,52 @@ nav.menu {
 }
 nav.menu ul {
     padding-left: 0;
+    margin: 10px;
 }
 nav.menu ul li {
     display: inline-block;
     list-style-type: none;
-    margin: 15px;
-    margin-top: 110px;
+    margin: 90px 50px 15px;
 }
 nav.menu li a {
     text-decoration: none;
     color: #050505;
     font-size: 18px;
     padding: 5px 10px;
-    padding-top: 110px;
+    padding-top: 90px;
 }
 nav.menu li a:hover {
     color: firebrick;
 }
 nav.menu li a.myWishes {
-    background: url("../img/icons/home.png") top center no-repeat;
+    background: url("../img/icons/boxMy.png") top center no-repeat;
     background-size: 100px 100px;
 }
 nav.menu li a.wishesByMe {
-    background: url("../img/icons/home.png") top center no-repeat;
+    background: url("../img/icons/boxOther.png") top center no-repeat;
     background-size: 100px 100px;
 }
 nav.menu li a.messages {
-    background: url("../img/icons/home.png") top center no-repeat;
+    background: url("../img/icons/messages.png") top center no-repeat;
     background-size: 100px 100px;
+}
+.messages_amount {
+    position: relative;
+    top: -70px;
+    right: 35px;
+    display: inline-block;
+    background-color: yellow;
+    border: solid 1px yellow;
+    border-radius: 100%;
+    width: 25px;
+    height: 25px;
+    color: darkred;
+    font-size: 20px;
+}
+/*********Login***************/
+.login_form {
+    vertical-align: middle;
+    margin: 0 auto;
 }
 
 .userPhoto {
