@@ -75,7 +75,7 @@ button, html input[type="button"], input[type="reset"], input[type="submit"] {
 }
 
 button:hover, html input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover {
-    background-color: #dd8823;
+    background-color: firebrick;
 }
 
 button:active, html input[type="button"]:active, input[type="reset"]:active, input[type="submit"]:active {
@@ -213,9 +213,36 @@ nav.menu li a.messages {
 }
 /*********Login***************/
 .login_form {
-    vertical-align: middle;
-    margin: 0 auto;
+    width: 300px;
+    margin: 100px auto;
+    padding: 40px 40px 20px;
+    background: #FEFFDF;
+    border: solid 2px firebrick;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 5px 18px #3f241d;
+    box-shadow: 0 5px 18px #3f241d;
 }
+.login_form .label {
+    font-size: 20px;
+    line-height: 38px;
+    margin: 8px;
+}
+.login_form .errorLabel {
+    font-size: 20px;
+    line-height: 38px;
+    margin: 8px;
+    color: firebrick;
+}
+.login_form .form-control {
+    margin-top: 10px;
+}
+.sign_in_button {
+    margin-top: 30px;
+}
+.sign_up_button {
+    margin-top: -57px;
+}
+
 
 .userPhoto {
     display: inline-block;

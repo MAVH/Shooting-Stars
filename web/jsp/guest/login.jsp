@@ -12,7 +12,7 @@
 <c:import url="../partial/header.jsp"/>
 <section>
     <div class="login_form">
-        <s:form action="login" class="form-horizontal">
+        <s:form action="login">
             <s:textfield key="login" class="form-control">
                 <jsp:attribute name="label">
                     <fmt:message key="login"/>
@@ -23,16 +23,16 @@
                     <fmt:message key="password"/>
                 </jsp:attribute>
             </s:password>
-            <s:submit class="btn btn-primary">
+            <s:submit class="btn btn-primary sign_in_button">
                 <jsp:attribute name="value">
                     <fmt:message key="sign_in"/>
                 </jsp:attribute>
             </s:submit>
         </s:form>
+        <button class="btn btn-default sign_up_button" onclick="window.location.href = '${pageContext.request.contextPath}/jsp/guest/registration1.jsp'">
+            <fmt:message key="sign_up"/>
+        </button>
     </div>
-    <button class="btn btn-default" onclick="window.location.href = '${pageContext.request.contextPath}/jsp/guest/registration1.jsp'">
-        <fmt:message key="sign_up"/>
-    </button>
     <s:property value="loginOrPasswordErrorMessage"/>
 </section>
 </body>
