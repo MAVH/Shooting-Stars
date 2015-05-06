@@ -19,6 +19,7 @@
                 <p>..</p>
                 <p class="curr">3</p>
             </div>
+            <p class="wishes_explanation"><fmt:message key="wishes_explanation"/></p>
             <form method="POST" action="${pageContext.request.contextPath}/registration">
                 <input type="hidden" name="part" value="3"/>
                 <table class="reg_table">
