@@ -274,10 +274,12 @@ nav.menu li a.messages {
 }
 .continue_button {
     margin-top: 15px;
+    float: right;
 }
 .continue_button_td {
     text-align: right;
 }
+
 .quit_button {
     display: block;
     margin-left: 10px;
@@ -289,6 +291,7 @@ nav.menu li a.messages {
     display: block;
     margin-left: 7px;
     margin-top: 15px;
+    float: left;
 }
 .wish_label_td {
     vertical-align: top;

@@ -45,11 +45,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <input type="submit" name="submitAction" class="back_button" value="<fmt:message key="back"/>">
-                        </td>
-                        <td class="continue_button_td">
+                        <td colspan="2">
                             <input type="submit" name="submitAction" class="continue_button" value="<fmt:message key="continue"/>"/>
+                            <input type="submit" name="submitAction" class="back_button" value="<fmt:message key="back"/>">
+                            <%--</td>
+                            <td class="continue_button_td">--%>
+
                         </td>
                     </tr>
                 </table>
