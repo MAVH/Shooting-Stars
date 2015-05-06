@@ -21,7 +21,7 @@ public class UserDAO extends AbstractDAO {
     public static final String SQL_GET_STATUS = "SELECT status FROM user_status JOIN user ON user.userStatusId = user_status.userStatusId WHERE user.userId = ?";
     public static final String SQL_SET_STATUS = "UPDATE user SET userStatusId = ? WHERE userId = ?";
     public static final String SQL_UPDATE_USER_INFO =
-            "UPDATE user_info SET user_name = ?, surname = ?, country = ?, city = ?, dateOfBirth = ?, email = ? WHERE userId = ?";
+            "UPDATE user_info SET user_name = ?, surname = ?, country = ?, city = ?, dateOfBirth = ? WHERE userId = ?";
     public static final String SQL_SELECT_ABILITIES = "SELECT abilities FROM user_info WHERE userId = ?";
     public static final String SQL_UPDATE_ABILITIES = "UPDATE user_info SET abilities = ? WHERE userId = ?";
     public static final String SQL_GET_PASSWORD_BY_USER_ID = "SELECT password FROM user WHERE userId = ?";
@@ -203,8 +203,7 @@ public class UserDAO extends AbstractDAO {
             ps.setString(3, userInfo.getCountry());
             ps.setString(4, userInfo.getCity());
             ps.setDate(5, userInfo.getDateOfBirth());
-            ps.setString(6, userInfo.getEmail());
-            ps.setInt(7, userId);
+            ps.setInt(6, userId);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("SQL exception (request or table failed): ", e);

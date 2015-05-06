@@ -13,68 +13,61 @@
     <body>
         <c:import url="../partial/header.jsp"/>
         <c:import url="../partial/menu.jsp"/>
+        <div class="registration_form">
         <form method="POST" action="${pageContext.request.contextPath}/saveEditedUserInfo">
             <table>
                 <tr>
-                    <s:textfield key="name">
-                        <jsp:attribute name="value">
-                            ${userInfo.name}
-                        </jsp:attribute>
-                        <jsp:attribute name="label">
-                            <fmt:message key="name"/>
-                        </jsp:attribute>
-                    </s:textfield>
-                </tr>
-                <%--
-              <label for="name"><fmt:message key="name"/></label>
-              <input type="text" name="name" id="name"  value="${userInfo.name}"/>
-              --%>
-                <tr>
                     <td>
-                        <label for="surname"><fmt:message key="surname"/></label>
+                        <label for="name" class="label"><fmt:message key="name"/></label>
                     <td>
-                        <input type="text" name="surname" id="surname" value="${userInfo.surname}"/>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="country"><fmt:message key="country"/></label>
-                    <td>
-                        <input type="text" name="country" id="country" value="${userInfo.country}"/>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="city"><fmt:message key="city"/></label>
-                    </td>
-                    <td>
-                        <input type="text" name="city" id="city" value="${userInfo.city}"/>
+                        <input type="text" name="name" id="name" class="form-control"
+                               value="${userInfo.name}" pattern="[A-Za-zА-Яа-я\s]+"/>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <label for="dateOfBirth"><fmt:message key="date_of_birth"/></label>
+                        <label for="surname" class="label"><fmt:message key="surname"/></label>
+                    <td>
+                        <input type="text" name="surname" id="surname" value="${userInfo.surname}" class="form-control"/>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="country" class="label"><fmt:message key="country"/></label>
+                    <td>
+                        <input type="text" name="country" id="country" value="${userInfo.country}" class="form-control"/>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="city" class="label"><fmt:message key="city"/></label>
                     </td>
                     <td>
-                        <input type="date" name="date" id="dateOfBirth" value="${userInfo.dateOfBirth}"/>
+                        <input type="text" name="city" id="city" value="${userInfo.city}" class="form-control"/>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <label for="email"><fmt:message key="e-mail"/></label>
+                        <label for="dateOfBirth" class="label"><fmt:message key="date_of_birth"/></label>
                     </td>
                     <td>
-                        <input type="email" name="email" id="email" value="${userInfo.email}"/>
+                        <input type="date" name="date" id="dateOfBirth" value="${userInfo.dateOfBirth}" class="form-control"/>
                     </td>
                 </tr>
                 <tr>
-                    <td></td>
                     <td>
+                        <button onclick="window.location.href = 'userPage'">
+                            <fmt:message key="cancel"/>
+                        </button>
+                    </td>
+                    <td class="continue_button_td">
                         <input type="submit" name="submitAction" value="<fmt:message key="save"/>"/>
                     </td>
                 </tr>
             </table>
         </form>
-        <p>${messageEmailEmpty}</p>
+        <p class="errorMessage">${messageNameEmpty}</p>
+        <p class="errorMessage">${messageDateIncorrect}</p>
 
-        <p>${messageDateIncorrect}</p>
+        </div>
+
     </body>
 </html>

@@ -26,6 +26,7 @@
                         <td>
                             <input type="text" name="name" id="name" class="form-control"
                                    value="${user_registry.name}" pattern="[A-Za-zА-Яа-я\s]+"/>
+                        </td>
                     </tr>
                     <tr>
                         <td>

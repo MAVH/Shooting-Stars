@@ -17,17 +17,15 @@ public class SaveEditedUserInfoCommand extends SessionAwareCommand implements Mo
     private String date;
     private UserInfo userInfo = new UserInfo();
     private MessageManager messageManager;
-    private String messageEmailEmpty;
     private String messageDateIncorrect;
+    private String messageNameEmpty;
     @Override
     public void validate() {
         messageManager = (MessageManager)sessionAttributes.get("messageManager");
         if(StringUtils.isEmpty(userInfo.getName())) {
+            messageNameEmpty = messageManager.getMessage("message.name.input");
             addFieldError("name", messageManager.getMessage("message.name.input"));
-        }
-        if(StringUtils.isEmpty(userInfo.getEmail())) {
-            messageEmailEmpty =  messageManager.getMessage("message.email.empty");
-            addFieldError("email",messageManager.getMessage("message.email.empty"));
+
         }
         if(StringUtils.isNotEmpty(date)) {
             if (!Validation.isDateBeforeCurrent(Date.valueOf(date))) {
@@ -75,19 +73,19 @@ public class SaveEditedUserInfoCommand extends SessionAwareCommand implements Mo
         this.userInfo = userInfo;
     }
 
-    public String getMessageEmailEmpty() {
-        return messageEmailEmpty;
-    }
-
-    public void setMessageEmailEmpty(String messageEmailEmpty) {
-        this.messageEmailEmpty = messageEmailEmpty;
-    }
-
     public String getMessageDateIncorrect() {
         return messageDateIncorrect;
     }
 
     public void setMessageDateIncorrect(String messageDateIncorrect) {
         this.messageDateIncorrect = messageDateIncorrect;
+    }
+
+    public String getMessageNameEmpty() {
+        return messageNameEmpty;
+    }
+
+    public void setMessageNameEmpty(String messageNameEmpty) {
+        this.messageNameEmpty = messageNameEmpty;
     }
 }
