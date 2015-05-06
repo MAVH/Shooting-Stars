@@ -17,7 +17,7 @@
             </button>
         </div>
         <form action="wishesSearch" method="get">
-            <input type="textarea" name="wish" value="${wish}" class="searchField" pattern="[A-Za-zА-Яа-я\s-]+"/>
+            <input type="textarea" name="wish" value="${wish}" class="searchField form-control" pattern="[A-Za-zА-Яа-я\s-]+"/>
             <input type="submit" value="<fmt:message key="find"/>" class="btn btn-default">
         </form>
         <c:choose>

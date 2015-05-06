@@ -279,7 +279,9 @@ nav.menu li a.messages {
 .continue_button_td {
     text-align: right;
 }
+.continue_back_button_td {
 
+}
 .quit_button {
     display: block;
     margin-left: 10px;

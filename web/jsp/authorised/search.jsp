@@ -17,12 +17,19 @@
             </button>
         </div>
         <form action="usersSearch" method="get">
-            <input type="text" name="name" value="${name}" class="searchField" pattern="[A-Za-zА-Яа-я\s-]+"/>
-            <input type="text" name="surname" value="${surname}" class="searchField" pattern="[A-Za-zА-Яа-я\s-]+"/>
-            <input type="text" name="country" value="${country}" class="searchField" pattern="[A-Za-zА-Яа-я\s-]+"/>
-            <input type="text" name="city" value="${city}" class="searchField" pattern="[A-Za-zА-Яа-я\s-]+"/>
-            <input type="date" name="dateOfBirthMin" value="${dateOfBirthMin}" class="searchField"/>
-            <input type="date" name="dateOfBirthMax" value="${dateOfBirthMax}" class="searchField"/>
+            <label for="name" class="label"><fmt:message key="name"/></label>
+            <input type="text" name="name" id="name" value="${name}" class="searchField" pattern="[A-Za-zА-Яа-я\s-]+"/>
+            <label for="surname" class="label"><fmt:message key="surname"/></label>
+            <input type="text" name="surname" id="surname" value="${surname}" class="searchField" pattern="[A-Za-zА-Яа-я\s-]+"/>
+            <label for="country" class="label"><fmt:message key="country"/></label>
+            <input type="text" name="country" id="country" value="${country}" class="searchField" pattern="[A-Za-zА-Яа-я\s-]+"/>
+            <label for="city" class="label"><fmt:message key="city"/></label>
+            <input type="text" name="city" id="city" value="${city}" class="searchField" pattern="[A-Za-zА-Яа-я\s-]+"/>
+
+            <label for="dateOfBirthMin" class="label"><fmt:message key="from"/></label>
+            <input type="date" name="dateOfBirthMin" id="dateOfBirthMin" value="${dateOfBirthMin}" class="searchField"/>
+            <label for="dateOfBirthMax" class="label"><fmt:message key="to"/></label>
+            <input type="date" name="dateOfBirthMax" id="dateOfBirthMax" value="${dateOfBirthMax}" class="searchField"/>
             <input type="submit" value="<fmt:message key="find"/>" class="btn btn-default">
         </form>
         <c:choose>

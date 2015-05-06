@@ -10,15 +10,15 @@
         <nav class="menu">
             <ul>
                 <li>
-                    <c:url value="${pageContext.request.contextPath}/jsp/authorised/myWishes.jsp" var="myWishesURL">
-                        <c:param name="userId" value="${currentUserId}"/>
-                    </c:url>
-                    <a href = "${myWishesURL}" class = "myWishes">
+                    <a href = "${pageContext.request.contextPath}/myFulfilledWishes?userId=${currentUserId}" class = "myWishes">
                         <fmt:message key="my_fulfilled_wishes"/>
                     </a>
                 </li>
                 <li>
-                    <a href = "${pageContext.request.contextPath}/myFulfilledWishes?userId=${currentUserId}" class = "wishesByMe">
+                    <c:url value="${pageContext.request.contextPath}/jsp/authorised/myWishes.jsp" var="myWishesURL">
+                        <c:param name="userId" value="${currentUserId}"/>
+                    </c:url>
+                    <a href = "${myWishesURL}" class = "wishesByMe">
                         <fmt:message key="wishes_I_fulfilled"/>
                     </a>
                 </li>
