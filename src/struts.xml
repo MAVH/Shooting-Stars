@@ -221,6 +221,11 @@
                 /jsp/authorised/changePassword.jsp
             </result>
         </action>
+        <action name="wishesSearch" class="com.shooting_stars.project.command.FindWishesCommand">
+            <result name="success">
+                /jsp/authorised/wishesSearch.jsp
+            </result>
+        </action>
 </package>
 
 </struts>

@@ -46,7 +46,7 @@ public class UserDAO extends AbstractDAO {
             int userId;
             if(rs.next()) {
                 userId = rs.getInt(1);
-                user = new User(userId, login);
+                user = new User(userId);
             }
         } catch (SQLException e) {
             throw new DAOException("SQL exception (request or table failed): ", e);

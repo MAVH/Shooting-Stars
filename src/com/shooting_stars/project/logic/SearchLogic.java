@@ -3,6 +3,7 @@ package com.shooting_stars.project.logic;
 import com.shooting_stars.project.dao.SearchDAO;
 import com.shooting_stars.project.dao.UserDAO;
 import com.shooting_stars.project.entity.User;
+import com.shooting_stars.project.entity.WishesOwner;
 import com.shooting_stars.project.exception.DAOException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.exception.PoolConnectionException;
@@ -50,6 +51,23 @@ public class SearchLogic {
             } else {
                 users = null;
             }   */
+            return users;
+        } catch(PoolConnectionException | DAOException e ) {
+            throw new LogicException(e.getCause());
+        } finally {
+            Pool.getPool().returnConnection(connection);
+        }
+    }
+
+    public static List<WishesOwner> findWishes(String wishesInput)
+            throws LogicException {
+        Connection connection = null;
+        try {
+            connection = Pool.getPool().getConnection();
+            SearchDAO searchDAO = new SearchDAO(connection);
+            List<WishesOwner> users;
+            String[] wishes = wishesInput.split("[\\p{Blank}]");
+            users = searchDAO.findWishes(wishes);
             return users;
         } catch(PoolConnectionException | DAOException e ) {
             throw new LogicException(e.getCause());

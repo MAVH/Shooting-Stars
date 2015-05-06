@@ -11,6 +11,11 @@
     <body>
         <c:import url="../partial/header.jsp"/>
         <c:import url="../partial/menu.jsp"/>
+        <div>
+            <button onclick="window.location.href = '${pageContext.request.contextPath}/jsp/authorised/wishesSearch.jsp'">
+                <fmt:message key="wishes_search"/>
+            </button>
+        </div>
         <form action="usersSearch" method="get">
             <input type="text" name="name" value="${name}" class="searchField" pattern="[A-Za-zА-Яа-я\s-]+"/>
             <input type="text" name="surname" value="${surname}" class="searchField" pattern="[A-Za-zА-Яа-я\s-]+"/>

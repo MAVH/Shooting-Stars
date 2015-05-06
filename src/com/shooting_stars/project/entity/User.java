@@ -2,7 +2,6 @@ package com.shooting_stars.project.entity;
 
 public class User {
     private int userId;
-    private String login;
     private String name;
     private String surname;
     private String photoName;
@@ -12,11 +11,6 @@ public class User {
 
     public User(int userId) {
         this.userId = userId;
-    }
-
-    public User(int userId, String login) {
-        this.userId = userId;
-        this.login = login;
     }
 
     public User(int userId, String name, String surname) {
@@ -50,17 +44,10 @@ public class User {
         return userId;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
     public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
 
     public String getPhotoName() {
         return photoName;

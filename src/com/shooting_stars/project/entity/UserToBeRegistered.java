@@ -6,6 +6,8 @@ import com.shooting_stars.project.hashing.MD5Hashing;
 import java.sql.Date;
 
 public class UserToBeRegistered {
+
+    private String login;
     private String password;
     private UserInfo info;
     private String[] wishes;
@@ -29,7 +31,11 @@ public class UserToBeRegistered {
     }
 
     public String getLogin() {
-        return info.getLogin();
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getEmail() {
@@ -58,10 +64,6 @@ public class UserToBeRegistered {
 
     public String getAbilities() {
         return info.getAbilities();
-    }
-
-    public void setLogin(String login) {
-        info.setLogin(login);
     }
 
     public void setEmail(String email) {

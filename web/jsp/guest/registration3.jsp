@@ -50,7 +50,6 @@
                             <input type="submit" name="submitAction" class="back_button" value="<fmt:message key="back"/>">
                             <%--</td>
                             <td class="continue_button_td">--%>
-
                         </td>
                     </tr>
                 </table>

@@ -2,6 +2,8 @@ package com.shooting_stars.project.dao;
 
 
 import com.shooting_stars.project.entity.User;
+import com.shooting_stars.project.entity.WishesOwner;
+import com.shooting_stars.project.entity.Wish;
 import com.shooting_stars.project.exception.DAOException;
 
 import java.sql.*;
@@ -22,6 +24,10 @@ public class SearchDAO extends AbstractDAO{
     private static final String SQL_SEARCH_FILTER_CITY = "AND city LIKE ?";
     private static final String SQL_SEARCH_FILTER_DATE_OF_BIRTH_MIN = "AND dateOfBirth >= ?";
     private static final String SQL_SEARCH_FILTER_DATE_OF_BIRTH_MAX= "AND dateOfBirth <= ?";
+
+    private static final String SQL_SEARCH_BY_WISH_CRITERIA_PART = "AND wish LIKE  ? ";
+    private static final String SQL_SEARCH_BY_WISH = "SELECT wishId, wish, wish.userId, user_name, surname, photoName " +
+            "FROM wish JOIN user_info ON wish.userId = user_info.userId WHERE wishStatusId = 0 ";
 
     public SearchDAO(Connection connection) {
         super(connection);
@@ -99,6 +105,7 @@ public class SearchDAO extends AbstractDAO{
         }
         return users;
     }
+
     public List<User> findUsers(String name, String surname, String country, String city)
             throws DAOException {
         User user = null;
@@ -119,6 +126,50 @@ public class SearchDAO extends AbstractDAO{
                 userId = rs.getInt(1);
                 user = new User(userId, rs.getString(2),rs.getString(3), rs.getString(4));
                 users.add(user);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+        return users;
+    }
+
+    public List<WishesOwner> findWishes(String[] wishes)
+            throws DAOException {
+        User user = null;
+        PreparedStatement ps = null;
+        ResultSet rs;
+        ArrayList<WishesOwner> users = new ArrayList<WishesOwner>();
+        try {
+            String query = SQL_SEARCH_BY_WISH;
+
+            int size = wishes.length;
+            for(int i = 0; i < size; i++) {
+                 query += SQL_SEARCH_BY_WISH_CRITERIA_PART;
+            }
+            ps = connection.prepareStatement(query);
+            for(int i = 0; i < size; i++) {
+                ps.setString(i + 1, '%' + wishes[i] + '%');
+            }
+            rs = ps.executeQuery();
+            int userId;
+            Wish wish;
+            int counter = 0;
+            WishesOwner owner;
+            while (rs.next()) {
+                wish = new Wish(rs.getInt(1), rs.getString(2));
+                userId = rs.getInt(3);
+                user = new User(userId, rs.getString(4), rs.getString(5), rs.getString(6));
+                owner = new WishesOwner(user);
+                if(users.contains(owner)) {
+                    users.get(users.lastIndexOf(owner)).addWish(wish);
+                } else {
+                    owner.addWish(wish);
+                    users.add(owner);
+                }
+
             }
         } catch (SQLException e) {
             throw new DAOException("SQL exception (request or table failed): ", e);
