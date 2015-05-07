@@ -27,38 +27,35 @@
     <body onload="displayButtonAddWish()">
         <c:import url="../partial/header.jsp"/>
         <c:import url="../partial/menu.jsp"/>
-
-        <h4>${userInfo.name}</h4>
-        <h4>${userInfo.surname}</h4>
-        <h5>${userInfo.country}</h5>
-        <h5>${userInfo.city}</h5>
-        <h5><fmt:formatDate value="${userInfo.dateOfBirth}"/></h5>
-        <a href="/editUserInfo"><fmt:message key="edit"/></a>
-        <h4><fmt:message key="abilities"/></h4>
-        <h5>${userInfo.abilities}</h5>
-        <c:choose>
-            <c:when test="${not empty userInfo.abilities}">
-                <a href="/editUserAbilities"><fmt:message key="edit"/></a>
-            </c:when>
-            <c:otherwise>
-                <a href="/editUserAbilities"><fmt:message key="add_abilities"/></a>
-            </c:otherwise>
-        </c:choose>
-        <h3>${status}</h3>
-        <div id="userPhoto">
-            <c:choose>
-                <c:when test="${not empty userInfo.photoName}">
-                    <img src="../../img/userPhoto/${userInfo.photoName}" class="userPhoto"/>
-                </c:when>
-                <c:otherwise>
-                    <img src="../../img/userPhoto/default.png" class="userPhoto"/>
-                </c:otherwise>
-            </c:choose>
+        <div id="userPhoto" class="userPhotoBlock">
+            <ctg:userPhoto photoName="${userInfo.photoName}" photoClass="userPhoto"/>
             <button onclick="window.location.href = 'changePhoto.jsp'">
                 <fmt:message key="change_photo"/>
             </button>
         </div>
-        <div id="wishes_block">
+        <div class = "infoBlock">
+            <h2 class="userName">${userInfo.name} ${userInfo.surname}</h2>
+            <h3 class="userStatus">${status}</h3>
+            <h3 class="userAddress">${userInfo.country}, ${userInfo.city}</h3>
+            <c:if test="${not empty userInfo.dateOfBirth}">
+                <h3 class="userBirthdate"><fmt:message key="date_of_birth"/>:
+                    <fmt:formatDate value="${userInfo.dateOfBirth}"/></h3>
+            </c:if>
+            <a class="editInfoLink hidden" href="/editUserInfo"><fmt:message key="edit"/></a>
+        </div>
+        <div class="abilitiesBlock">
+            <h2 class="abilitiesLabel"><fmt:message key="abilities"/></h2>
+            <h3 class="abilities">${userInfo.abilities}</h3>
+            <c:choose>
+                <c:when test="${not empty userInfo.abilities}">
+                    <a href="/editUserAbilities"  class="editAbilitiesLink hidden"><fmt:message key="edit"/></a>
+                </c:when>
+                <c:otherwise>
+                    <a href="/editUserAbilities"  class="editAbilitiesLink hidden"><fmt:message key="add_abilities"/></a>
+                </c:otherwise>
+            </c:choose>
+        </div>
+        <div id="wishes_block" class="wishes_block">
         </div>
         <ctg:addingWishBlock count="${wishesCount}"/>
     </body>

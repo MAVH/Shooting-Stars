@@ -1,3 +1,4 @@
+/*Common*/
 html {
     height: 100%;
 }
@@ -84,8 +85,13 @@ button:active, html input[type="button"]:active, input[type="reset"]:active, inp
     padding: 10px 14px 6px 10px;
     outline: none;
 }
+input:invalid {
+    border: solid 2px red;
+}
+.hidden {
+    display: none;
+}
 
-/*CUSTOM*/
 /*********Header***************/
 .logo {
     width: 60px;
@@ -230,7 +236,7 @@ nav.menu li a.messages {
     width: 460px;
     margin-top: 50px;
 }
-.registration_form .reg_table {
+.registration_form .reg_table, .info_editor_table {
     width: 100%;
 }
 .login_form .label, .login_form .errorLabel, .registration_form .label {
@@ -334,20 +340,79 @@ nav.menu li a.messages {
     color: #dd4814;
 }
 
-.userPhoto {
-    display: inline-block;
+/*********Profile***************/
+.userPhotoBlock {
     float: left;
+    margin: 30px;
+    width: 200px;
+    text-align: center;
+}
+.userPhoto {
     width: 200px;
     height: 200px;
+    padding-bottom: 5px;
 }
-#userPhoto {
-    display: block;
-    height: 250px;
+.infoBlock {
+    margin: 50px 5px;
+}
+.infoBlock .userName {
+    font-size: 30px;
+    display: inline;
+    color: darkred;
+}
+.infoBlock .userStatus {
+    color: #616161;
+    display: inline;
+    margin-left: 10px
+}
+.infoBlock:hover .editInfoLink, .abilitiesBlock:hover .editAbilitiesLink {
+    display: inline;
+}
+.editInfoLink, .editAbilitiesLink {
+    float: right;
+    text-decoration: underline;
+    color: #848181;
+    font-style: italic;
+    margin-top: -40px;
+    padding-left: 15px;
+    background: url("../img/icons/pencil.png") left center no-repeat;
+    background-size: 15px 15px;
+}
+.infoBlock .userAddress {
+    font-size: 20px;
+}
+.infoBlock .userBirthdate {
+    font-size: 18px;
+}
+.abilitiesBlock {
+    float: left;
     width: 100%;
 }
-#userPhoto:hover button {
-    display: block;
+.abilitiesLabel, .wishes_block th {
+    padding-left: 20px;
+    color: darkred;
+    font-size: 24px;
 }
+.abilities {
+    padding-left: 30px;
+}
+.wishes_block th {
+    float: left;
+    padding-left: 10px;
+}
+.wishes_block table {
+    font-size: 20px;
+}
+.deleteButton {
+
+}
+.cancelButton {
+
+}
+.fulfilledButton {
+
+}
+
 .formWishes {
     display: inline-block;
 }
@@ -364,14 +429,6 @@ nav.menu li a.messages {
     width: 20px;
     height: 20px;
 }
-
 .currentPage {
     color: #298537;
-}
-
-input:invalid {
-    border: solid 2px red;
-}
-.hidden {
-    display: none;
 }

@@ -28,7 +28,7 @@
                             <label for="abilities" class="label"><fmt:message key="abilities"/></label>
                         </td>
                         <td>
-                            <input type="textarea" name="abilities" id="abilities" class="form-control"/>
+                            <input type="text" name="abilities" id="abilities" class="form-control"/>
                         </td>
                     </tr>
                     <%--wishes--%>

@@ -409,7 +409,7 @@ function displayWishesTable(currentUserId) {
                         var candidates = wish.candidates;
                         if(candidate == null) {
                             formAction = "<form action=deleteWish method=post><input type=hidden name=wishId value="
-                                + wish.wishId + "><input type=submit value=" + msg.buttonDelete + "></form>";
+                                + wish.wishId + "><input type=submit class=deleteButton value=" + msg.buttonDelete + "></form>";
                             column.innerHTML = formAction;
                         }
                         column = row.insertCell(1);
@@ -428,10 +428,11 @@ function displayWishesTable(currentUserId) {
                             columnActions.appendChild(createUserLink(candidate));
                             columnActions = rowActions.insertCell(1);
                             columnActions.innerHTML = "<form action=cancelMakingWish method=post><input type=hidden name=wishId value="
-                                + wish.wishId + "><input type=submit value=" + msg.buttonCancel + "></form>";
+                                + wish.wishId + "><input type=submit class=cancelButton value=" + msg.buttonCancel + "></form>";
                             var columnActions = rowActions.insertCell(2);
                             columnActions.innerHTML = "<form action=wishMade method=post>" +
-                                "<input type=hidden name=wishId value=" + wish.wishId + "><input type=submit value=" + "isDone" + "></form>";
+                                "<input type=hidden name=wishId value=" + wish.wishId + ">" +
+                                "<input type=submit class=fulfilledButton value=" + "isDone" + "></form>";
 
                         }
 

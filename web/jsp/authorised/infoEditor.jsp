@@ -15,7 +15,7 @@
         <c:import url="../partial/menu.jsp"/>
         <div class="registration_form">
         <form method="POST" action="${pageContext.request.contextPath}/saveEditedUserInfo">
-            <table>
+            <table class="info_editor_table">
                 <tr>
                     <td>
                         <label for="name" class="label"><fmt:message key="name"/></label>
