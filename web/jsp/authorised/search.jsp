@@ -12,6 +12,11 @@
         <c:import url="../partial/header.jsp"/>
         <c:import url="../partial/menu.jsp"/>
         <div>
+            <button onclick="window.location.href = '${pageContext.request.contextPath}/birthdayMen'">
+                <fmt:message key="birthday_men"/>
+            </button>
+        </div>
+        <div>
             <button onclick="window.location.href = '${pageContext.request.contextPath}/jsp/authorised/wishesSearch.jsp'">
                 <fmt:message key="wishes_search"/>
             </button>
@@ -46,6 +51,9 @@
                         </tr>
                     </c:forEach>
                 </table>
+                <ctg:usersPager currentPage="${page}" generalAmount="${usersAmount}" name="${name}"
+                                surname="${surname}" country="${country}" city="${city}"
+                                dateOfBirthMin="${dateOfBirthMin}" dateOfBirthMax="${dateOfBirthMax}"/>
             </c:when>
             <c:otherwise>
                 <fmt:message key="not_found"/>

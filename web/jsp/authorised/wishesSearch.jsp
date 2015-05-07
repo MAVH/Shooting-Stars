@@ -16,8 +16,13 @@
                 <fmt:message key="users_search"/>
             </button>
         </div>
+        <div>
+            <button onclick="window.location.href = '${pageContext.request.contextPath}/recentWishes'">
+                <fmt:message key="recent_wishes"/>
+            </button>
+        </div>
         <form action="wishesSearch" method="get">
-            <input type="textarea" name="wish" value="${wish}" class="searchField form-control" pattern="[A-Za-zА-Яа-я\s-]+"/>
+            <input type="text" name="wish" value="${wish}" class="searchField form-control" pattern="[A-Za-zА-Яа-я\s-]+"/>
             <input type="submit" value="<fmt:message key="find"/>" class="btn btn-default">
         </form>
         <c:choose>
@@ -31,9 +36,9 @@
                                     ${result.owner.name} ${result.owner.surname}
                             </a>
                             <table>
-                                <c:forEach var="wish" items="${result.wishes}">
+                                <c:forEach var="userWish" items="${result.wishes}">
                                     <tr>
-                                        <td>${wish.wish}</td>
+                                        <td>${userWish.wish}</td>
                                     </tr>
                                 </c:forEach>
                             </table>
@@ -41,10 +46,12 @@
                     </tr>
                 </c:forEach>
                 </table>
+                <ctg:wishesPager currentPage="${page}" generalAmount="${amount}" wish="${wish}"/>
             </c:when>
             <c:otherwise>
                 <fmt:message key="not_found"/>
             </c:otherwise>
         </c:choose>
+
     </body>
 </html>

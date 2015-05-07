@@ -17,6 +17,8 @@ public class UsersSearchCommand extends SessionAwareCommand {
     private String dateOfBirthMin;
     private String dateOfBirthMax;
     private List<User> foundUsers;
+    private int page = 1;
+    private int usersAmount;
 
     @Override
     public void validate() {
@@ -28,7 +30,8 @@ public class UsersSearchCommand extends SessionAwareCommand {
     public String execute() {
         String result = SUCCESS;
         try {
-            foundUsers = SearchLogic.findUsers(name, surname, city, country, dateOfBirthMin, dateOfBirthMax);
+            foundUsers = SearchLogic.findUsers(name, surname, city, country, dateOfBirthMin, dateOfBirthMax, page);
+            usersAmount = SearchLogic.countUsers(name, surname, city, country, dateOfBirthMin, dateOfBirthMax);
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());
             exception = new CommandException(e.getCause());
@@ -91,5 +94,21 @@ public class UsersSearchCommand extends SessionAwareCommand {
 
     public void setFoundUsers(List<User> foundUsers) {
         this.foundUsers = foundUsers;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getUsersAmount() {
+        return usersAmount;
+    }
+
+    public void setUsersAmount(int usersAmount) {
+        this.usersAmount = usersAmount;
     }
 }

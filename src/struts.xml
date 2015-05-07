@@ -226,6 +226,16 @@
                 /jsp/authorised/wishesSearch.jsp
             </result>
         </action>
+        <action name="recentWishes" class="com.shooting_stars.project.command.FindRecentWishesCommand">
+            <result name="success">
+                /jsp/authorised/wishesSearch.jsp
+            </result>
+        </action>
+        <action name="birthdayMen" class="com.shooting_stars.project.command.GetBirthdayMenCommand">
+            <result name="success">
+                /jsp/authorised/search.jsp
+            </result>
+        </action>
 </package>
 
 </struts>
