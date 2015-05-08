@@ -29,7 +29,7 @@
         <c:import url="../partial/menu.jsp"/>
         <div id="userPhoto" class="userPhotoBlock">
             <ctg:userPhoto photoName="${userInfo.photoName}" photoClass="userPhoto"/>
-            <button onclick="window.location.href = 'changePhoto.jsp'">
+            <button class="changePhotoButton" onclick="window.location.href = 'changePhoto.jsp'">
                 <fmt:message key="change_photo"/>
             </button>
         </div>

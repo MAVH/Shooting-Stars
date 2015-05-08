@@ -340,7 +340,7 @@ nav.menu li a.messages {
     color: #dd4814;
 }
 
-/*********Profile***************/
+/*********Profile and user page***************/
 .userPhotoBlock {
     float: left;
     margin: 30px;
@@ -351,6 +351,19 @@ nav.menu li a.messages {
     width: 200px;
     height: 200px;
     padding-bottom: 5px;
+}
+.userPhotoBlock:hover .changePhotoButton {
+    display: inline;
+    opacity: 0.6;
+}
+.changePhotoButton {
+    margin-top: -41px;
+    width: 200px;
+    text-align: center;
+    background-color: #333333;
+    opacity: 0;
+    border-radius: 0;
+    border: none;
 }
 .infoBlock {
     margin: 50px 5px;
@@ -387,6 +400,7 @@ nav.menu li a.messages {
 .abilitiesBlock {
     float: left;
     width: 100%;
+    margin-top: -20px;
 }
 .abilitiesLabel, .wishes_block th {
     padding-left: 20px;
@@ -403,6 +417,31 @@ nav.menu li a.messages {
 .wishes_block table {
     font-size: 20px;
 }
+.infoBlock .usersWishes, .infoBlock .wishesByUser {
+    display: inline-block;
+    text-decoration: none;
+    color: #050505;
+    font-size: 16px;
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    float: left;
+}
+.infoBlock .usersWishes {
+    background: url("../img/icons/boxMy.png") top center no-repeat;
+    background-size: 50px 50px;
+}
+.infoBlock .wishesByUser {
+    background: url("../img/icons/boxOther.png") top center no-repeat;
+    background-size: 50px 50px;
+}
+.sendMessageButton {
+    float: left;
+    font-size: 13px;
+    margin-left: 15px;
+}
+
+
 .deleteButton {
 
 }

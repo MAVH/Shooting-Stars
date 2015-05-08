@@ -21,43 +21,38 @@
     <body>
         <c:import url="../partial/header.jsp"/>
         <c:import url="../partial/menu.jsp"/>
-        <h4>${userInfo.name}</h4>
-        <h4>${userInfo.surname}</h4>
-        <h5>${userInfo.country}</h5>
-        <h5>${userInfo.city}</h5>
-        <h5><fmt:formatDate value="${userInfo.dateOfBirth}"/></h5>
+        <div id="userPhoto" class="userPhotoBlock">
+            <ctg:userPhoto photoName="${userInfo.photoName}" photoClass="userPhoto"/>
+        </div>
+        <div class = "infoBlock">
+            <h2 class="userName">${userInfo.name} ${userInfo.surname}</h2>
+            <h3 class="userStatus">${status}</h3>
+            <h3 class="userAddress">${userInfo.country}, ${userInfo.city}</h3>
+            <c:if test="${not empty userInfo.dateOfBirth}">
+                <h3 class="userBirthdate"><fmt:message key="date_of_birth"/>:
+                    <fmt:formatDate value="${userInfo.dateOfBirth}"/></h3>
+            </c:if>
+            <div>
+                <a href = "${pageContext.request.contextPath}/myFulfilledWishes?userId=${userId}" class = "usersWishes">
+                </a>
+                <c:url value="${pageContext.request.contextPath}/jsp/authorised/myWishes.jsp" var="myWishesURL">
+                    <c:param name="userId" value="${userId}"/>
+                </c:url>
+                <a href = "${myWishesURL}" class = "wishesByUser">
+                </a>
+                <form action="toChat" method="post">
+                    <input type="hidden" name="userId" value="${userId}">
+                    <input type="submit" class="sendMessageButton" value="Send message"/>
+                </form>
+            </div>
+        </div>
         <c:if test="${not empty userInfo.abilities}">
-            <h4><fmt:message key="abilities"/></h4>
-            <h5>${userInfo.abilities}</h5>
+            <div class="abilitiesBlock">
+                <h2 class="abilitiesLabel"><fmt:message key="abilities"/></h2>
+                <h3 class="abilities">${userInfo.abilities}</h3>
+            </div>
         </c:if>
-        <h3>${status}</h3>
-        <div id="userPhoto">
-            <c:choose>
-                <c:when test="${not empty userInfo.photoName}">
-                    <img src="../../img/userPhoto/${userInfo.photoName}" class="userPhoto"/>
-                </c:when>
-                <c:otherwise>
-                    <img src="../../img/userPhoto/default.png" class="userPhoto"/>
-                </c:otherwise>
-            </c:choose>
-        </div>
-        <form action="toChat" method="post">
-            <input type="hidden" name="userId" value="${userId}">
-            <input type="submit" value="Send message"/>
-        </form>
-        <div>
-            <c:url value="${pageContext.request.contextPath}/jsp/authorised/myWishes.jsp" var="myWishesURL">
-                <c:param name="userId" value="${userId}"/>
-            </c:url>
-            <button onclick="window.location.href = '${myWishesURL}'">
-                <fmt:message key="wishes_fulfilled"/>
-            </button>
-            <form action="myFulfilledWishes" method="get">
-                <input type="hidden" name="userId" value="${userId}">
-                <input type="submit" value="His fulfilled wishes"/>
-            </form>
-        </div>
-        <div id="wishes_block">
+        <div id="wishes_block" class="wishes_block">
         </div>
     </body>
 </html>
