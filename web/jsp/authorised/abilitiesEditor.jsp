@@ -10,12 +10,17 @@
         <title><fmt:message key="abilities_editing"/></title>
     </head>
     <body>
-    <c:import url="../partial/header.jsp"/>
-    <c:import url="../partial/menu.jsp"/>
-    <form method="POST" action="${pageContext.request.contextPath}/saveEditedUserAbilities">
-        <label for="abilities"><fmt:message key="abilities"/></label>
-        <input type="text" name="abilities" id="abilities" value="${abilities}"/>
-        <input type="submit" name="submitAction" value="<fmt:message key="save"/>"/>
-    </form>
+        <c:import url="../partial/header.jsp"/>
+        <c:import url="../partial/menu.jsp"/>
+        <div class="registration_form abilities_edit_form">
+            <form method="POST" action="${pageContext.request.contextPath}/saveEditedUserAbilities">
+                <label for="abilities" class="label"><fmt:message key="abilities"/></label>
+                <textarea class="form-control abilities_textarea" name="abilities" id="abilities">${abilities}</textarea>
+                <input type="submit" class="saveAbilitiesChangesButton" name="submitAction" value="<fmt:message key="save"/>"/>
+            </form>
+            <button onclick="window.location.href = 'userPage'" class="cancelAbilitiesEditButton">
+                <fmt:message key="cancel"/>
+            </button>
+        </div>
     </body>
 </html>
