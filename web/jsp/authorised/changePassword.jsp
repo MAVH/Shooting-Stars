@@ -13,40 +13,40 @@
     <body>
     <c:import url="../partial/header.jsp"/>
     <c:import url="../partial/menu.jsp"/>
-    <button id="buttonChangePassword" ><fmt:message key="password.change"/></button>
-    <div id="formChangePassword" class="hidden">
-    <s:form method="POST" action="changePassword">
-        <s:password key="oldPassword" pattern="[\S]+">
-            <jsp:attribute name="label">
-                <fmt:message key="old_password"/>
-            </jsp:attribute>
-        </s:password>
-        <s:password key="newPassword" pattern="[\S]+">
-            <jsp:attribute name="label">
-                 <fmt:message key="new_password"/>
-            </jsp:attribute>
-        </s:password>
-        <s:password key="repeatPassword" pattern="[\S]+">
-             <jsp:attribute name="label">
-                  <fmt:message key="password_repeat"/>
-             </jsp:attribute>
-        </s:password>
-        <s:submit name="submitAction">
-             <jsp:attribute name="value">
-                   <fmt:message key="save"/>
-             </jsp:attribute>
-        </s:submit>
-    </s:form>
-    <p>${messageOperationInfo}</p>
+    <button id="buttonChangePassword" class="changePasswordButton"><fmt:message key="password.change"/></button>
+    <div id="formChangePassword" class="hidden changePasswordBlock">
+        <s:form method="POST" action="changePassword">
+            <s:password key="oldPassword" class="form-control" pattern="[\S]+">
+                <jsp:attribute name="label">
+                    <fmt:message key="old_password"/>
+                </jsp:attribute>
+            </s:password>
+            <s:password key="newPassword" class="form-control" pattern="[\S]+">
+                <jsp:attribute name="label">
+                     <fmt:message key="new_password"/>
+                </jsp:attribute>
+            </s:password>
+            <s:password key="repeatPassword" class="form-control" pattern="[\S]+">
+                 <jsp:attribute name="label">
+                      <fmt:message key="password_repeat"/>
+                 </jsp:attribute>
+            </s:password>
+            <s:submit name="submitAction" class="saveChangedPasswordButton">
+                 <jsp:attribute name="value">
+                       <fmt:message key="save"/>
+                 </jsp:attribute>
+            </s:submit>
+        </s:form>
+        <p>${messageOperationInfo}</p>
     </div>
     <hr/>
-    <button id="buttonChangeEmail" ><fmt:message key="email.change"/></button>
-    <div id="formChangeEmail" class="hidden">
-    <form action="changeEmail">
-        <input type="email" name="email" id="email"/>
-        <input type="submit" value="<fmt:message key="save"/> ">
-    </form>
-    <p>${operationInfo}</p>
+    <button id="buttonChangeEmail" class="changeEmailButton"><fmt:message key="email.change"/></button>
+    <div id="formChangeEmail" class="hidden changeEmailBlock">
+        <form action="changeEmail">
+            <input type="email" name="email" class="form-control changeEmail" id="email"/>
+            <input type="submit" value="<fmt:message key="save"/> ">
+        </form>
+        <p>${operationInfo}</p>
     </div>
     <script>
         document.getElementById("buttonChangeEmail").onclick = function() {

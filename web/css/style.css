@@ -440,8 +440,7 @@ nav.menu li a.messages {
     font-size: 13px;
     margin-left: 15px;
 }
-
-
+/*Wishes*/
 .deleteButton {
 
 }
@@ -450,6 +449,19 @@ nav.menu li a.messages {
 }
 .fulfilledButton {
 
+}
+
+/*********Settings***************/
+.changeEmail {
+    width: 300px;
+    float: left;
+    margin-right: 15px;
+}
+.changePasswordBlock, .changeEmailBlock, .changePasswordButton, .changeEmailButton {
+    margin: 15px;
+}
+.saveChangedPasswordButton {
+    margin-top: 5px;
 }
 
 .formWishes {
