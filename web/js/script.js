@@ -326,35 +326,15 @@ function displayUserWishesTable(userId, currentUserId, msg) {
                     nameRow.appendChild(columnName);
                     var column;
                     var tableActions;
+                    var row;
                     for (var i = 0; i < size; i++) {
                         var wish = wishes[i];
                         row = table.insertRow(i + 1);
                         column = row.insertCell(0);
-                        var formAction = "";
-                        var candidate = wish.candidate;
-
-                        if (listContainsUser(wish.candidates, currentUserId) == true) {
-                            formAction = "<form action=cancelApplication method=post>" +
-                                "<input type=hidden name=wishId value=" + wish.wishId + "><input type=hidden name=userId value=" + currentUserId + "><input type=submit value=" + msg.buttonCancel + "></form>";
-                        } else {
-                            if (candidate == null) {
-                                formAction = "<form action=makeApplication method=post><input type=hidden name=wishId value=" + wish.wishId
-                                    + "><input type=submit value="
-                                    + "make application" + "></form>";
-                            }
-                        }
-                        if (candidate != null) {
-                            if (candidate.userId == currentUserId) {
-                                formAction = "<form action=cancelMakingWish method=post><input type=hidden name=wishId value="
-                                    + wish.wishId + "><input type=hidden name=userId value=" + candidate.userId + "><input type=submit class=cancelButton value="
-                                    + msg.buttonCancel + "></form>";
-                            }
-                        }
-                        column.innerHTML = formAction;
-                        column = row.insertCell(1);
                         column.innerHTML = wish["wish"];
-                        column = row.insertCell(2);
+                        column = row.insertCell(1);
                         var label = document.createElement('h5');
+                        var candidate = wish.candidate;
                         if (candidate != null) {
                             label.innerHTML = msg.labelPerformed;
                             column.appendChild(label);
@@ -364,8 +344,15 @@ function displayUserWishesTable(userId, currentUserId, msg) {
                             var rowActions = tableActions.insertRow(0);
                             var columnActions = rowActions.insertCell(0);
                             columnActions.appendChild(createUserLink(candidate));
+                            if (candidate.userId == currentUserId) {
+                            columnActions = rowActions.insertCell(1);
+                            columnActions.innerHTML = "<form action=cancelMakingWish method=post><input type=hidden name=wishId value="
+                                    + wish.wishId + "><input type=hidden name=userId value=" + candidate.userId + "><input type=submit class=cancelButton value="
+                                    + msg.buttonCancel + "></form>";
+                            }
                         }
                         var candidates = wish.candidates;
+                        var isApplicant = false;
                         if (candidates != null) {
                             var candidatesAmount = candidates.length;
                             if (candidatesAmount != 0) {
@@ -379,9 +366,26 @@ function displayUserWishesTable(userId, currentUserId, msg) {
                                     var columnActions = rowActions.insertCell(0);
                                     candidate = candidates[j];
                                     columnActions.appendChild(createUserLink(candidate));
+                                    if(candidate.userId == currentUserId) {
+                                        isApplicant = true;
+                                        columnActions = rowActions.insertCell(1);
+                                        columnActions.innerHTML = "<form action=cancelApplication method=post>" +
+                                            "<input type=hidden name=wishId value=" + wish.wishId
+                                            + "><input type=hidden name=userId value=" + currentUserId +
+                                            "><input type=submit value=" + msg.buttonCancel + "></form>";
+                                    }
                                 }
 
                             }
+                        }
+                        column = row.insertCell(2);
+                        var formAction = "";
+                        candidate = wish.candidate;
+                        if (candidate == null && !isApplicant) {
+                                formAction = "<form action=makeApplication method=post><input type=hidden name=wishId value=" + wish.wishId
+                                    + "><input type=submit value="
+                                    + "make application" + "></form>";
+                                column.innerHTML = formAction;
                         }
                     }
 

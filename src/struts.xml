@@ -93,18 +93,24 @@
             </result>
         </action>
         <action name="cancelMakingWish" class="com.shooting_stars.project.command.CancelMakingWishCommand">
-            <result name="success" type="redirectAction" >
+            <result name="userPage" type="redirectAction" >
                 userPage?userId=${userId}
             </result>
-            <result name="myPage">
+            <result name="profile" type="redirectAction" >
+                userPage
+            </result>
+            <result name="myWishesPage">
                 /jsp/authorised/myWishes.jsp?userId=${sessionUserId}
             </result>
         </action>
         <action name="cancelApplication" class="com.shooting_stars.project.command.CancelApplicationCommand">
-            <result name="success" type="redirectAction" >
+            <result name="userPage" type="redirectAction" >
                 userPage?userId=${userId}
             </result>
-            <result name="myPage">
+            <result name="profile" type="redirectAction" >
+                userPage
+            </result>
+            <result name="myWishesPage">
                 /jsp/authorised/myWishes.jsp?userId=${sessionUserId}
             </result>
         </action>

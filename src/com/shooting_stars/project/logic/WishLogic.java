@@ -86,9 +86,9 @@ public class WishLogic {
         try {
             connection = Pool.getPool().getConnection();
             WishDAO wishDAO = new WishDAO(connection);
-            //int userId = wishDAO.getWishMakerUserIdByWishId(wishId);
             wishDAO.deleteUserWishMaker(wishId);
-            return wishDAO.getWishOwnerUserIdByWishId(wishId);
+            int wishOwnerId = wishDAO.getWishOwnerUserIdByWishId(wishId);
+            return wishOwnerId;
         } catch(PoolConnectionException | DAOException e ) {
             throw new LogicException(e.getCause());
         } finally {

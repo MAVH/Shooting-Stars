@@ -16,16 +16,17 @@ public class CancelMakingWishCommand extends SessionAwareCommand {
 
     @Override
     public String execute() {
-        String result = SUCCESS;
+        String result = "profile";
         sessionUserId = getCurrentUserId();
-        //int currentUserId = getCurrentUserId();
         int receiverId;
         try {
             int applicantId = userId;
             int wishOwnerId = WishLogic.cancelWishMaking(wishId);
             if(sessionUserId == applicantId) {
                 if(pageCode != 0) {
-                    result = "myPage";
+                    result = "myWishesPage";
+                } else {
+                    result = "userPage";
                 }
                 receiverId = wishOwnerId;
                 userId = wishOwnerId;

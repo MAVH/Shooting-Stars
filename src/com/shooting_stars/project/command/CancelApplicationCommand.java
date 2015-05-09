@@ -12,7 +12,7 @@ public class CancelApplicationCommand extends SessionAwareCommand {
     private int sessionUserId;
     @Override
     public String execute() {
-        String result = SUCCESS;
+        String result = "profile";
         sessionUserId = getCurrentUserId();
         int receiverId;
         try {
@@ -20,7 +20,9 @@ public class CancelApplicationCommand extends SessionAwareCommand {
             int wishOwnerId = WishLogic.cancelApplication(wishId, applicantId);
             if(sessionUserId == applicantId) {
                 if(pageCode != 0) {
-                    result = "myPage";
+                    result = "myWishesPage";
+                } else {
+                    result = "userPage";
                 }
                 receiverId = wishOwnerId;
                 userId = wishOwnerId;
