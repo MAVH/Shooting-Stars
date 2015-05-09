@@ -3,7 +3,7 @@
 -- Server version:               5.6.21-log - MySQL Community Server (GPL)
 -- Server OS:                    Win64
 -- HeidiSQL version:             7.0.0.4053
--- Date/time:                    2015-05-09 08:13:23
+-- Date/time:                    2015-05-09 08:22:50
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -65,7 +65,7 @@ INSERT INTO `considered_wish` (`wishId`, `userId`) VALUES
 -- Dumping structure for table shooting_stars_database.fulfilled_wish
 DROP TABLE IF EXISTS `fulfilled_wish`;
 CREATE TABLE IF NOT EXISTS `fulfilled_wish` (
-  `wishId` int(10) NOT NULL DEFAULT '0',
+  `wishId` int(10) NOT NULL,
   `userId` int(10) DEFAULT NULL,
   `wishStatusId` int(10) DEFAULT '1',
   `date` date DEFAULT NULL,
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `message` (
   CONSTRAINT `FK_message_user` FOREIGN KEY (`sender`) REFERENCES `user` (`userId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=181 DEFAULT CHARSET=utf8;
 
--- Dumping data for table shooting_stars_database.message: ~136 rows (approximately)
+-- Dumping data for table shooting_stars_database.message: ~95 rows (approximately)
 DELETE FROM `message`;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
 INSERT INTO `message` (`messageId`, `chatId`, `message`, `date`, `time`, `sender`, `isRead`) VALUES
@@ -254,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `user_info` (
   `country` varchar(50) DEFAULT NULL,
   `city` varchar(50) DEFAULT NULL,
   `dateOfBirth` date DEFAULT NULL,
-  `abilities` varchar(50) DEFAULT NULL,
+  `abilities` tinytext,
   `photoName` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`userId`),
   FULLTEXT KEY `user_name` (`user_name`),
