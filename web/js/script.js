@@ -175,9 +175,6 @@ function displayMyWishes(userId, currentUserId, msg) {
                 columnName.innerHTML = msg.ownerText;
                 nameRow.appendChild(columnName);
                 columnName = document.createElement('th');
-                columnName.innerHTML = msg.dateText;
-                nameRow.appendChild(columnName);
-                columnName = document.createElement('th');
                 columnName.innerHTML = msg.statusText;
                 nameRow.appendChild(columnName);
                 for (var i = 0; i < wishes.length; i++) {
@@ -190,13 +187,10 @@ function displayMyWishes(userId, currentUserId, msg) {
                     var link = createUserLink(wish.owner);
                     column.appendChild(link);
                     column = row.insertCell(2);
-                    if (wish.date != null) {
-                        column.innerHTML = json.dateValues[i];
-                    }
-                    column = row.insertCell(3);
                     if (wish.isFulfilled == true) {
                         if (wish.date != null) {
-                            column.innerHTML = msg.wishFulfilledText;
+                            column.innerHTML = msg.wishFulfilledText + "<br/>";
+                            column.innerHTML += json.dateValues[i];
                         } else {
                             column.innerHTML = msg.labelPerformed;
                             if(json.isPageOwner == true) {
@@ -224,7 +218,7 @@ function displayMyWishes(userId, currentUserId, msg) {
         }
         xmlhttp.open("GET", "updateMyWishes?userId=" + userId, true);
         xmlhttp.send();
-    }, 1000);
+    }, interval);
 }
 
 function displayChats(currentPage) {
@@ -261,7 +255,7 @@ function displayChats(currentPage) {
                 }
                 xmlhttp.open("GET", "updateChats?page=" + currentPage, true);
                 xmlhttp.send();
-    }, 1000);
+    }, interval);
 }
 
 function updateMessages(chatId,page) {
@@ -301,7 +295,7 @@ function updateMessages(chatId,page) {
     }
     xmlhttp.open("GET", "newMessages?chatId=" + chatId, true);
     xmlhttp.send();
-    }, 1000);
+    }, interval);
 }
 
 function displayUserWishesTable(userId, currentUserId, msg) {

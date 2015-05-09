@@ -163,7 +163,7 @@
                 userPage
             </result>
         </action>
-        <action name="getChats" class="com.shooting_stars.project.command.GetUserChatsCommand">
+        <action name="chats" class="com.shooting_stars.project.command.GetUserChatsCommand">
             <result name="success"  >
                 /jsp/authorised/chats.jsp
             </result>

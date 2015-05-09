@@ -3,7 +3,7 @@
 -- Server version:               5.6.21-log - MySQL Community Server (GPL)
 -- Server OS:                    Win64
 -- HeidiSQL version:             7.0.0.4053
--- Date/time:                    2015-05-04 08:16:16
+-- Date/time:                    2015-05-09 08:13:23
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -27,16 +27,18 @@ CREATE TABLE IF NOT EXISTS `chat` (
   KEY `FK_chat_user_2` (`user2Id`),
   CONSTRAINT `FK_chat_user` FOREIGN KEY (`user1Id`) REFERENCES `user` (`userId`),
   CONSTRAINT `FK_chat_user_2` FOREIGN KEY (`user2Id`) REFERENCES `user` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
--- Dumping data for table shooting_stars_database.chat: ~4 rows (approximately)
+-- Dumping data for table shooting_stars_database.chat: ~5 rows (approximately)
 DELETE FROM `chat`;
 /*!40000 ALTER TABLE `chat` DISABLE KEYS */;
 INSERT INTO `chat` (`chatId`, `user1Id`, `user2Id`) VALUES
 	(1, 14, 2),
 	(2, 2, 11),
 	(3, 2, 15),
-	(13, 18, 2);
+	(13, 18, 2),
+	(14, 2, 17),
+	(17, 18, 14);
 /*!40000 ALTER TABLE `chat` ENABLE KEYS */;
 
 
@@ -55,8 +57,8 @@ CREATE TABLE IF NOT EXISTS `considered_wish` (
 DELETE FROM `considered_wish`;
 /*!40000 ALTER TABLE `considered_wish` DISABLE KEYS */;
 INSERT INTO `considered_wish` (`wishId`, `userId`) VALUES
-	(47, 2),
-	(48, 14);
+	(44, 2),
+	(44, 18);
 /*!40000 ALTER TABLE `considered_wish` ENABLE KEYS */;
 
 
@@ -65,7 +67,7 @@ DROP TABLE IF EXISTS `fulfilled_wish`;
 CREATE TABLE IF NOT EXISTS `fulfilled_wish` (
   `wishId` int(10) NOT NULL DEFAULT '0',
   `userId` int(10) DEFAULT NULL,
-  `wishStatusId` int(10) DEFAULT '3',
+  `wishStatusId` int(10) DEFAULT '1',
   `date` date DEFAULT NULL,
   PRIMARY KEY (`wishId`),
   KEY `FK_fulfilled_wish_user` (`userId`),
@@ -104,9 +106,9 @@ CREATE TABLE IF NOT EXISTS `message` (
   KEY `FK_message_user` (`sender`),
   CONSTRAINT `FK_message_chat` FOREIGN KEY (`chatId`) REFERENCES `chat` (`chatId`),
   CONSTRAINT `FK_message_user` FOREIGN KEY (`sender`) REFERENCES `user` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=143 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=181 DEFAULT CHARSET=utf8;
 
--- Dumping data for table shooting_stars_database.message: ~98 rows (approximately)
+-- Dumping data for table shooting_stars_database.message: ~136 rows (approximately)
 DELETE FROM `message`;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
 INSERT INTO `message` (`messageId`, `chatId`, `message`, `date`, `time`, `sender`, `isRead`) VALUES
@@ -119,12 +121,6 @@ INSERT INTO `message` (`messageId`, `chatId`, `message`, `date`, `time`, `sender
 	(7, 1, 'gjhgjhgjyj', '2015-04-12', '18:19:22', 14, 1),
 	(8, 1, 'ghgb', '2015-04-12', '18:20:54', 2, 1),
 	(9, 1, 'cancel application', '2015-04-12', '21:07:08', 2, 1),
-	(10, 1, 'application was made', '2015-04-12', '21:08:30', 2, 1),
-	(11, 1, 'application was accepted', '2015-04-12', '21:08:49', 14, 1),
-	(12, 1, 'cancel making wish', '2015-04-12', '21:09:08', 14, 1),
-	(13, 1, 'application was made', '2015-04-12', '21:09:47', 2, 1),
-	(14, 1, 'application was accepted', '2015-04-12', '21:09:54', 14, 1),
-	(15, 1, 'wish was made', '2015-04-12', '21:09:59', 14, 1),
 	(16, 2, 'application was made', '2015-04-12', '21:11:13', 2, 0),
 	(17, 1, 'qq', '2015-04-12', '21:41:19', 2, 1),
 	(18, 1, 'hgfhfh', '2015-04-12', '21:43:35', 2, 1),
@@ -207,7 +203,10 @@ INSERT INTO `message` (`messageId`, `chatId`, `message`, `date`, `time`, `sender
 	(139, 1, 'cancel making wish', '2015-05-01', '09:00:34', 2, 0),
 	(140, 1, 'cancel application', '2015-05-01', '09:00:46', 14, 1),
 	(141, 1, 'application was made', '2015-05-01', '09:00:56', 14, 1),
-	(142, 1, 'cancel application', '2015-05-01', '09:02:26', 14, 1);
+	(142, 1, 'cancel application', '2015-05-01', '09:02:26', 14, 1),
+	(143, 14, 'application was made', '2015-05-06', '08:11:50', 2, 0),
+	(144, 14, 'cancel application', '2015-05-06', '08:56:04', 2, 0),
+	(180, 17, 'application was made', '2015-05-09', '07:56:31', 18, 0);
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 
 
@@ -217,30 +216,31 @@ CREATE TABLE IF NOT EXISTS `user` (
   `userId` int(10) NOT NULL AUTO_INCREMENT,
   `login` varchar(50) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL,
-  `userInfoId` int(10) DEFAULT NULL,
-  `userStatusId` int(10),
+  `userStatusId` int(10) DEFAULT '1',
   PRIMARY KEY (`userId`),
   KEY `FK_user_user_status` (`userStatusId`),
   CONSTRAINT `FK_user_user_status` FOREIGN KEY (`userStatusId`) REFERENCES `user_status` (`userStatusId`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
--- Dumping data for table shooting_stars_database.user: ~13 rows (approximately)
+-- Dumping data for table shooting_stars_database.user: ~15 rows (approximately)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`userId`, `login`, `password`, `userInfoId`, `userStatusId`) VALUES
-	(2, 'v', 'c4ca4238a0b923820dcc509a6f75849b', NULL, 0),
-	(8, 'bbbv', 'c4ca4238a0b923820dcc509a6f75849b', NULL, 0),
-	(9, 'ghg', 'c4ca4238a0b923820dcc509a6f75849b', NULL, 0),
-	(10, 'gdfgd', 'c4ca4238a0b923820dcc509a6f75849b', NULL, 0),
-	(11, 'hfhfh', 'c4ca4238a0b923820dcc509a6f75849b', NULL, 0),
-	(12, 'fg', 'c4ca4238a0b923820dcc509a6f75849b', NULL, 0),
-	(13, 'fdgfg', 'c4ca4238a0b923820dcc509a6f75849b', NULL, 0),
-	(14, 'h', 'c4ca4238a0b923820dcc509a6f75849b', NULL, 0),
-	(15, 'htbh', 'c4ca4238a0b923820dcc509a6f75849b', NULL, 0),
-	(16, '1', 'c4ca4238a0b923820dcc509a6f75849b', NULL, 0),
-	(17, 's', '202cb962ac59075b964b07152d234b70', NULL, 0),
-	(18, '123', 'e10adc3949ba59abbe56e057f20f883e', NULL, 0),
-	(19, '1234', 'e10adc3949ba59abbe56e057f20f883e', NULL, 0);
+INSERT INTO `user` (`userId`, `login`, `password`, `userStatusId`) VALUES
+	(2, 'v', 'c4ca4238a0b923820dcc509a6f75849b', 1),
+	(8, 'bbbv', 'c4ca4238a0b923820dcc509a6f75849b', 0),
+	(9, 'ghg', 'c4ca4238a0b923820dcc509a6f75849b', 0),
+	(10, 'gdfgd', 'c4ca4238a0b923820dcc509a6f75849b', 0),
+	(11, 'hfhfh', 'c4ca4238a0b923820dcc509a6f75849b', 0),
+	(12, 'fg', 'c4ca4238a0b923820dcc509a6f75849b', 0),
+	(13, 'fdgfg', 'c4ca4238a0b923820dcc509a6f75849b', 0),
+	(14, 'h', 'c4ca4238a0b923820dcc509a6f75849b', 0),
+	(15, 'htbh', 'c4ca4238a0b923820dcc509a6f75849b', 0),
+	(16, '1', 'c4ca4238a0b923820dcc509a6f75849b', 0),
+	(17, 's', '202cb962ac59075b964b07152d234b70', 0),
+	(18, '123', 'e10adc3949ba59abbe56e057f20f883e', 1),
+	(19, '1234', 'e10adc3949ba59abbe56e057f20f883e', 0),
+	(20, 'fhfdhhfdhfd', 'e10adc3949ba59abbe56e057f20f883e', 0),
+	(21, 'sjckscscj', 'e10adc3949ba59abbe56e057f20f883e', 1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 
@@ -262,11 +262,11 @@ CREATE TABLE IF NOT EXISTS `user_info` (
   CONSTRAINT `FK_user_info_user` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table shooting_stars_database.user_info: ~13 rows (approximately)
+-- Dumping data for table shooting_stars_database.user_info: ~15 rows (approximately)
 DELETE FROM `user_info`;
 /*!40000 ALTER TABLE `user_info` DISABLE KEYS */;
 INSERT INTO `user_info` (`userId`, `user_name`, `surname`, `email`, `country`, `city`, `dateOfBirth`, `abilities`, `photoName`) VALUES
-	(2, 'veronica', 'haritonova', 'veronica_haritonova@mail.ru', 'belarus', 'Minsk', '1994-09-29', 'jhjhj', '2.jpg'),
+	(2, 'veronica', 'haritonova', 'veronica_haritonova@mail.ru', 'belarus', 'Minsk', '2015-04-27', 'jhjhj', '2.jpg'),
 	(8, 'gfg', 'gfg', '', '', '', NULL, '', NULL),
 	(9, 'wj', 'wqh', '', '', '', NULL, 'gff', NULL),
 	(10, 'tr', 'gfgf', '', '', '', NULL, '', NULL),
@@ -276,9 +276,11 @@ INSERT INTO `user_info` (`userId`, `user_name`, `surname`, `email`, `country`, `
 	(14, 'Patrick', 'Weirauch', '', '', 'Munchen', NULL, '', NULL),
 	(15, 'vdvdfv', '', '', '', '', NULL, '', NULL),
 	(16, '1', '', '', '', '', NULL, '', NULL),
-	(17, 'Sasha', 'M', '', 'Australia', 'Sydney', '1994-12-12', 'sjsksl, skksl, sk', '17.jpg'),
+	(17, 'Sasha', 'M', '', 'Australia', 'Sydney', '2013-05-07', 'sjsksl, skksl, sk', '17.jpg'),
 	(18, 'fff', '', '', '', '', NULL, '', NULL),
-	(19, 'ver', 'har', '', '', '', NULL, '', NULL);
+	(19, 'ver', 'har', '', '', '', NULL, '', NULL),
+	(20, 'hgfhgh', '', 'veronica48@mail.ru', '', '', NULL, '', NULL),
+	(21, 'hgh', '', 'veronica_haritonova@mail.ru', '', '', NULL, '', NULL);
 /*!40000 ALTER TABLE `user_info` ENABLE KEYS */;
 
 
@@ -306,40 +308,43 @@ CREATE TABLE IF NOT EXISTS `wish` (
   `userId` int(10) DEFAULT NULL,
   `wish` tinytext,
   `wishStatusId` int(10) DEFAULT '0',
+  `creationTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`wishId`),
   KEY `FK_wish_user` (`userId`),
   KEY `FK_wish_wish_status` (`wishStatusId`),
   CONSTRAINT `FK_wish_user` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`),
   CONSTRAINT `FK_wish_wish_status` FOREIGN KEY (`wishStatusId`) REFERENCES `wish_status` (`wishStatusId`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
 
--- Dumping data for table shooting_stars_database.wish: ~23 rows (approximately)
+-- Dumping data for table shooting_stars_database.wish: ~22 rows (approximately)
 DELETE FROM `wish`;
 /*!40000 ALTER TABLE `wish` DISABLE KEYS */;
-INSERT INTO `wish` (`wishId`, `userId`, `wish`, `wishStatusId`) VALUES
-	(1, 11, 'gfg', 0),
-	(2, 11, 'fgdfg', 0),
-	(3, 12, 'bggfb', 0),
-	(7, 2, 'dgdgd', 2),
-	(14, 13, 'dgdgd', 0),
-	(15, 13, 'dgdgdfg', 0),
-	(17, 2, 'fsdfsdf', 2),
-	(20, 14, 'gsdgdsg', 2),
-	(21, 14, 'gdfgfdgf', 2),
-	(27, 2, 'vfvrfv', 2),
-	(29, 15, 'yuryfh', 0),
-	(30, 15, 'hghgg', 0),
-	(31, 15, 'jk', 0),
-	(32, 16, 'hi', 0),
-	(36, 14, 'sss', 2),
-	(38, 17, 'Parachute jump', 0),
-	(39, 17, 'Drums', 0),
-	(42, 2, 'ggh', 2),
-	(43, 2, 'ghjg', 0),
-	(44, 14, 'ghgh', 0),
-	(45, 2, 'hjhjh', 0),
-	(47, 14, 'ytyty', 0),
-	(48, 2, 'hghhg', 0);
+INSERT INTO `wish` (`wishId`, `userId`, `wish`, `wishStatusId`, `creationTime`) VALUES
+	(1, 11, 'gfg', 0, '2015-05-07 16:10:09'),
+	(2, 11, 'fgdfg', 0, '2015-05-07 16:10:09'),
+	(3, 12, 'bggfb', 0, '2015-05-07 16:10:09'),
+	(7, 2, 'dgdgd', 2, '2015-05-07 16:10:09'),
+	(14, 13, 'dgdgd', 0, '2015-05-07 16:10:09'),
+	(15, 13, 'dgdgdfg', 0, '2015-05-07 16:10:09'),
+	(17, 2, 'fsdfsdf', 2, '2015-05-07 16:10:09'),
+	(20, 14, 'gsdgdsg', 2, '2015-05-07 16:10:09'),
+	(21, 14, 'gdfgfdgf', 2, '2015-05-07 16:10:09'),
+	(27, 2, 'vfvrfv', 2, '2015-05-07 16:10:09'),
+	(29, 15, 'yuryfh', 0, '2015-05-07 16:10:09'),
+	(30, 15, 'hghgg', 0, '2015-05-07 16:10:09'),
+	(31, 15, 'jk', 0, '2015-05-07 16:10:09'),
+	(32, 16, 'hi', 0, '2015-05-07 16:10:09'),
+	(36, 14, 'sss', 2, '2015-05-07 16:10:09'),
+	(38, 17, 'Parachute jump', 0, '2015-05-07 16:10:09'),
+	(39, 17, 'Drums', 0, '2015-05-07 16:10:09'),
+	(42, 2, 'ggh', 2, '2015-05-07 16:10:09'),
+	(44, 14, 'ghgh', 0, '2015-05-07 16:10:09'),
+	(47, 14, 'ytyty', 0, '2015-05-07 16:10:09'),
+	(49, 20, 'htthfhd', 0, '2015-05-07 16:10:09'),
+	(50, 2, 'jhjjhjj', 0, '2015-05-07 16:10:09'),
+	(51, 2, 'fdgfdgfdgd', 0, '2015-05-07 16:10:59'),
+	(52, 2, 'hghgjfghf', 0, '2015-05-07 20:30:22'),
+	(53, 14, 'dfhhh', 0, '2015-05-08 22:37:03');
 /*!40000 ALTER TABLE `wish` ENABLE KEYS */;
 
 
