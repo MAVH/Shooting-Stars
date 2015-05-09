@@ -7,7 +7,7 @@ import com.shooting_stars.project.logic.WishLogic;
 
 public class CancelApplicationCommand extends SessionAwareCommand {
     private int wishId;
-    private int userId;
+    private int userId; //чью за€вку отмен€ют
     private int pageCode;
     private int sessionUserId;
     @Override
