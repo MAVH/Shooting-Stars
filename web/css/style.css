@@ -367,6 +367,7 @@ nav.menu li a.messages {
 }
 .infoBlock {
     margin: 50px 5px;
+    height: 200px;
 }
 .infoBlock .userName {
     font-size: 30px;
@@ -440,16 +441,6 @@ nav.menu li a.messages {
     font-size: 13px;
     margin-left: 15px;
 }
-/*Wishes*/
-.deleteButton {
-
-}
-.cancelButton {
-
-}
-.fulfilledButton {
-
-}
 
 /*********Settings***************/
 .changeEmail {
@@ -483,6 +474,43 @@ nav.menu li a.messages {
     min-width: 460px;
     max-width: 460px;
     height: 100px;
+}
+
+/***********Wishes tables************/
+.wishesTable {
+    margin: 10px 5px;
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+}
+.wishesTable>tbody>tr>td {
+    border: solid 1px darkorange;
+}
+input[type="submit"].deleteButton, input[type="submit"].cancelButton {
+    width: 25px;
+    height: 25px;
+    margin: 5px;
+    background: transparent url("../img/icons/delete.png") top center no-repeat;
+    background-size: 25px 25px;
+}
+input[type="submit"].fulfilledButton {
+    width: 25px;
+    height: 25px;
+    margin: 5px;
+    background: transparent url("../img/icons/accept.png") top center no-repeat;
+    background-size: 25px 25px;
+}
+input[type="submit"].deleteButton:hover, input[type="submit"].cancelButton:hover {
+    width: 28px;
+    height: 28px;
+    background: transparent url("../img/icons/delete.png") top center no-repeat;
+    background-size: 28px 28px;
+}
+input[type="submit"].fulfilledButton:hover {
+    width: 28px;
+    height: 28px;
+    background: transparent url("../img/icons/accept.png") top center no-repeat;
+    background-size: 28px 28px;
 }
 
 .formWishes {

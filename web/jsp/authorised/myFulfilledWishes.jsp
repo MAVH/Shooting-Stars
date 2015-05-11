@@ -20,7 +20,7 @@
     <body>
         <c:import url="../partial/header.jsp"/>
         <c:import url="../partial/menu.jsp"/>
-        <table class="table" id="fulfilledWishes">
+        <table class="table wishesTable" id="fulfilledWishes">
             <c:choose>
                 <c:when test="${not empty wishes}">
                     <tr>

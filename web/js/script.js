@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     
 });
 
-var interval = 10000;
+var interval = 20000;
 
 function displayHiddenForm() {
     document.getElementsByTagName('form').classList.remove("hidden");
@@ -24,11 +24,6 @@ function getEmail() {
         document.getElementById("buttonChangeEmail").classList.add("hidden");
     }
 }
-function addPropertiesOnUserPage() {	
-    document.getElementById("wishes_table").classList.add("table-striped");
-    document.getElementById("wishes_table").classList.add("table-hover");
-}
-
 function displayButtonAddWish() {
         document.getElementById("button_add_wish").classList.add("btn-default");
         document.getElementById("button_add_wish").onclick = function () {
@@ -53,12 +48,17 @@ function getEmptyWishesTable() {
     if(document.getElementById("wishes_table") == null) {
         table = document.createElement('table');
         table.setAttribute('id','wishes_table');
-        table.className = "table";
+        //table.className = "table";
+        table.classList.add("wishesTable");
+        table.classList.add("table");
+
         document.getElementById("wishes_block").appendChild(table);
+
     } else {
         table = document.getElementById("wishes_table");
         table.replaceChild(document.createElement('TBODY'), table.tBodies[0]);
     }
+
     return table;
 }
 
@@ -310,6 +310,7 @@ function displayUserWishesTable(userId, currentUserId, msg) {
                 var size = wishes.length;
                 if (size != 0) {
                     var table = getEmptyWishesTable();
+                    table.classList.add("wishesTable");
                     var nameRow = table.insertRow(0);
                     var columnName = document.createElement('th');
                     nameRow.appendChild(columnName);
@@ -403,6 +404,7 @@ function displayWishesTable(currentUserId) {
                 var size = wishes.length;
                 if (size != 0) {
                     var table = getEmptyWishesTable();
+
                     var nameRow = table.insertRow(0);
                     var columnName = document.createElement('th');
                     nameRow.appendChild(columnName);
@@ -422,7 +424,7 @@ function displayWishesTable(currentUserId) {
                         var candidates = wish.candidates;
                         if(candidate == null) {
                             formAction = "<form action=deleteWish method=post><input type=hidden name=wishId value="
-                                + wish.wishId + "><input type=submit class=deleteButton value=" + msg.buttonDelete + "></form>";
+                                + wish.wishId + "><input type=submit class=deleteButton></form>";
                             column.innerHTML = formAction;
                         }
                         column = row.insertCell(1);
@@ -442,11 +444,11 @@ function displayWishesTable(currentUserId) {
                             columnActions = rowActions.insertCell(1);
                             columnActions.innerHTML = "<form action=cancelMakingWish method=post><input type=hidden name=wishId value="
                                 + wish.wishId + "><input type=hidden name=userId value="
-                                + candidate.userId + "><input type=submit class=cancelButton value=" + msg.buttonCancel + "></form>";
+                                + candidate.userId + "><input type=submit class=cancelButton ></form>";
                             var columnActions = rowActions.insertCell(2);
                             columnActions.innerHTML = "<form action=wishMade method=post>" +
                                 "<input type=hidden name=wishId value=" + wish.wishId + ">" +
-                                "<input type=submit class=fulfilledButton value=" + "isDone" + "></form>";
+                                "<input type=submit class=fulfilledButton ></form>";
 
                         }
 
@@ -466,13 +468,11 @@ function displayWishesTable(currentUserId) {
                                     columnActions = rowActions.insertCell(1);
                                     columnActions.innerHTML = "<form action=acceptApplication method=post> " +
                                         "<input type=hidden name=wishId value=" + wish.wishId
-                                        + "><input type=hidden name=userId value=" + candidate.userId + "><input type=submit value="
-                                        + msg.buttonTake + "></form>";
+                                        + "><input type=hidden name=userId value=" + candidate.userId + "><input type=submit class=fulfilledButton></form>";
                                     var columnActions = rowActions.insertCell(2);
                                     columnActions.innerHTML = "<form action=cancelApplication method=post>" +
                                         "<input type=hidden name=wishId value=" + wish.wishId
-                                        + "><input type=hidden name=userId value=" + candidate.userId + "><input type=submit value="
-                                        + msg.buttonCancel + "></form>";
+                                        + "><input type=hidden name=userId value=" + candidate.userId + "><input type=submit class='cancelButton'></form>";
 
                                 }
                             }

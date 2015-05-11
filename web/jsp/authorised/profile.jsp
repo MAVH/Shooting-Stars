@@ -36,7 +36,7 @@
         <div class = "infoBlock">
             <h2 class="userName">${userInfo.name} ${userInfo.surname}</h2>
             <h3 class="userStatus">${status}</h3>
-            <h3 class="userAddress">${userInfo.country}, ${userInfo.city}</h3>
+            <h3 class="userAddress">${userInfo.country} ${userInfo.city}</h3>
             <c:if test="${not empty userInfo.dateOfBirth}">
                 <h3 class="userBirthdate"><fmt:message key="date_of_birth"/>:
                     <fmt:formatDate value="${userInfo.dateOfBirth}"/></h3>
