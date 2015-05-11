@@ -17,7 +17,9 @@
                 labelPerformed: "<fmt:message key="wish_performed" />",
                 wishFulfilledText: "<fmt:message key="wish_fulfilled" />",
                 applicationMadeText: "<fmt:message key="application_made" />",
-                buttonCancel: "<fmt:message key="cancel" />"
+                buttonCancel: "<fmt:message key="cancel" />",
+                notFoundMessage: "<fmt:message key="not_found"/>"
+
             };
             displayMyWishes("${param.userId}", "${currentUserId}",msg)
         </script>
@@ -26,11 +28,11 @@
         <c:import url="../partial/header.jsp"/>
         <c:import url="../partial/menu.jsp"/>
         <table class="table wishesTable" id="myWishes">
-            <tr>
+            <%--<tr>
                 <td>
                     <fmt:message key="not_found"/>
                 </td>
-            </tr>
+            </tr>--%>
         </table>
     </body>
 </html>

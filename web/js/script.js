@@ -25,6 +25,7 @@ function getEmail() {
     }
 }
 function displayButtonAddWish() {
+    if (document.getElementById("button_add_wish") != null) {
         document.getElementById("button_add_wish").classList.add("btn-default");
         document.getElementById("button_add_wish").onclick = function () {
             var fields = (document).getElementsByName("wish");
@@ -37,11 +38,12 @@ function displayButtonAddWish() {
                     break;
                 }
             }
-            if( document.getElementById("add_wish_form") != null) {
+            if (document.getElementById("add_wish_form") != null) {
                 document.getElementById("add_wish_form").classList.remove("hidden");
             }
         }
     }
+}
 
 function getEmptyWishesTable() {
     var table;
@@ -162,11 +164,15 @@ function displayMyWishes(userId, currentUserId, msg) {
                 var answer = xmlhttp.responseText;
                 var json = JSON.parse(answer);
                 var wishes = json.wishes;
+                var table = document.getElementById("myWishes");
+                if(table.tBodies[0] != null) {
+                    table.replaceChild(document.createElement('TBODY'), table.tBodies[0]);
+                }
                 if (wishes.length == 0) {
+                    var row = table.insertRow(0);
+                    row.insertCell(0).innerHTML = msg.notFoundMessage;
                     return;
                 }
-                var table = document.getElementById("myWishes");
-                table.replaceChild(document.createElement('TBODY'), table.tBodies[0]);
                 var nameRow = table.insertRow(0);
                 var columnName = document.createElement('th');
                 columnName.innerHTML = msg.wishText;
@@ -468,11 +474,11 @@ function displayWishesTable(currentUserId) {
                                     columnActions = rowActions.insertCell(1);
                                     columnActions.innerHTML = "<form action=acceptApplication method=post> " +
                                         "<input type=hidden name=wishId value=" + wish.wishId
-                                        + "><input type=hidden name=userId value=" + candidate.userId + "><input type=submit class=fulfilledButton></form>";
+                                        + "><input type=hidden name=userId value=" + candidate.userId + "><input type=submit class=fulfilledButton value= ></form>";
                                     var columnActions = rowActions.insertCell(2);
                                     columnActions.innerHTML = "<form action=cancelApplication method=post>" +
                                         "<input type=hidden name=wishId value=" + wish.wishId
-                                        + "><input type=hidden name=userId value=" + candidate.userId + "><input type=submit class='cancelButton'></form>";
+                                        + "><input type=hidden name=userId value=" + candidate.userId + "><input type=submit class='cancelButton' value= ></form>";
 
                                 }
                             }

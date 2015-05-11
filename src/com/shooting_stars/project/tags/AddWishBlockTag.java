@@ -34,7 +34,7 @@ public class AddWishBlockTag extends TagSupport {
                 //}
                 out.write("<input type=submit id=save_wish_button value=" + submitValue + ">");
                 out.write("</fieldset></form>");
-                out.write("<button id=button_add_wish class=btn>" + buttonValue + "</button>");
+                out.write("<button id=button_add_wish class=hidden>" + buttonValue + "</button>");
             }
         } catch (IOException e) {
             throw new JspTagException(e.getMessage(),e);
