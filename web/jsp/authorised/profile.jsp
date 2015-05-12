@@ -24,7 +24,7 @@
             displayWishesTable(${currentUserId},msg);
         </script>
     </head>
-    <body onload="displayButtonAddWish()">
+    <body>
         <c:import url="../partial/header.jsp"/>
         <c:import url="../partial/menu.jsp"/>
         <div id="userPhoto" class="userPhotoBlock">

@@ -26,6 +26,7 @@ function getEmail() {
 }
 function displayButtonAddWish() {
     if (document.getElementById("button_add_wish") != null) {
+        document.getElementById("button_add_wish").classList.remove("hidden");
         document.getElementById("button_add_wish").classList.add("btn-default");
         document.getElementById("button_add_wish").onclick = function () {
             var fields = (document).getElementsByName("wish");
@@ -399,7 +400,9 @@ function displayUserWishesTable(userId, currentUserId, msg) {
 }
 
 function displayWishesTable(currentUserId) {
+    var count = 0;
     setInterval(function() {
+
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -428,7 +431,7 @@ function displayWishesTable(currentUserId) {
                         var formAction;
                         var candidate = wish.candidate;
                         var candidates = wish.candidates;
-                        if(candidate == null) {
+                        if (candidate == null) {
                             formAction = "<form action=deleteWish method=post><input type=hidden name=wishId value="
                                 + wish.wishId + "><input type=submit class=deleteButton value= ></form>";
                             column.innerHTML = formAction;
@@ -485,11 +488,18 @@ function displayWishesTable(currentUserId) {
                         }
                     }
                 }
+                if(count == 0) {
+                    displayButtonAddWish();
+                }
+                count = 1;
+
             }
         }
+
         xmlhttp.open("GET", "updateWishes?userId=" + currentUserId, true);
         xmlhttp.send();
     }, interval);
+
 }
 
 
