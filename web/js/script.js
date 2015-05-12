@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     
 });
 
-var interval = 1000;
+var interval = 20000;
 
 function displayHiddenForm() {
     document.getElementsByTagName('form').classList.remove("hidden");

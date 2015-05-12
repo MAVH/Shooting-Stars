@@ -554,6 +554,7 @@ input[type="submit"].fulfilledButton:hover {
 
 /**********CHATS*********/
 .chatsTable {
+    padding: 0;
     margin: 20px 5px;
     width: 100%;
     font-size: 20px;
@@ -562,5 +563,12 @@ input[type="submit"].fulfilledButton:hover {
 .chatsTable a {
     text-decoration: none;
     color: black;
+}
+.chatsTable tr td {
+    margin: 0;
+    padding: 10px;
+    background-color: #faf2cc;
+    border-bottom: solid 1px #fae7bc;
+    text-align: left;
 }
 
