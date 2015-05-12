@@ -15,9 +15,16 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.regex.Pattern;
 
 public class UserLogic {
+
+    private static final String STATUS_ONLINE = "online";
+    private static final String STATUS_OFFLINE = "offline";
+    private static final int STATUS_TIMEOUT = 600000;
+
     public static UserInfo getUserInfo(int userId) throws LogicException {
         Connection connection = null;
         try {
@@ -83,7 +90,14 @@ public class UserLogic {
         try {
             connection = Pool.getPool().getConnection();
             UserDAO userDAO = new UserDAO(connection);
-            String status = userDAO.getUserStatus(userId);
+            String status;
+            Timestamp userLastVisitTime = userDAO.getVisitTime(userId);
+            long difference = Timestamp.valueOf(LocalDateTime.now()).getTime() - userLastVisitTime.getTime();
+            if( difference <= STATUS_TIMEOUT) {
+                status = STATUS_ONLINE;
+            } else {
+                status = STATUS_OFFLINE;
+            }
             return status;
         }  catch(PoolConnectionException | DAOException e ) {
             throw new LogicException(e.getCause());
@@ -92,12 +106,13 @@ public class UserLogic {
         }
     }
 
-    public static void setUserStatus(int userId, int userStatusId) throws LogicException {
+    public static void updateVisitTime(int userId) throws LogicException {
         Connection connection = null;
         try {
             connection = Pool.getPool().getConnection();
             UserDAO userDAO = new UserDAO(connection);
-            userDAO.setUserStatus(userId, userStatusId);
+            Timestamp currentTime = Timestamp.valueOf(LocalDateTime.now());
+            userDAO.updateVisitTime(userId,currentTime);
         }  catch(PoolConnectionException | DAOException e ) {
             throw new LogicException(e.getCause());
         }  finally {
@@ -183,6 +198,7 @@ public class UserLogic {
             Pool.getPool().returnConnection(connection);
         }
     }
+
     public static String getEmail(int userId) throws LogicException {
         Connection connection = null;
         try {
@@ -196,4 +212,6 @@ public class UserLogic {
             Pool.getPool().returnConnection(connection);
         }
     }
+
+
 }

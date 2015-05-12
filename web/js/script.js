@@ -514,6 +514,14 @@ function displayWishesTable(currentUserId) {
 
 }
 
+function updateTime() {
+    setInterval(function() {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("POST", "updateVisitTime");
+        xmlhttp.send();
+    }, 600000);
+}
+
 
 
 

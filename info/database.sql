@@ -3,7 +3,7 @@
 -- Server version:               5.6.21-log - MySQL Community Server (GPL)
 -- Server OS:                    Win64
 -- HeidiSQL version:             7.0.0.4053
--- Date/time:                    2015-05-12 12:04:31
+-- Date/time:                    2015-05-12 23:37:58
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -27,9 +27,9 @@ CREATE TABLE IF NOT EXISTS `chat` (
   KEY `FK_chat_user_2` (`user2Id`),
   CONSTRAINT `FK_chat_user` FOREIGN KEY (`user1Id`) REFERENCES `user` (`userId`),
   CONSTRAINT `FK_chat_user_2` FOREIGN KEY (`user2Id`) REFERENCES `user` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
--- Dumping data for table shooting_stars_database.chat: ~5 rows (approximately)
+-- Dumping data for table shooting_stars_database.chat: ~6 rows (approximately)
 DELETE FROM `chat`;
 /*!40000 ALTER TABLE `chat` DISABLE KEYS */;
 INSERT INTO `chat` (`chatId`, `user1Id`, `user2Id`) VALUES
@@ -222,31 +222,29 @@ CREATE TABLE IF NOT EXISTS `user` (
   `userId` int(10) NOT NULL AUTO_INCREMENT,
   `login` varchar(50) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL,
-  `userStatusId` int(10) DEFAULT '1',
-  PRIMARY KEY (`userId`),
-  KEY `FK_user_user_status` (`userStatusId`),
-  CONSTRAINT `FK_user_user_status` FOREIGN KEY (`userStatusId`) REFERENCES `user_status` (`userStatusId`)
+  `lastVisitTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table shooting_stars_database.user: ~15 rows (approximately)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`userId`, `login`, `password`, `userStatusId`) VALUES
-	(2, 'v', 'c4ca4238a0b923820dcc509a6f75849b', 1),
-	(8, 'bbbv', 'c4ca4238a0b923820dcc509a6f75849b', 0),
-	(9, 'ghg', 'c4ca4238a0b923820dcc509a6f75849b', 0),
-	(10, 'gdfgd', 'c4ca4238a0b923820dcc509a6f75849b', 0),
-	(11, 'hfhfh', 'c4ca4238a0b923820dcc509a6f75849b', 0),
-	(12, 'fg', 'c4ca4238a0b923820dcc509a6f75849b', 0),
-	(13, 'fdgfg', 'c4ca4238a0b923820dcc509a6f75849b', 0),
-	(14, 'h', 'c4ca4238a0b923820dcc509a6f75849b', 1),
-	(15, 'htbh', 'c4ca4238a0b923820dcc509a6f75849b', 0),
-	(16, '1', 'c4ca4238a0b923820dcc509a6f75849b', 0),
-	(17, 's', '202cb962ac59075b964b07152d234b70', 0),
-	(18, '123', 'e10adc3949ba59abbe56e057f20f883e', 1),
-	(19, '1234', 'e10adc3949ba59abbe56e057f20f883e', 0),
-	(20, 'fhfdhhfdhfd', 'e10adc3949ba59abbe56e057f20f883e', 0),
-	(21, 'sjckscscj', 'e10adc3949ba59abbe56e057f20f883e', 1);
+INSERT INTO `user` (`userId`, `login`, `password`, `lastVisitTime`) VALUES
+	(2, 'v', 'c4ca4238a0b923820dcc509a6f75849b', '2015-05-12 23:36:38'),
+	(8, 'bbbv', 'c4ca4238a0b923820dcc509a6f75849b', '2015-03-12 23:05:22'),
+	(9, 'ghg', 'c4ca4238a0b923820dcc509a6f75849b', '2015-03-12 23:05:33'),
+	(10, 'gdfgd', 'c4ca4238a0b923820dcc509a6f75849b', '2015-04-12 23:05:38'),
+	(11, 'hfhfh', 'c4ca4238a0b923820dcc509a6f75849b', '2015-05-11 23:05:47'),
+	(12, 'fg', 'c4ca4238a0b923820dcc509a6f75849b', '2015-05-10 23:05:52'),
+	(13, 'fdgfg', 'c4ca4238a0b923820dcc509a6f75849b', '2015-05-10 23:05:57'),
+	(14, 'h', 'c4ca4238a0b923820dcc509a6f75849b', '2015-05-12 23:26:47'),
+	(15, 'htbh', 'c4ca4238a0b923820dcc509a6f75849b', '2015-02-12 23:06:05'),
+	(16, '1', 'c4ca4238a0b923820dcc509a6f75849b', '2015-01-12 23:06:12'),
+	(17, 's', '202cb962ac59075b964b07152d234b70', '2015-04-12 23:06:16'),
+	(18, '123', 'e10adc3949ba59abbe56e057f20f883e', '2015-03-12 23:06:21'),
+	(19, '1234', 'e10adc3949ba59abbe56e057f20f883e', '2015-03-12 23:06:25'),
+	(20, 'fhfdhhfdhfd', 'e10adc3949ba59abbe56e057f20f883e', '2015-02-12 23:06:29'),
+	(21, 'sjckscscj', 'e10adc3949ba59abbe56e057f20f883e', '2015-01-12 23:06:33');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 
@@ -272,7 +270,7 @@ CREATE TABLE IF NOT EXISTS `user_info` (
 DELETE FROM `user_info`;
 /*!40000 ALTER TABLE `user_info` DISABLE KEYS */;
 INSERT INTO `user_info` (`userId`, `user_name`, `surname`, `email`, `country`, `city`, `dateOfBirth`, `abilities`, `photoName`) VALUES
-	(2, 'veronica', 'haritonova', 'veronica_haritonova@mail.ru', 'belarus', 'Minsk', '2015-04-27', 'ghg jhg jddf fdjfhjd fhjdfh fdhfdhjfhdfdfh jdhfdhfjdhjfhdjfhjdddddd jfhdjhfjdh fdhfdh fhdfhdjfhdjhfdjhfjdfhdfdf', '2.jpg'),
+	(2, 'veronica', 'haritonova', 'veronica_haritonova@mail.ru', 'belarus', 'Minsk', '2015-04-27', 'ghg jhg jddf fdjfhjd fhjdfh fdhfdhjfhdfdfh ', '2.jpg'),
 	(8, 'gfg', 'gfg', '', '', '', NULL, '', NULL),
 	(9, 'wj', 'wqh', '', '', '', NULL, 'gff', NULL),
 	(10, 'tr', 'gfgf', '', '', '', NULL, '', NULL),
@@ -288,23 +286,6 @@ INSERT INTO `user_info` (`userId`, `user_name`, `surname`, `email`, `country`, `
 	(20, 'hgfhgh', '', 'veronica48@mail.ru', '', '', NULL, '', NULL),
 	(21, 'hgh', '', 'veronica_haritonova@mail.ru', '', '', NULL, '', NULL);
 /*!40000 ALTER TABLE `user_info` ENABLE KEYS */;
-
-
--- Dumping structure for table shooting_stars_database.user_status
-DROP TABLE IF EXISTS `user_status`;
-CREATE TABLE IF NOT EXISTS `user_status` (
-  `userStatusId` int(10) NOT NULL DEFAULT '0',
-  `status` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`userStatusId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- Dumping data for table shooting_stars_database.user_status: ~2 rows (approximately)
-DELETE FROM `user_status`;
-/*!40000 ALTER TABLE `user_status` DISABLE KEYS */;
-INSERT INTO `user_status` (`userStatusId`, `status`) VALUES
-	(0, 'offline'),
-	(1, 'online');
-/*!40000 ALTER TABLE `user_status` ENABLE KEYS */;
 
 
 -- Dumping structure for table shooting_stars_database.wish

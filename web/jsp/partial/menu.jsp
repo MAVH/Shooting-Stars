@@ -32,6 +32,7 @@
         </nav>
         <script>
             displayAmount();
+            updateTime();
         </script>
     </body>
 </html>

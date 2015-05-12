@@ -4,13 +4,13 @@ import com.shooting_stars.project.entity.User;
 import com.shooting_stars.project.entity.UserInfo;
 import com.shooting_stars.project.entity.UserToBeRegistered;
 import com.shooting_stars.project.exception.DAOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
 
 public class UserDAO extends AbstractDAO {
+    public static final String SQL_UPDATE_VISIT_TIME = "UPDATE user SET lastVisitTime = ? WHERE userId = ?";
+    public static final String SQL_SELECT_VISIT_TIME = "SELECT lastVisitTime FROM user WHERE userId = ?";
     public static final String SQL_FIND_USER = "SELECT userId FROM user WHERE login = ? and password = ?";
     public static final String SQL_INSERT_USER = "INSERT INTO user (login, password) VALUES (?,?)";
     public static final String SQL_INSERT_USER_INFO =
@@ -18,8 +18,6 @@ public class UserDAO extends AbstractDAO {
     public static final String SQL_CHECK_LOGIN_EXISTENCE = "SELECT COUNT(login) FROM user WHERE login = ?";
     public static final  String SQL_UPDATE_PHOTO_NAME = "UPDATE user_info SET photoName = ? WHERE userId = ?";
     public static final String SQL_SELECT_USER_INFO = "SELECT * FROM user_info WHERE userId = ?";
-    public static final String SQL_GET_STATUS = "SELECT status FROM user_status JOIN user ON user.userStatusId = user_status.userStatusId WHERE user.userId = ?";
-    public static final String SQL_SET_STATUS = "UPDATE user SET userStatusId = ? WHERE userId = ?";
     public static final String SQL_UPDATE_USER_INFO =
             "UPDATE user_info SET user_name = ?, surname = ?, country = ?, city = ?, dateOfBirth = ? WHERE userId = ?";
     public static final String SQL_SELECT_ABILITIES = "SELECT abilities FROM user_info WHERE userId = ?";
@@ -159,41 +157,6 @@ public class UserDAO extends AbstractDAO {
         return userInfo;
     }
 
-    public String getUserStatus(int userId) throws DAOException {
-        PreparedStatement ps = null;
-        ResultSet rs;
-        String status = "";
-        try {
-            ps = connection.prepareStatement(SQL_GET_STATUS);
-            ps.setInt(1, userId);
-            rs = ps.executeQuery();
-            if(rs.next()) {
-               status = rs.getString(1);
-            }
-        } catch (SQLException e) {
-            throw new DAOException("SQL exception (request or table failed): ", e);
-        }
-        finally {
-            close(ps);
-        }
-        return status;
-    }
-
-    public void setUserStatus(int userId, int userStatusId) throws DAOException {
-        PreparedStatement ps = null;
-        try {
-            ps = connection.prepareStatement(SQL_SET_STATUS);
-            ps.setInt(1, userStatusId);
-            ps.setInt(2, userId);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException("SQL exception (request or table failed): ", e);
-        }
-        finally {
-            close(ps);
-        }
-    }
-
     public void updateUserInfo(int userId, UserInfo userInfo) throws DAOException {
         PreparedStatement ps = null;
         try {
@@ -324,6 +287,40 @@ public class UserDAO extends AbstractDAO {
             }
             return email;
 
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+    }
+
+    public Timestamp getVisitTime(int userId) throws DAOException {
+        PreparedStatement ps = null;
+        ResultSet rs;
+        Timestamp time = null;
+        try {
+            ps = connection.prepareStatement(SQL_SELECT_VISIT_TIME);
+            ps.setInt(1,userId);
+            rs = ps.executeQuery();
+            if(rs.next()) {
+                time = rs.getTimestamp(1);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+        return time;
+    }
+    public void updateVisitTime(int userId, Timestamp time) throws DAOException {
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement(SQL_UPDATE_VISIT_TIME);
+            ps.setTimestamp(1,time);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("SQL exception (request or table failed): ", e);
         }

@@ -245,6 +245,9 @@
                 /jsp/authorised/search.jsp
             </result>
         </action>
+        <action name="updateVisitTime" class="com.shooting_stars.project.command.UpdateVisitTimeCommand">
+            <result type="json"/>
+        </action>
 </package>
 
 </struts>
