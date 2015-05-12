@@ -569,17 +569,72 @@ input[type="submit"].fulfilledButton:hover {
 
 /********SEARCH***************/
 .searchTypes {
-     margin: 10px;
-}
-.usersSearchButton {
-     margin: 10px;
-}
-.wishesSearchButton {
     margin: 10px;
+    text-align: center;
+}
+.usersSearchButton, .wishesSearchButton {
+    margin: 10px;
+    margin-bottom: 30px;
+    background: none;
+    color: #050505;
+    font-weight: bold;
+    border: solid 1px #dd4814;
+    padding: 5px 40px;
+}
+.usersSearchButton:hover, .wishesSearchButton:hover {
+    background: none;
+    border-color: firebrick;
+    border-width: 2px;
+    padding: 4px 39px;
+}
+.usersSearchButton.curr, .wishesSearchButton.curr {
+    background: firebrick;
+    color: #ffffff;
 }
 .searchField {
     display: inline-block;
-    width: 200px;
+    width: 300px;
+}
+.searchFilters {
+    float: right;
+}
+.searchFilters .searchField {
+    margin: 3px;
+}
+.searchFilters .label {
+    padding-left: 5px;
+}
+.searchFilters .label.dateLabel {
+    padding-left: 15px;
+}
+.findButton {
+    margin: 10px;
+}
+.birthdayMenButton, .recentWishesButton {
+    margin-top: -64px;
+    margin-left: 100px;
+}
+.searchResultsTable {
+    border-spacing: 0;
+    width: 600px;
+    font-size: 17px;
+}
+.searchResultsTable.searchWishesResults {
+    width: 100%
+}
+.searchResultsTable a {
+    text-decoration: none;
+    color: black;
+}
+.searchResultsTable>tbody>tr>td {
+    padding: 10px;
+    border-bottom: solid 1px #ffcb6d;
+}
+.no_search_results {
+    font-size: 17px;
+    color: firebrick;
+    margin-left: 15px;
+    margin-top: 0;
 }
 
 /**********CHATS*********/

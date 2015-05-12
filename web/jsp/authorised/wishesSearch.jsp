@@ -15,22 +15,21 @@
             <button class = "usersSearchButton" onclick="window.location.href = '${pageContext.request.contextPath}/jsp/authorised/search.jsp'">
                 <fmt:message key="users_search"/>
             </button>
-            <button class = "wishesSearchButton" onclick="window.location.href = '${pageContext.request.contextPath}/jsp/authorised/wishesSearch.jsp'">
+            <button class = "wishesSearchButton curr" onclick="window.location.href = '${pageContext.request.contextPath}/jsp/authorised/wishesSearch.jsp'">
                 <fmt:message key="wishes_search"/>
-            </button>
-        </div>
-        <div>
-            <button onclick="window.location.href = '${pageContext.request.contextPath}/recentWishes'">
-                <fmt:message key="recent_wishes"/>
             </button>
         </div>
         <form action="wishesSearch" method="get">
             <input type="text" name="wish" value="${wish}" class="searchField form-control" pattern="[A-Za-zА-Яа-я\s-]+"/>
-            <input type="submit" value="<fmt:message key="find"/>" class="btn btn-default">
+            <br/>
+            <input type="submit" value="<fmt:message key="find"/>" class="btn btn-default findButton">
         </form>
+        <button class="recentWishesButton" onclick="window.location.href = '${pageContext.request.contextPath}/recentWishes'">
+            <fmt:message key="recent_wishes"/>
+        </button>
         <c:choose>
             <c:when test="${not empty foundUsers}">
-                <table class="table table-striped table-hover ">
+                <table class="table table-striped table-hover searchResultsTable searchWishesResults">
                 <c:forEach var="result" items="${foundUsers}">
                     <tr class="active">
                         <td>
@@ -54,7 +53,9 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <fmt:message key="not_found"/>
+                <p class="no_search_results">
+                    <fmt:message key="not_found"/>
+                </p>
             </c:otherwise>
         </c:choose>
 
