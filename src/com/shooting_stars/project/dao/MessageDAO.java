@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MessageDAO extends AbstractDAO {
+
+    public static final String SQL_DELETE_CHAT_BY_CHAT_ID = "DELETE FROM chat WHERE chatId = ?";
     public static final String SQL_SELECT_CHATS_BY_USER_ID = "SELECT chatId, chat.user1Id, user_name, surname, photoName, " +
             "(SELECT  message.date FROM message WHERE message.chatId = chat.chatId ORDER BY message.date DESC LIMIT 1) AS chatDate, " +
             "(SELECT  message.time FROM message  WHERE message.chatId = chat.chatId AND chatDate = message.date ORDER BY message.time DESC LIMIT 1) AS chatTime " +
@@ -57,6 +59,20 @@ public class MessageDAO extends AbstractDAO {
         super(connection);
     }
 
+    public void deleteChat(int chatId) throws DAOException {
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement(SQL_DELETE_CHAT_BY_CHAT_ID);
+            ps.setInt(1,chatId);
+            ps.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new DAOException("SQL exception (request or table failed): ", e);
+        }
+        finally {
+            close(ps);
+        }
+    }
     public List<Chat> getChatsByUserId(int userId, int from, int num) throws DAOException {
         PreparedStatement ps = null;
         ResultSet rs;
@@ -71,11 +87,18 @@ public class MessageDAO extends AbstractDAO {
             int chatId;
             User user;
             int amount;
+            int messagesAmount;
             while (rs.next()) {
                 chatId = rs.getInt(1);
                 user = new User(rs.getInt(2),rs.getString(3), rs.getString(4),rs.getString(5));
                 amount = getAmountUnreadMessages(chatId,userId);
-                chats.add(new Chat(chatId,user,amount));
+                messagesAmount = countMessages(chatId);
+                if(messagesAmount != 0) {
+                    chats.add(new Chat(chatId, user, amount));
+                }
+                else {
+                    deleteChat(chatId);
+                }
             }
         } catch (SQLException e) {
             throw new DAOException("SQL exception (request or table failed): ", e);
