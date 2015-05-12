@@ -368,6 +368,8 @@ nav.menu li a.messages {
 .infoBlock {
     margin: 50px 5px;
     height: 200px;
+    position: relative;
+    margin-left: 250px;
 }
 .infoBlock .userName {
     font-size: 30px;
@@ -383,11 +385,12 @@ nav.menu li a.messages {
     display: inline;
 }
 .editInfoLink, .editAbilitiesLink {
-    float: right;
+    position: absolute;
+    top: 0;
+    right: 0;
     text-decoration: underline;
     color: #848181;
     font-style: italic;
-    margin-top: -40px;
     padding-left: 15px;
     background: url("../img/icons/pencil.png") left center no-repeat;
     background-size: 15px 15px;
@@ -401,6 +404,7 @@ nav.menu li a.messages {
 .abilitiesBlock {
     width: 100%;
     margin-top: -20px;
+    position: relative;
 }
 .abilitiesLabel, .wishesLabel {
     padding-left: 20px;
