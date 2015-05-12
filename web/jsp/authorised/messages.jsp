@@ -35,7 +35,7 @@
         <c:import url="../partial/menu.jsp"/>
         <form action="sendMessage" method="POST">
             <input type="hidden" name="chatId" value="${chatId}"/>
-            <input type="textarea" name="message"/>
+            <textarea name="message"></textarea>
             <input type="submit" value="<fmt:message key="send"/> "/>
         </form>
         <span id="info"></span>

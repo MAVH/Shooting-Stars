@@ -27,7 +27,14 @@
         <div class = "infoBlock">
             <h2 class="userName">${userInfo.name} ${userInfo.surname}</h2>
             <h3 class="userStatus">${status}</h3>
-            <h3 class="userAddress">${userInfo.country} ${userInfo.city}</h3>
+            <c:choose>
+                <c:when test="${not empty userInfo.country && not empty userInfo.city}">
+                    <h3 class="userAddress">${userInfo.country}, ${userInfo.city}</h3>
+                </c:when>
+                <c:otherwise>
+                    <h3 class="userAddress">${userInfo.country} ${userInfo.city}</h3>
+                </c:otherwise>
+            </c:choose>
             <c:if test="${not empty userInfo.dateOfBirth}">
                 <h3 class="userBirthdate"><fmt:message key="date_of_birth"/>:
                     <fmt:formatDate value="${userInfo.dateOfBirth}"/></h3>

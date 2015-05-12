@@ -105,7 +105,13 @@ function displayAmount() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 var answer = xmlhttp.responseText;
                 var json = JSON.parse(answer);
-                document.getElementById("unreadMessagesAmount").innerHTML = json.unreadMessagesAmount;
+                var amount = json.unreadMessagesAmount;
+                if(amount != 0) {
+                    document.getElementById("unreadMessagesAmount").classList.add("messages_amount");
+                    document.getElementById("unreadMessagesAmount").innerHTML = amount;
+                } else {
+                    document.getElementById("unreadMessagesAmount").classList.remove("messages_amount");
+                }
             }
         }
         xmlhttp.open("GET", "getUnreadMessagesAmount", true);
