@@ -19,13 +19,10 @@ public class ChangePhotoCommand extends SessionAwareCommand implements ServletRe
     private String photoFileName;
     private String destPath;
     private HttpServletRequest request = null;
+    private String errorMessage;
 
-    @Override
-    public void validate() {
-        MessageManager messageManager = (MessageManager)sessionAttributes.get("messageManager");
-        if(photo == null) {
-            addFieldError("photo", messageManager.getMessage("message.photo.empty"));
-        }
+    public String getErrorMessage() {
+        return errorMessage;
     }
 
     public File getPhoto() {
@@ -63,6 +60,11 @@ public class ChangePhotoCommand extends SessionAwareCommand implements ServletRe
     @Override
     public String execute() {
         String result = SUCCESS;
+        MessageManager messageManager = (MessageManager)sessionAttributes.get("messageManager");
+        if(photo == null) {
+            errorMessage = messageManager.getMessage("message.photo.empty");
+            return INPUT;
+        }
         try{
             int currentUserId = getCurrentUserId();
             String path = request.getServletContext().getRealPath("/img/userPhoto");
