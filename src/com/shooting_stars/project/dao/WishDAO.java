@@ -35,12 +35,19 @@ public class WishDAO extends AbstractDAO {
             "JOIN wish_status ON wish.wishStatusId = wish_status.wishStatusId WHERE wish.userId = ? AND wishStatus LIKE ?" +
             " ORDER BY fulfilled_wish.date DESC";
     public static final String SQL_SELECT_FULFILLED_WISH_BY_MAKING_USER_ID = "SELECT wish.wishId, wish, " +
-            "wish.userId, user_name, surname, photoName,  fulfilled_wish.date, wishStatus " +
+            "wish.userId, user_name, surname, photoName, fulfilled_wish.date, wishStatus " +
             "FROM user JOIN wish ON user.userId = wish.userId " +
             "JOIN user_info ON user.userId = user_info.userId " +
             "JOIN fulfilled_wish ON fulfilled_wish.wishId = wish.wishId " +
             "JOIN wish_status ON wish.wishStatusId = wish_status.wishStatusId " +
-            "WHERE fulfilled_wish.userId = ? ORDER BY fulfilled_wish.date DESC";
+            "WHERE (fulfilled_wish.userId = ? AND fulfilled_wish.date IS NOT NULL) ORDER BY fulfilled_wish.date DESC";
+    public static final String SQL_SELECT_MAKING_WISH_BY_MAKING_USER_ID = "SELECT wish.wishId, wish, " +
+            "wish.userId, user_name, surname, photoName, wishStatus " +
+            "FROM user JOIN wish ON user.userId = wish.userId " +
+            "JOIN user_info ON user.userId = user_info.userId " +
+            "JOIN fulfilled_wish ON fulfilled_wish.wishId = wish.wishId " +
+            "JOIN wish_status ON wish.wishStatusId = wish_status.wishStatusId " +
+            "WHERE fulfilled_wish.userId = ? AND fulfilled_wish.date IS NULL ";
     public static final String SQL_SELECT_WISH_CONSIDERED_BY_MAKING_USER_ID = "SELECT wish.wishId, " +
             "wish, wish.userId, user_name, surname, photoName " +
             "FROM user JOIN wish ON user.userId = wish.userId " +
@@ -320,6 +327,15 @@ public class WishDAO extends AbstractDAO {
                 wish = new Wish(rs.getInt(1),rs.getString(2));
                 wish.setOwner(new User(rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6)));
                 wish.setFulfilled(false);
+                wishes.add(wish);
+            }
+            ps = connection.prepareStatement(SQL_SELECT_MAKING_WISH_BY_MAKING_USER_ID);
+            ps.setInt(1,userId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                wish = new Wish(rs.getInt(1),rs.getString(2));
+                wish.setOwner(new User(rs.getInt(3), rs.getString(4), rs.getString(5),rs.getString(6)));
+                wish.setFulfilled(true);
                 wishes.add(wish);
             }
             ps = connection.prepareStatement(SQL_SELECT_FULFILLED_WISH_BY_MAKING_USER_ID);

@@ -11,16 +11,20 @@
     <body>
         <c:import url="../partial/header.jsp"/>
         <c:import url="../partial/menu.jsp"/>
+        <div class="searchTypes">
+            <button class = "usersSearchButton" onclick="window.location.href = '${pageContext.request.contextPath}/jsp/authorised/search.jsp'">
+                <fmt:message key="users_search"/>
+            </button>
+            <button class = "wishesSearchButton" onclick="window.location.href = '${pageContext.request.contextPath}/jsp/authorised/wishesSearch.jsp'">
+                 <fmt:message key="wishes_search"/>
+            </button>
+        </div>
         <div>
             <button onclick="window.location.href = '${pageContext.request.contextPath}/birthdayMen'">
                 <fmt:message key="birthday_men"/>
             </button>
         </div>
-        <div>
-            <button onclick="window.location.href = '${pageContext.request.contextPath}/jsp/authorised/wishesSearch.jsp'">
-                <fmt:message key="wishes_search"/>
-            </button>
-        </div>
+
         <form action="usersSearch" method="get">
             <label for="name" class="label"><fmt:message key="name"/></label>
             <input type="text" name="name" id="name" value="${name}" class="searchField" pattern="[A-Za-zА-Яа-я\s-]+"/>

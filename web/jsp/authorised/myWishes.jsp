@@ -28,11 +28,6 @@
         <c:import url="../partial/header.jsp"/>
         <c:import url="../partial/menu.jsp"/>
         <table class="table wishesTable" id="myWishes">
-            <%--<tr>
-                <td>
-                    <fmt:message key="not_found"/>
-                </td>
-            </tr>--%>
         </table>
     </body>
 </html>

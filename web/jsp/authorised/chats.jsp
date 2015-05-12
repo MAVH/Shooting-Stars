@@ -16,7 +16,7 @@
     <body>
         <c:import url="../partial/header.jsp"/>
         <c:import url="../partial/menu.jsp"/>
-        <table class="table" id="chats">
+        <table class="table chatsTable" id="chats">
             <c:choose>
                 <c:when test="${not empty chats}">
                     <c:forEach var="chat" items="${chats}">
@@ -28,7 +28,9 @@
                                 </a>
                             </td>
                             <td>
-                                ${chat.amountOfUnreadMessages}
+                                <c:if test="${chat.amountOfUnreadMessages != 0}">
+                                    ${chat.amountOfUnreadMessages}
+                                </c:if>
                             </td>
                         </tr>
                     </c:forEach>

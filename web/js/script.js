@@ -262,7 +262,9 @@ function displayChats(currentPage) {
                         chat.otherParticipant.name + " " + chat.otherParticipant.surname;
                     column.appendChild(link);
                     column = row.insertCell(1);
-                    column.innerHTML = chat.amountOfUnreadMessages;
+                    if(chat.amountOfUnreadMessages != 0) {
+                        column.innerHTML = chat.amountOfUnreadMessages;
+                    }
                 }
                 }
                 }

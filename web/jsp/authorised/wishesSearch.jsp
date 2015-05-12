@@ -11,9 +11,12 @@
     <body>
         <c:import url="../partial/header.jsp"/>
         <c:import url="../partial/menu.jsp"/>
-        <div>
-            <button onclick="window.location.href = '${pageContext.request.contextPath}/jsp/authorised/search.jsp'">
+        <div class="searchTypes">
+            <button class = "usersSearchButton" onclick="window.location.href = '${pageContext.request.contextPath}/jsp/authorised/search.jsp'">
                 <fmt:message key="users_search"/>
+            </button>
+            <button class = "wishesSearchButton" onclick="window.location.href = '${pageContext.request.contextPath}/jsp/authorised/wishesSearch.jsp'">
+                <fmt:message key="wishes_search"/>
             </button>
         </div>
         <div>
