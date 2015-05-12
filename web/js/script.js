@@ -202,22 +202,26 @@ function displayMyWishes(userId, currentUserId, msg) {
                     column = row.insertCell(2);
                     if (wish.isFulfilled == true) {
                         if (wish.date != null) {
+                            column.className = "wishFulfilled";
                             column.innerHTML = msg.wishFulfilledText + "<br/>";
                             column.innerHTML += json.dateValues[i];
                         } else {
+                            column.className = "wishIsBeingPerformed";
                             column.innerHTML = msg.labelPerformed;
                             if(json.isPageOwner == true) {
-                                var formAction = "<form action=cancelMakingWish method=post><input type=hidden name=wishId value="
-                                    + wish.wishId + "><input type=hidden name=pageCode value=1><input type=hidden name=userId value="
+                                var formAction = "<form action=cancelMakingWish class=cancelForm method=post>" +
+                                    "<input type=hidden name=wishId value=" + wish.wishId + ">" +
+                                    "<input type=hidden name=pageCode value=1><input type=hidden name=userId value="
                                     + currentUserId + "><input type=submit class=cancelButton value=></form>";
                                 column.innerHTML += formAction;
                             }
                         }
                     }
                     else {
-                        column.innerHTML = "<p>" + msg.applicationMadeText + "</p>";
+                        column.className = "wishAppliedFor";
+                        column.innerHTML = "<p class=cancelLabel>" + msg.applicationMadeText + "</p>";
                         if (json.isPageOwner == true) {
-                            column.innerHTML += "<form action=cancelApplication method=post>" +
+                            column.innerHTML += "<form action=cancelApplication class=cancelForm method=post>" +
                                 "<input type=hidden name=pageCode value=1>" +
                                 "<input type=hidden name=wishId value=" + wish.wishId + ">" +
                                 "<input type=hidden name=userId value=" + currentUserId + ">" +

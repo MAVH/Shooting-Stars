@@ -515,16 +515,34 @@ input[type="submit"].fulfilledButton {
     background-size: 25px 25px;
 }
 input[type="submit"].deleteButton:hover, input[type="submit"].cancelButton:hover {
-    width: 28px;
-    height: 28px;
+    width: 29px;
+    height: 29px;
     background: transparent url("../img/icons/delete.png") top center no-repeat;
-    background-size: 28px 28px;
+    background-size: 29px 29px;
+    margin: 3px;
 }
 input[type="submit"].fulfilledButton:hover {
-    width: 28px;
-    height: 28px;
+    width: 29px;
+    height: 29px;
     background: transparent url("../img/icons/accept.png") top center no-repeat;
-    background-size: 28px 28px;
+    background-size: 29px 29px;
+    margin: 3px;
+}
+.cancelForm {
+    display: inline-block;
+    margin: 0 3px;
+}
+.cancelLabel {
+    display: inline;
+}
+.wishFulfilled {
+    color: green;
+}
+.wishIsBeingPerformed {
+    color: #ff775a;
+}
+.wishAppliedFor {
+    color: #fad60a;
 }
 
 /********SEARCH***************/
