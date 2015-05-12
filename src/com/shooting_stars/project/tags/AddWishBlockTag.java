@@ -26,14 +26,14 @@ public class AddWishBlockTag extends TagSupport {
             if (count != MAX_SIZE) {
                 int number = MAX_SIZE - count;
                 String submitValue = rs.getString("save");
-                String buttonValue = rs.getString("wish_add");
+                String buttonValue = rs.getString("wish_add_button");
                 String label = rs.getString("wish_input");
-                out.write("<form action=/saveWishes method=post class=hidden id=add_wish_form><fieldset><legend>" + label + "</legend>");
+                out.write("<form action=/saveWishes method=post class='addWishesBlock hidden' id=add_wish_form><legend>" + label + "</legend>");
                 //for (int i = 0; i < number; i++) {
-                out.write("<input type=text name=wish class=hidden>");
+                out.write("<input type=text name=wish class='form-control hidden'>");
                 //}
                 out.write("<input type=submit id=save_wish_button value=" + submitValue + ">");
-                out.write("</fieldset></form>");
+                out.write("</form>");
                 out.write("<button id=button_add_wish class=hidden>" + buttonValue + "</button>");
             }
         } catch (IOException e) {

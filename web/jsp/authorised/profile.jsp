@@ -134,6 +134,7 @@
             </c:choose>
         </div>
         <div id="wishes_block" class="wishes_block">
+            <h2 class="wishesLabel"><fmt:message key="wishes"/></h2>
         </div>
         <ctg:addingWishBlock count="${wishesCount}"/>
     </body>

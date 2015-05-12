@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     
 });
 
-var interval = 30000;
+var interval = 1000;
 
 function displayHiddenForm() {
     document.getElementsByTagName('form').classList.remove("hidden");
@@ -28,6 +28,7 @@ function displayButtonAddWish() {
     if (document.getElementById("button_add_wish") != null) {
         document.getElementById("button_add_wish").classList.remove("hidden");
         document.getElementById("button_add_wish").classList.add("btn-default");
+        document.getElementById("button_add_wish").classList.add("addNewWishButton");
         document.getElementById("button_add_wish").onclick = function () {
             var fields = (document).getElementsByName("wish");
             for (var i = 0; i < fields.length; i++) {
@@ -435,20 +436,11 @@ function displayWishesTable(currentUserId) {
                 var size = wishes.length;
                 if (size != 0) {
                     var table = getEmptyWishesTable();
-
-                    var nameRow = table.insertRow(0);
-                    var columnName = document.createElement('th');
-                    nameRow.appendChild(columnName);
-                    columnName = document.createElement('th');
-                    columnName.innerHTML = msg.wishesText;
-                    nameRow.appendChild(columnName);
-                    columnName = document.createElement('th');
-                    nameRow.appendChild(columnName);
                     var column;
                     var tableActions;
                     for (var i = 0; i < size; i++) {
                         var wish = wishes[i];
-                        row = table.insertRow(i + 1);
+                        row = table.insertRow(i);
                         column = row.insertCell(0);
                         column.className = "deleteCell";
                         var formAction;
@@ -513,7 +505,6 @@ function displayWishesTable(currentUserId) {
                     displayButtonAddWish();
                 }
                 count = 1;
-
             }
         }
 
