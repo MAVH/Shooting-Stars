@@ -1,13 +1,14 @@
 package com.shooting_stars.project.command;
 
 import com.shooting_stars.project.manager.LocaleManager;
-import com.shooting_stars.project.manager.MessageManager;;
+import com.shooting_stars.project.manager.MessageManager;
 
 import java.util.Locale;
 
 public class ChangeLocaleCommand extends SessionAwareCommand {
     private static final String PARAM_MESSAGE_MANAGER = "messageManager";
     private String localeValue;
+
     @Override
     public String execute() {
         String newLocale = localeValue;
@@ -20,6 +21,7 @@ public class ChangeLocaleCommand extends SessionAwareCommand {
         return SUCCESS;
 
     }
+
     public String getLocaleValue() {
         return localeValue;
     }
@@ -27,5 +29,4 @@ public class ChangeLocaleCommand extends SessionAwareCommand {
     public void setLocaleValue(String localeValue) {
         this.localeValue = localeValue;
     }
-
 }

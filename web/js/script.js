@@ -264,6 +264,7 @@ function displayChats(currentPage) {
                     column = row.insertCell(1);
                     if(chat.amountOfUnreadMessages != 0) {
                         column.innerHTML = chat.amountOfUnreadMessages;
+                        column.className = "unreadMessagesAmount";
                     }
                 }
                 }
@@ -299,12 +300,15 @@ function updateMessages(chatId,page) {
                 var column;
                 column = row.insertCell(0);
                 var link = createUserLink(message.sender);
+                link.className = "messageSender";
                 column.appendChild(link);
                 var p = document.createElement('p');
                 p.innerHTML = message["message"];
+                p.className = "messageText";
                 column.appendChild(p);
                 column = row.insertCell(1);
                 column.innerHTML = json.dateValues[i] + "<br/>" + json.timeValues[i];
+                column.className = "messageTime";
             }
         }
     }
@@ -393,8 +397,8 @@ function displayUserWishesTable(userId, currentUserId, msg) {
                         candidate = wish.candidate;
                         if (candidate == null && !isApplicant) {
                                 formAction = "<form action=makeApplication method=post><input type=hidden name=wishId value=" + wish.wishId
-                                    + "><input type=submit value="
-                                    + "make application" + "></form>";
+                                    + "><input type=submit value='"
+                                    + msg.makeApplication + "'></form>";
                                 column.innerHTML = formAction;
                         }
                     }

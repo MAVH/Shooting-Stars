@@ -13,7 +13,8 @@
                 wishesText: "<fmt:message key="wishes" />",
                 buttonCancel: "<fmt:message key="cancel" />",
                 labelPerformed: "<fmt:message key="wish_performed" />",
-                labelApplications: "<fmt:message key="applications" />"
+                labelApplications: "<fmt:message key="applications" />",
+                makeApplication: "<fmt:message key="make_application"/> "
             };
             displayUserWishesTable(${userId},${currentUserId}, msg)
         </script>

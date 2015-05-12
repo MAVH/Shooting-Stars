@@ -49,7 +49,9 @@
                     </tr>
                 </c:forEach>
                 </table>
-                <ctg:wishesPager currentPage="${page}" generalAmount="${amount}" wish="${wish}"/>
+                <div class="pager">
+                    <ctg:wishesPager currentPage="${page}" generalAmount="${amount}" wish="${wish}"/>
+                </div>
             </c:when>
             <c:otherwise>
                 <fmt:message key="not_found"/>

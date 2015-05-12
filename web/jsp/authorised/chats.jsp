@@ -27,7 +27,7 @@
                                         ${chat.otherParticipant.name} ${chat.otherParticipant.surname}
                                 </a>
                             </td>
-                            <td>
+                            <td class="unreadMessagesAmount">
                                 <c:if test="${chat.amountOfUnreadMessages != 0}">
                                     ${chat.amountOfUnreadMessages}
                                 </c:if>
@@ -44,6 +44,8 @@
                 </c:otherwise>
             </c:choose>
         </table>
-        <ctg:chatsPager currentPage="${page}" generalAmount="${chatsAmount}"/>
+        <div class="pager">
+            <ctg:chatsPager currentPage="${page}" generalAmount="${chatsAmount}"/>
+        </div>
     </body>
 </html>

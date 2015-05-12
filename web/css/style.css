@@ -498,6 +498,7 @@ nav.menu li a.messages {
     width: 20px;
     height: 20px;
     margin-right: 3px;
+    vertical-align: middle;
 }
 input[type="submit"].deleteButton, input[type="submit"].cancelButton {
     width: 25px;
@@ -526,21 +527,6 @@ input[type="submit"].fulfilledButton:hover {
     background-size: 28px 28px;
 }
 
-.formWishes {
-    display: inline-block;
-}
-.searchField {
-    display: inline-block;
-    width: 200px;
-}
-.userColor {
-    color: #9451ff;
-}
-.currentPage {
-    color: #298537;
-}
-
-
 /********SEARCH***************/
 .searchTypes {
      margin: 10px;
@@ -551,24 +537,83 @@ input[type="submit"].fulfilledButton:hover {
 .wishesSearchButton {
     margin: 10px;
 }
+.searchField {
+    display: inline-block;
+    width: 200px;
+}
 
 /**********CHATS*********/
-.chatsTable {
-    padding: 0;
+.chatsTable, .messageTable {
+    border-spacing: 0;
     margin: 20px 5px;
     width: 100%;
     font-size: 20px;
     vertical-align: middle;
 }
-.chatsTable a {
+.chatsTable a, .messageTable a {
     text-decoration: none;
     color: black;
 }
 .chatsTable tr td {
-    margin: 0;
     padding: 10px;
     background-color: #faf2cc;
-    border-bottom: solid 1px #fae7bc;
-    text-align: left;
+    border-bottom: solid 1px #ffcb6d;
+}
+.unreadMessagesAmount {
+    color: firebrick;
+    font-weight: bold;
+    text-align: right;
+}
+.sendMessageBlock {
+    margin: 10px 5px;
+}
+.sendMessageBlock textarea {
+    width: 500px;
+    height: 50px;
+    resize: none;
+    display: inline-block;
+}
+.sendRealMessageButton {
+    margin-top: -30px;
+    margin-left: 5px;
+}
+.messageTable tr td {
+    padding: 10px;
+    border-bottom: solid 1px #b57bff;
+}
+.messageTable tr {
+    background-color: rgb(245, 245, 255);
+}
+.messageTable tr.userColor {
+    background-color: #ede6ff;
+}
+a.messageSender {
+    color: #515050;
+}
+.messageTime {
+    text-align: right;
+    font-size: 16px;
+}
+.messageTable tr td .messageText {
+    padding-left: 40px;
+}
+.pager {
+    font-size: 17px;
+    padding: 2px;
+    text-align: center;
+}
+.pager a {
+    text-decoration: none;
+    color: #000000;
+    margin: 2px;
+}
+.pager a.currentPage {
+    color: #298537;
+}
+
+
+
+.formWishes {
+    display: inline-block;
 }
 

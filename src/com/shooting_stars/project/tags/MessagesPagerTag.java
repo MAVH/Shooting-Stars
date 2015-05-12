@@ -55,7 +55,7 @@ public class MessagesPagerTag extends TagSupport {
                     out.write("<a href=/getMessages?chatId=" + chatId + "&page=" + (currentPage + 1) + ">" +
                        rs.getString("next_page") + " </a>");
                     out.write("<a href=/getMessages?chatId=" + chatId + "&page=" + generalAmountOfPages + ">" +
-                            rs.getString("last_page") + " ( " + generalAmountOfPages + " ) </a>");
+                            rs.getString("last_page") + " (" + generalAmountOfPages + ") </a>");
                 }
             }
         } catch (IOException e) {

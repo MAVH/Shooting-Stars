@@ -55,9 +55,11 @@
                         </tr>
                     </c:forEach>
                 </table>
-                <ctg:usersPager currentPage="${page}" generalAmount="${usersAmount}" name="${name}"
+                <div class="pager">
+                    <ctg:usersPager currentPage="${page}" generalAmount="${usersAmount}" name="${name}"
                                 surname="${surname}" country="${country}" city="${city}"
                                 dateOfBirthMin="${dateOfBirthMin}" dateOfBirthMax="${dateOfBirthMax}"/>
+                </div>
             </c:when>
             <c:otherwise>
                 <fmt:message key="not_found"/>

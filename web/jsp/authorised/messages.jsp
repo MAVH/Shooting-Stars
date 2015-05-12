@@ -33,28 +33,25 @@
     <body>
         <c:import url="../partial/header.jsp"/>
         <c:import url="../partial/menu.jsp"/>
-        <form action="sendMessage" method="POST">
+        <form action="sendMessage" method="POST" class = "sendMessageBlock">
             <input type="hidden" name="chatId" value="${chatId}"/>
-            <textarea name="message"></textarea>
-            <input type="submit" value="<fmt:message key="send"/> "/>
+            <textarea name="message" class="form-control"></textarea>
+            <input type="submit" class = "sendRealMessageButton" value="<fmt:message key="send"/> "/>
         </form>
         <span id="info"></span>
         <c:choose>
             <c:when test="${not empty messages}">
-                <table class="table" id="messages">
+                <table class="table messageTable" id="messages">
                     <c:forEach var="message" items="${messages}">
-                        <tr>
+                        <tr class="<c:if test="${!message.isLoggedInUser()}">userColor </c:if>">
                             <td>
-                                <a href="userPage?userId=${message.sender.userId}"
-                                   class="<c:if test="${message.isLoggedInUser()}">
-                                           userColor
-                                           </c:if>">
+                                <a class="messageSender" href="userPage?userId=${message.sender.userId}">
                                     <ctg:userPhoto photoName="${message.sender.photoName}" photoClass="iconPhoto"/>
                                         ${message.sender.name} ${message.sender.surname}
                                 </a>
-                                <p>${message.message}</p>
+                                <p class="messageText">${message.message}</p>
                             </td>
-                            <td>
+                            <td class="messageTime">
                                 <fmt:formatDate value="${message.date}"/>
                                 <br/>
                                 <fmt:formatDate value="${message.time}" type="time" timeStyle="short"/>
@@ -62,7 +59,9 @@
                         </tr>
                     </c:forEach>
                 </table>
-                <ctg:messagesPager chatId="${chatId}" currentPage="${page}" generalAmount="${messagesAmount}"/>
+                <div class="pager">
+                    <ctg:messagesPager chatId="${chatId}" currentPage="${page}" generalAmount="${messagesAmount}"/>
+                </div>
             </c:when>
             <c:otherwise>
                 <p>

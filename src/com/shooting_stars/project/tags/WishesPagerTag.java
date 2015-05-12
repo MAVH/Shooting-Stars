@@ -1,8 +1,5 @@
 package com.shooting_stars.project.tags;
 
-
-import com.shooting_stars.project.logic.MessageLogic;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
