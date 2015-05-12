@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     
 });
 
-var interval = 20000;
+var interval = 30000;
 
 function displayHiddenForm() {
     document.getElementsByTagName('form').classList.remove("hidden");
@@ -350,9 +350,29 @@ function displayUserWishesTable(userId, currentUserId, msg) {
                         row = table.insertRow(i + 1);
                         column = row.insertCell(0);
                         column.innerHTML = wish["wish"];
+                        var formAction = "";
+                        var candidate = wish.candidate;
+                        var candidates = wish.candidates;
+                        var isApplicant = false;
+                        if (candidates != null) {
+                            var candidatesAmount = candidates.length;
+                            if (candidatesAmount != 0) {
+                                for (var j = 0; j < candidatesAmount; j++) {
+                                    if(candidates[j].userId == currentUserId) {
+                                        isApplicant = true;
+                                    }
+                                }
+
+                            }
+                        if (candidate == null && !isApplicant) {
+                            formAction = "<form action=makeApplication method=post>" +
+                            "<input type=hidden name=wishId value=" + wish.wishId
+                            + "><input type=submit class=makeApplicationButton value='"
+                            + msg.makeApplication + "'></form>";
+                            column.innerHTML += formAction;
+                        }
                         column = row.insertCell(1);
                         var label = document.createElement('h5');
-                        var candidate = wish.candidate;
                         if (candidate != null) {
                             label.innerHTML = msg.labelPerformed;
                             column.appendChild(label);
@@ -364,30 +384,25 @@ function displayUserWishesTable(userId, currentUserId, msg) {
                             columnActions.appendChild(createUserLink(candidate));
                             if (candidate.userId == currentUserId) {
                             columnActions = rowActions.insertCell(1);
-                            columnActions.innerHTML = "<form action=cancelMakingWish method=post><input type=hidden name=wishId value="
+                            columnActions.innerHTML = "<form action=cancelMakingWish class=cancelForm method=post><input type=hidden name=wishId value="
                                     + wish.wishId + "><input type=hidden name=userId value=" + candidate.userId
                                     + "><input type=submit class=cancelButton value=></form>";
                             }
                         }
-                        var candidates = wish.candidates;
-                        var isApplicant = false;
-                        if (candidates != null) {
-                            var candidatesAmount = candidates.length;
-                            if (candidatesAmount != 0) {
-                                label.innerHTML = msg.labelApplications;
-                                column.appendChild(label);
-                                tableActions = document.createElement('table');
-                                tableActions.setAttribute('id', 'candidates');
-                                column.appendChild(tableActions);
-                                for (var j = 0; j < candidatesAmount; j++) {
-                                    var rowActions = tableActions.insertRow(j);
-                                    var columnActions = rowActions.insertCell(0);
-                                    candidate = candidates[j];
-                                    columnActions.appendChild(createUserLink(candidate));
-                                    if(candidate.userId == currentUserId) {
-                                        isApplicant = true;
-                                        columnActions = rowActions.insertCell(1);
-                                        columnActions.innerHTML = "<form action=cancelApplication method=post>" +
+                        if (candidates != null && candidatesAmount != 0) {
+                            label.innerHTML = msg.labelApplications;
+                            column.appendChild(label);
+                            tableActions = document.createElement('table');
+                            tableActions.setAttribute('id', 'candidates');
+                            column.appendChild(tableActions);
+                            for (var j = 0; j < candidatesAmount; j++) {
+                                var rowActions = tableActions.insertRow(j);
+                                var columnActions = rowActions.insertCell(0);
+                                candidate = candidates[j];
+                                columnActions.appendChild(createUserLink(candidate));
+                                if(candidate.userId == currentUserId) {
+                                    columnActions = rowActions.insertCell(1);
+                                    columnActions.innerHTML = "<form action=cancelApplication class=cancelForm method=post>" +
                                             "<input type=hidden name=wishId value=" + wish.wishId
                                             + "><input type=hidden name=userId value=" + currentUserId +
                                             "><input type=submit class=cancelButton value=></form>";
@@ -395,15 +410,6 @@ function displayUserWishesTable(userId, currentUserId, msg) {
                                 }
 
                             }
-                        }
-                        column = row.insertCell(2);
-                        var formAction = "";
-                        candidate = wish.candidate;
-                        if (candidate == null && !isApplicant) {
-                                formAction = "<form action=makeApplication method=post><input type=hidden name=wishId value=" + wish.wishId
-                                    + "><input type=submit value='"
-                                    + msg.makeApplication + "'></form>";
-                                column.innerHTML = formAction;
                         }
                     }
 
@@ -444,11 +450,12 @@ function displayWishesTable(currentUserId) {
                         var wish = wishes[i];
                         row = table.insertRow(i + 1);
                         column = row.insertCell(0);
+                        column.className = "deleteCell";
                         var formAction;
                         var candidate = wish.candidate;
                         var candidates = wish.candidates;
                         if (candidate == null) {
-                            formAction = "<form action=deleteWish method=post><input type=hidden name=wishId value="
+                            formAction = "<form action=deleteWish class=cancelForm method=post><input type=hidden name=wishId value="
                                 + wish.wishId + "><input type=submit class=deleteButton value= ></form>";
                             column.innerHTML = formAction;
                         }
@@ -467,14 +474,13 @@ function displayWishesTable(currentUserId) {
                             var columnActions = rowActions.insertCell(0);
                             columnActions.appendChild(createUserLink(candidate));
                             columnActions = rowActions.insertCell(1);
-                            columnActions.innerHTML = "<form action=cancelMakingWish method=post><input type=hidden name=wishId value="
-                                + wish.wishId + "><input type=hidden name=userId value="
-                                + candidate.userId + "><input type=submit class=cancelButton value= ></form>";
+                            columnActions.innerHTML = "<form action=wishMade class=acceptForm method=post>" +
+                            "<input type=hidden name=wishId value=" + wish.wishId + ">" +
+                            "<input type=submit class=fulfilledButton value= ></form>";
                             var columnActions = rowActions.insertCell(2);
-                            columnActions.innerHTML = "<form action=wishMade method=post>" +
-                                "<input type=hidden name=wishId value=" + wish.wishId + ">" +
-                                "<input type=submit class=fulfilledButton value= ></form>";
-
+                            columnActions.innerHTML = "<form action=cancelMakingWish class=cancelForm method=post>" +
+                            "<input type=hidden name=wishId value=" + wish.wishId + "><input type=hidden name=userId value="
+                            + candidate.userId + "><input type=submit class=cancelButton value= ></form>";
                         }
 
                         if (candidates != null) {
@@ -491,14 +497,13 @@ function displayWishesTable(currentUserId) {
                                     candidate = candidates[j];
                                     columnActions.appendChild(createUserLink(candidate));
                                     columnActions = rowActions.insertCell(1);
-                                    columnActions.innerHTML = "<form action=acceptApplication method=post> " +
+                                    columnActions.innerHTML = "<form action=acceptApplication class=acceptForm method=post> " +
                                         "<input type=hidden name=wishId value=" + wish.wishId
                                         + "><input type=hidden name=userId value=" + candidate.userId + "><input type=submit class=fulfilledButton value= ></form>";
                                     var columnActions = rowActions.insertCell(2);
-                                    columnActions.innerHTML = "<form action=cancelApplication method=post>" +
+                                    columnActions.innerHTML = "<form action=cancelApplication class=cancelForm method=post>" +
                                         "<input type=hidden name=wishId value=" + wish.wishId
                                         + "><input type=hidden name=userId value=" + candidate.userId + "><input type=submit class='cancelButton' value= ></form>";
-
                                 }
                             }
                         }

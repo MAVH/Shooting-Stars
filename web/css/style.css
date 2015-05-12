@@ -486,7 +486,7 @@ nav.menu li a.messages {
 }
 .wishesTable>tbody>tr>td {
     border: solid 1px darkorange;
-    padding: 5px;
+    padding: 10px;
     vertical-align: middle;
 }
 .wishesTable a {
@@ -528,7 +528,7 @@ input[type="submit"].fulfilledButton:hover {
     background-size: 29px 29px;
     margin: 3px;
 }
-.cancelForm {
+.cancelForm, .acceptForm {
     display: inline-block;
     margin: 0 3px;
 }
@@ -543,6 +543,16 @@ input[type="submit"].fulfilledButton:hover {
 }
 .wishAppliedFor {
     color: #fad60a;
+}
+.wishesTable h5 {
+    margin-bottom: 2px;
+}
+.makeApplicationButton {
+    margin-top: 5px;
+    margin-bottom: 2px;
+}
+.wishesTable>tbody>tr>td.deleteCell {
+    width: 40px;
 }
 
 /********SEARCH***************/
