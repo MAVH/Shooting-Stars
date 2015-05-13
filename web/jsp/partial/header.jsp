@@ -9,6 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-cache">    -->
     <meta http-equiv="Cache-Control" content="private">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css"/>
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
 </head>
 <body>
 <a class="lang" href="${pageContext.request.contextPath}/changeLocale?localeValue=EN">EN</a>
@@ -25,7 +26,7 @@
         </a>
     </div>
 </c:if>
-<a href="${pageContext.request.contextPath}/index.jsp"><img class="logo"
+<a class="logo_link" href="${pageContext.request.contextPath}/index.jsp"><img class="logo"
                                                             src="${pageContext.request.contextPath}/img/logo.png"></a>
 
 <h2 class="header_name">Shooting Stars</h2>

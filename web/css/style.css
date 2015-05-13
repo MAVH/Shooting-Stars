@@ -97,6 +97,10 @@ input:invalid {
     width: 60px;
     height: 60px;
     display: inline-block;
+    vertical-align: inherit;
+}
+.logo_link {
+    vertical-align: sub;
 }
 .lang {
     float: right;
