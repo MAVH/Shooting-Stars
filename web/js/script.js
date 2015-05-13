@@ -521,6 +521,7 @@ function updateTime() {
         xmlhttp.send();
     }, 600000);
 }
+
 function getUploadedPhotoName (str){
     if (str.lastIndexOf('\\')){
         var i = str.lastIndexOf('\\')+1;
@@ -532,6 +533,7 @@ function getUploadedPhotoName (str){
     var uploaded = document.getElementById("fileformlabel");
     uploaded.innerHTML = filename;
 }
+
 
 
 
