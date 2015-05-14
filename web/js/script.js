@@ -259,18 +259,20 @@ function displayChats(currentPage) {
                     column = row.insertCell(0);
                     var link = document.createElement('a');
                     link.setAttribute('href', "getMessages?chatId=" + chat.chatId);
+                    link.className = "goToMessagesLink";
                     var photoName = chat.otherParticipant.photoName;
                     if (photoName == null) {
                         photoName = "default.png";
                     }
-                    link.innerHTML = "<img src=../../img/userPhoto/" + photoName + " class=iconPhoto />" +
+                    link.innerHTML = "<img src=../../img/userPhoto/" + photoName + " class=iconPhoto />" + " " +
                         chat.otherParticipant.name + " " + chat.otherParticipant.surname;
-                    column.appendChild(link);
-                    column = row.insertCell(1);
                     if(chat.amountOfUnreadMessages != 0) {
-                        column.innerHTML = chat.amountOfUnreadMessages;
-                        column.className = "unreadMessagesAmount";
+                        var p = document.createElement('p');
+                        p.className = "unreadMessagesAmount";
+                        p.innerHTML = chat.amountOfUnreadMessages;
+                        link.appendChild(p);
                     }
+                    column.appendChild(link);
                 }
                 }
                 }

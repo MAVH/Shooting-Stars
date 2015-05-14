@@ -9,7 +9,6 @@
     <meta http-equiv="Cache-Control" content="no-cache">    -->
     <meta http-equiv="Cache-Control" content="private">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css"/>
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
 </head>
 <body>
 <a class="lang" href="${pageContext.request.contextPath}/changeLocale?localeValue=EN">EN</a>

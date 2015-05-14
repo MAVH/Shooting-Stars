@@ -12,6 +12,7 @@
         <script>
             displayChats("${page}");
         </script>
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
     </head>
     <body>
         <c:import url="../partial/header.jsp"/>
@@ -22,15 +23,13 @@
                     <c:forEach var="chat" items="${chats}">
                         <tr>
                             <td>
-                                <a href="getMessages?chatId=${chat.chatId}">
+                                <a href="getMessages?chatId=${chat.chatId}" class="goToMessagesLink">
                                     <ctg:userPhoto photoName="${chat.otherParticipant.photoName}" photoClass="iconPhoto"/>
                                         ${chat.otherParticipant.name} ${chat.otherParticipant.surname}
+                                    <c:if test="${chat.amountOfUnreadMessages != 0}">
+                                        <p class="unreadMessagesAmount">${chat.amountOfUnreadMessages}</p>
+                                    </c:if>
                                 </a>
-                            </td>
-                            <td class="unreadMessagesAmount">
-                                <c:if test="${chat.amountOfUnreadMessages != 0}">
-                                    ${chat.amountOfUnreadMessages}
-                                </c:if>
                             </td>
                         </tr>
                     </c:forEach>

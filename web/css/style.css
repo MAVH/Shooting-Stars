@@ -188,6 +188,7 @@ nav.menu ul li {
     display: inline-block;
     list-style-type: none;
     margin: 90px 50px 15px;
+    position: relative;
 }
 nav.menu li a {
     text-decoration: none;
@@ -212,9 +213,9 @@ nav.menu li a.messages {
     background-size: 100px 100px;
 }
 .messages_amount {
-    position: relative;
-    top: -70px;
-    right: 35px;
+    position: absolute;
+    top: -75px;
+    right: 10px;
     display: inline-block;
     background-color: yellow;
     border: solid 1px yellow;
@@ -669,6 +670,8 @@ input[type="submit"].fulfilledButton:hover {
     color: firebrick;
     font-weight: bold;
     text-align: right;
+    float: right;
+    margin: 0;
 }
 .sendMessageBlock {
     margin: 10px 5px;
@@ -716,7 +719,11 @@ a.messageSender {
 .pager a.currentPage {
     color: #298537;
 }
-
+a.goToMessagesLink {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+}
 
 
 .formWishes {

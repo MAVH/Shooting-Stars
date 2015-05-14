@@ -23,6 +23,7 @@
             };
             displayMyWishes("${param.userId}", "${currentUserId}",msg)
         </script>
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
     </head>
     <body>
         <c:import url="../partial/header.jsp"/>

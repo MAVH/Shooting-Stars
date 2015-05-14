@@ -3,6 +3,7 @@
 <html>
   <head>
     <title></title>
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
   </head>
   <body>
     <c:if test="${not empty currentUserId}">

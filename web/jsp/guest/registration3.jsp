@@ -7,7 +7,7 @@
     <head>
         <title><fmt:message key="registration_page_title"/></title>
         <script type="text/javascript" src="${pageContext.request.contextPath}/js/script.js"></script>
-
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
     </head>
     <body>
         <c:import url="../partial/header.jsp"/>

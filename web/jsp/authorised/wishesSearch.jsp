@@ -7,6 +7,7 @@
 <html>
     <head>
         <title><fmt:message key="search"/></title>
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
     </head>
     <body>
         <c:import url="../partial/header.jsp"/>

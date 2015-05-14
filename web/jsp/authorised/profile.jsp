@@ -12,7 +12,6 @@
         <meta http-equiv="Cache-Control" content="private">
         <script type="text/javascript" src="${pageContext.request.contextPath}/js/script.js"></script>
         <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css" media="screen"/>
-
         <script>
             var msg = {
                 wishesText: "<fmt:message key="wishes" />",
@@ -25,7 +24,7 @@
             displayWishesTable(${currentUserId},msg);
 
         </script>
-
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
     </head>
     <body>
         <c:import url="../partial/header.jsp"/>
