@@ -39,9 +39,10 @@
             <input type="submit" class = "sendRealMessageButton" value="<fmt:message key="send"/> "/>
         </form>
         <span id="info"></span>
+        <table class="table messageTable" id="messages">
         <c:choose>
             <c:when test="${not empty messages}">
-                <table class="table messageTable" id="messages">
+
                     <c:forEach var="message" items="${messages}">
                         <tr class="<c:if test="${!message.isLoggedInUser()}">userColor </c:if>">
                             <td>
@@ -58,17 +59,16 @@
                             </td>
                         </tr>
                     </c:forEach>
-                </table>
-                <div class="pager">
-                    <ctg:messagesPager chatId="${chatId}" currentPage="${page}" generalAmount="${messagesAmount}"/>
-                </div>
             </c:when>
             <c:otherwise>
-                <p>
+                <td>
                     <fmt:message key="not_found"/>
-                </p>
+                </td>
             </c:otherwise>
         </c:choose>
-
+        </table>
+        <div class="pager">
+            <ctg:messagesPager chatId="${chatId}" currentPage="${page}" generalAmount="${messagesAmount}"/>
+        </div>
     </body>
 </html>
