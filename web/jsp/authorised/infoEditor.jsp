@@ -18,7 +18,9 @@
                 <table class="info_editor_table">
                     <tr>
                         <td>
-                            <label for="name" class="label"><fmt:message key="name"/></label>
+                            <label for="name" class="label">
+                                <fmt:message key="name"/><span class="required">*</span>
+                            </label>
                         <td>
                             <input type="text" name="name" id="name" class="form-control"
                                    value="${userInfo.name}" pattern="[A-Za-zА-Яа-я\s]+"/>

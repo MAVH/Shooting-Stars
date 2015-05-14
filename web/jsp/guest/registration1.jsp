@@ -22,7 +22,9 @@
                 <table class="reg_table">
                     <tr>
                         <td>
-                            <label for="login_name" class="label"><fmt:message key="login"/></label>
+                            <label for="login_name" class="label">
+                                <fmt:message key="login"/><span class="required">*</span>
+                            </label>
                         </td>
                         <td>
                             <input type="text" name="login" id="login_name" class="form-control"
@@ -31,7 +33,9 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="password" class="label"><fmt:message key="password"/></label>
+                            <label for="password" class="label">
+                                <fmt:message key="password"/><span class="required">*</span>
+                            </label>
                         </td>
                         <td>
                             <input type="password" name="password" id="password" class="form-control"
@@ -40,7 +44,9 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="password_repeat" class="label"><fmt:message key="password_repeat"/></label>
+                            <label for="password_repeat" class="label">
+                                <fmt:message key="password_repeat"/><span class="required">*</span>
+                            </label>
                         </td>
                         <td>
                             <input type="password" name="password_repeat" id="password_repeat" class="form-control"
@@ -49,7 +55,9 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="email" class="label"><fmt:message key="e-mail"/></label>
+                            <label for="email" class="label">
+                                <fmt:message key="e-mail"/><span class="required">*</span>
+                            </label>
                         </td>
                         <td>
                             <input type="email" name="email" id="email" class="form-control"

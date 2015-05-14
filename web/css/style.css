@@ -321,7 +321,7 @@ nav.menu li a.messages {
 .add_wish_button {
     position: absolute;
     top: 358px;
-    right: 235px;
+    right: 225px;
     background: transparent;
     font-size: 50px;
     padding: 0;
@@ -342,6 +342,10 @@ nav.menu li a.messages {
     font-size: 16px;
     margin: 10px;
     color: #dd4814;
+}
+span.required {
+    color: firebrick;
+    font-size: 16px;
 }
 
 /*********Profile and user page***************/
