@@ -296,12 +296,15 @@ function updateMessages(chatId,page) {
                 return;
             }
             var table = document.getElementById("messages");
-            for (var i = 0; i < messagesAmount; i++) {
-                table.deleteRow(json.maxAmount - i - 1);
+            if(table.rows.length + messagesAmount >= json.maxAmount) {
+                for (var i = 0; i < (table.rows.length + messagesAmount - json.maxAmount) ; i++) {
+                    table.deleteRow(table.rows.length - i - 1);
+                }
             }
             for (var i = 0; i < messages.length; i++) {
                 var message = messages[i];
                 var row = table.insertRow(i);
+                row.className = "userColor";
                 var column;
                 column = row.insertCell(0);
                 var link = createUserLink(message.sender);
