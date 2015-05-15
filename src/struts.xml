@@ -243,10 +243,10 @@
         <action name="changePassword" class="com.shooting_stars.project.command.ChangePasswordCommand">
             <interceptor-ref name="privateStack"/>
             <result name="success">
-                /jsp/authorised/changePassword.jsp
+                /jsp/authorised/settings.jsp
             </result>
             <result name="input">
-                /jsp/authorised/changePassword.jsp
+                /jsp/authorised/settings.jsp
             </result>
         </action>
         <action name="newMessages" class="com.shooting_stars.project.command.GetUnreadMessagesCommand">
@@ -265,10 +265,10 @@
         <action name="changeEmail" class="com.shooting_stars.project.command.ChangeEmailCommand">
             <interceptor-ref name="privateStack"/>
             <result name="success">
-                /jsp/authorised/changePassword.jsp
+                /jsp/authorised/settings.jsp
             </result>
             <result name="input">
-                /jsp/authorised/changePassword.jsp
+                /jsp/authorised/settings.jsp
             </result>
         </action>
         <action name="wishesSearch" class="com.shooting_stars.project.command.FindWishesCommand">

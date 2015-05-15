@@ -20,7 +20,7 @@
         <a href = "${pageContext.request.contextPath}/jsp/authorised/search.jsp" class="search_button">
             <%--<fmt:message key="search"/>--%>
         </a>
-        <a href = "${ pageContext.request.contextPath }/jsp/authorised/changePassword.jsp" class="settings_button">
+        <a href = "${ pageContext.request.contextPath }/jsp/authorised/settings.jsp" class="settings_button">
             <%--<fmt:message key="settings"/>--%>
         </a>
     </div>
