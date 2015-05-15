@@ -188,10 +188,9 @@
                 /jsp/authorised/messages.jsp
             </result>
             <result name="invalid_chat" type="redirectAction">
-                getChats
+                chats
             </result>
         </action>
-
         <action name="toChat" class="com.shooting_stars.project.command.GoToChatCommand">
             <result name="success" type="redirectAction">
                 getMessages?chatId=${chatId}
