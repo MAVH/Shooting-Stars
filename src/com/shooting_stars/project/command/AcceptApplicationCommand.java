@@ -4,6 +4,7 @@ import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.MessageLogic;
 import com.shooting_stars.project.logic.WishLogic;
+import com.shooting_stars.project.manager.MessageManager;
 
 public class AcceptApplicationCommand extends SessionAwareCommand {
     private int wishId;
@@ -12,10 +13,9 @@ public class AcceptApplicationCommand extends SessionAwareCommand {
     public String execute() {
         String result = SUCCESS;
         int currentUserId = getCurrentUserId();
+        MessageManager messageManager = (MessageManager)sessionAttributes.get("messageManager");
         try {
-              //TODO change message
-
-            MessageLogic.sendMessage(currentUserId, userId,"application was accepted");
+            MessageLogic.sendMessage(currentUserId, userId,messageManager.getMessage("message.wish.application.accepted"));
             WishLogic.takeApplication(wishId,userId);
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());

@@ -6,6 +6,7 @@ import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.MessageLogic;
 import com.shooting_stars.project.logic.WishLogic;
+import com.shooting_stars.project.manager.MessageManager;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -38,8 +39,8 @@ public class MakeApplicationCommand extends SessionAwareCommand {
         int currentUserId = getCurrentUserId();
         try {
             userId = WishLogic.makeApplication(wishId, currentUserId);
-            //change message
-            MessageLogic.sendMessage(currentUserId, userId, "application was made");
+            MessageManager messageManager = (MessageManager)sessionAttributes.get("messageManager");
+            MessageLogic.sendMessage(currentUserId, userId, messageManager.getMessage("message.wish.application.made"));
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());
             exception = new CommandException(e.getCause());

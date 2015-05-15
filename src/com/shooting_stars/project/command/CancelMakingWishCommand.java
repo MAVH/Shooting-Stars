@@ -4,7 +4,7 @@ import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.MessageLogic;
 import com.shooting_stars.project.logic.WishLogic;
-
+import com.shooting_stars.project.manager.MessageManager;
 
 
 public class CancelMakingWishCommand extends SessionAwareCommand {
@@ -19,6 +19,7 @@ public class CancelMakingWishCommand extends SessionAwareCommand {
         String result = "profile";
         sessionUserId = getCurrentUserId();
         int receiverId;
+        MessageManager messageManager = (MessageManager)sessionAttributes.get("messageManager");
         try {
             int applicantId = userId;
             int wishOwnerId = WishLogic.cancelWishMaking(wishId);
@@ -35,7 +36,7 @@ public class CancelMakingWishCommand extends SessionAwareCommand {
                 userId = sessionUserId;
             }
             //change message
-            MessageLogic.sendMessage(sessionUserId, receiverId, "cancel making wish");
+            MessageLogic.sendMessage(sessionUserId, receiverId, messageManager.getMessage("message.wish.making.cancel"));
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());
             exception = new CommandException(e.getCause());

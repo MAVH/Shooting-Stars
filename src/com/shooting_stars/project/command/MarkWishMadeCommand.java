@@ -6,6 +6,7 @@ import com.shooting_stars.project.exception.CommandException;
 import com.shooting_stars.project.exception.LogicException;
 import com.shooting_stars.project.logic.MessageLogic;
 import com.shooting_stars.project.logic.WishLogic;
+import com.shooting_stars.project.manager.MessageManager;
 import org.apache.struts2.interceptor.SessionAware;
 
 import java.util.Map;
@@ -29,8 +30,9 @@ public class MarkWishMadeCommand extends SessionAwareCommand {
         try {
 
             int userId = WishLogic.markWishMade(wishId);
+            MessageManager messageManager = (MessageManager)sessionAttributes.get("messageManager");
             //change message
-            MessageLogic.sendMessage(currentUserId, userId, "wish was made");
+            MessageLogic.sendMessage(currentUserId, userId, messageManager.getMessage("message.wish.complete"));
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());
             exception = new CommandException(e.getCause());
