@@ -30,8 +30,8 @@ public class UsersSearchCommand extends SessionAwareCommand {
     public String execute() {
         String result = SUCCESS;
         try {
-            foundUsers = SearchLogic.findUsers(name, surname, city, country, dateOfBirthMin, dateOfBirthMax, page);
-            usersAmount = SearchLogic.countUsers(name, surname, city, country, dateOfBirthMin, dateOfBirthMax);
+            foundUsers = SearchLogic.findUsers(name, surname, country, city, dateOfBirthMin, dateOfBirthMax, page);
+            usersAmount = SearchLogic.countUsers(name, surname, country, city, dateOfBirthMin, dateOfBirthMax);
         } catch (LogicException e) {
             LOG.error(e.getMessage(),e.getCause());
             exception = new CommandException(e.getCause());

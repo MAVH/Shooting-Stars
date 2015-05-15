@@ -94,6 +94,8 @@ public class SearchDAO extends AbstractDAO{
             ps.setString(6, "%" + city + "%");
             if(dateMax == null) {
                 ps.setDate(7, dateMin);
+                ps.setInt(8,from);
+                ps.setInt(9,num);
             } else if(dateMin == null) {
                 ps.setDate(7, dateMax);
                 ps.setInt(8,from);
