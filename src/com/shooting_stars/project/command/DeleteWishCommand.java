@@ -9,15 +9,6 @@ import com.shooting_stars.project.manager.MessageManager;
 
 public class DeleteWishCommand extends SessionAwareCommand {
     private int wishId;
-    private String messageError;
-
-    public String getMessageError() {
-        return messageError;
-    }
-
-    public void setMessageError(String messageError) {
-        this.messageError = messageError;
-    }
 
     public int getWishId() {
         return wishId;
@@ -31,9 +22,7 @@ public class DeleteWishCommand extends SessionAwareCommand {
     public String execute() {
         String result = SUCCESS;
         try {
-            if(!WishLogic.deleteWish(wishId)) {
-                 messageError = ((MessageManager)sessionAttributes.get("messageManager")).getMessage("message.delete.impossible");
-            }
+            WishLogic.deleteWish(wishId);
         } catch (LogicException e) {
             LOG.error(e.getMessage(), e.getCause());
             exception =  new CommandException(e.getCause());

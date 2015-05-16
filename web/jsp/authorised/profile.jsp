@@ -7,8 +7,8 @@
 <fmt:setBundle basename="resources.pagecontent"/>
 <html>
     <head>
-        <title><fmt:message key="profile"/></title><!--
-        <meta http-equiv="Cache-Control" content="no-cache">    -->
+        <title><fmt:message key="profile"/></title>
+        <!--    <meta http-equiv="Cache-Control" content="no-cache">    -->
         <meta http-equiv="Cache-Control" content="private">
         <script type="text/javascript" src="${pageContext.request.contextPath}/js/script.js"></script>
         <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/style.css" media="screen"/>

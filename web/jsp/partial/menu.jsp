@@ -4,8 +4,9 @@
 <fmt:setLocale value="${currentLocale}" scope="session"/>
 <fmt:setBundle basename="resources.pagecontent"/>
 <html>
-    <head></head>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/script.js"></script>
+    <head>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/js/script.js"></script>
+    </head>
     <body>
         <nav class="menu">
             <ul>

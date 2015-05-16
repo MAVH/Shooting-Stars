@@ -30,7 +30,7 @@ img {
 }
 input {
     box-sizing: border-box;
-    padding: 1px 0px;
+    padding: 1px 0;
     -webkit-appearance: textfield;
     -webkit-rtl-ordering: logical;
     -webkit-user-select: text;
@@ -46,14 +46,14 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
     color: rgb(0, 0, 0);
 }
 input, textarea, keygen, select, button {
-    margin: 0em;
+    margin: 0;
     font: normal normal normal 13.3333330154419px/normal Arial;
     text-rendering: auto;
     color: initial;
     letter-spacing: normal;
     word-spacing: normal;
     text-transform: none;
-    text-indent: 0px;
+    text-indent: 0;
     text-shadow: none;
     display: inline-block;
     text-align: start;
@@ -63,7 +63,6 @@ button, html input[type="button"], input[type="reset"], input[type="submit"] {
     cursor: pointer;
     color: #ffffff;
     background-color: #dd4814;
-    border-color: #dd4814;
     display: inline-block;
     text-align: center;
     vertical-align: middle;
@@ -130,7 +129,7 @@ input:invalid {
 }
 .motto {
     font-size: 25px;
-    margin: 0px 10px 10px 300px;
+    margin: 0 10px 10px 300px;
 }
 .buttons_block {
     float: right;
@@ -194,8 +193,7 @@ nav.menu li a {
     text-decoration: none;
     color: #050505;
     font-size: 18px;
-    padding: 5px 10px;
-    padding-top: 90px;
+    padding: 90px 10px 5px;
 }
 nav.menu li a:hover {
     color: firebrick;
@@ -375,10 +373,9 @@ span.required {
     border: none;
 }
 .infoBlock {
-    margin: 50px 5px;
+    margin: 50px 5px 50px 250px;
     height: 200px;
     position: relative;
-    margin-left: 250px;
 }
 .infoBlock .userName {
     font-size: 30px;
@@ -585,8 +582,7 @@ input[type="submit"].fulfilledButton:hover {
     text-align: center;
 }
 .usersSearchButton, .wishesSearchButton {
-    margin: 10px;
-    margin-bottom: 30px;
+    margin: 10px 10px 30px;
     background: none;
     color: #050505;
     font-weight: bold;
@@ -595,8 +591,7 @@ input[type="submit"].fulfilledButton:hover {
 }
 .usersSearchButton:hover, .wishesSearchButton:hover {
     background: none;
-    border-color: firebrick;
-    border-width: 2px;
+    border: 2px firebrick;
     padding: 4px 39px;
 }
 .usersSearchButton.curr, .wishesSearchButton.curr {
@@ -731,7 +726,7 @@ a.goToMessagesLink {
 }
 /**************CHANGE PHOTO************/
 .changePhotoBlock{
-    margin:40px auto 0px auto;
+    margin:40px auto 0 auto;
     width:460px;
     height: 180px;
     padding: 10px;
