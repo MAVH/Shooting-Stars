@@ -2,3 +2,5 @@
 out/*
 .idea/*
 src/resources/database.properties
+target/
+.idea/
