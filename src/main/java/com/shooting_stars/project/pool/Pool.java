@@ -21,7 +21,7 @@ public class Pool {
     private BlockingQueue<Connection> resources;
 
     private Pool() throws SQLException, InterruptedException {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.database", new Locale("en", "EN"));
+        ResourceBundle bundle = ResourceBundle.getBundle("database", new Locale("en", "EN"));
         String dbPath = bundle.getString("db.path");
         String login = bundle.getString("db.login");
         String pass = bundle.getString("db.password");

@@ -11,8 +11,6 @@ import javax.servlet.annotation.WebListener;
 public class ContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        String path = servletContextEvent.getServletContext().getRealPath("/");
-        new DOMConfigurator().doConfigure(path + "/log4j.xml", LogManager.getLoggerRepository());
     }
 
     @Override
