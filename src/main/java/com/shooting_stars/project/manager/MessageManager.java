@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 public enum MessageManager {
         INSTANCE;
         private ResourceBundle resourceBundle;
-        private final String resourceName = "resources.message";
+        private final String resourceName = "message";
         private MessageManager() {
             resourceBundle = ResourceBundle.getBundle(resourceName, Locale.getDefault());
         }

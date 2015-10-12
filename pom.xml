@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.hs</groupId>
-    <artifactId>.shooting-stars</artifactId>
+    <artifactId>shooting-stars</artifactId>
     <packaging>war</packaging>
     <version>1.0</version>
     <name>ShootingStars</name>
@@ -23,6 +23,17 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>com.opensymphony</groupId>-->
+            <!--<artifactId>xwork-core</artifactId>-->
+            <!--<version>2.1.6</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-json-plugin</artifactId>
+            <version>${struts.version}</version>
         </dependency>
 
         <dependency>
